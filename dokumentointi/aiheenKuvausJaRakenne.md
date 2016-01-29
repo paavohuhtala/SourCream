@@ -25,5 +25,5 @@ Tulkki ja emulaattori binäärimuotoisille [CHIP-8](https://en.wikipedia.org/wik
 
 ## Määrittelyvaiheen luokkakaavio
 
-![Luokkakaavio](/uml/concept.png)
+![Luokkakaavio](/dokumentointi/uml/concept.png)
 
