@@ -7,7 +7,7 @@ public class Register {
     public final int id;
     
     public Register(int offset) {
-        if (offset >= 16) {
+        if (offset < 0 || offset >= 16) {
             throw new IllegalArgumentException("Register offset must be between 0 and 15.");
         }
         this.id = offset;
@@ -15,9 +15,7 @@ public class Register {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + this.id;
-        return hash;
+        return id;
     }
 
     @Override

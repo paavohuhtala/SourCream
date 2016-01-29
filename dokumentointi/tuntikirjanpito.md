@@ -19,3 +19,10 @@ Koodaaminen aloitettu. Toteutettiin mm.
 ## 25.1.2016: 1h
 
 Eilistä koodia siistitty ja bugeja/suunniteluvirheitä korjattu.
+
+## 29.1.2016: 4h
+
+* Parikymmentä uutta testiä
+* Bugeja/testivajavaisuuksia korjattu PIT-raporttien perusteella
+* XOR-käsky ja kaksi rekisterikäskyä
+* Käskycache abstraktoitu rajapinnoiksi ja toteutukseksi

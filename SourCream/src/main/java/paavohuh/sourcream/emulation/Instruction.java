@@ -3,6 +3,7 @@ package paavohuh.sourcream.emulation;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import org.jooq.lambda.Seq;
+import org.joou.UByte;
 import org.joou.UShort;
 
 /**
@@ -25,13 +26,13 @@ public interface Instruction {
     /**
      * An abstract instruction with one register parameter.
      */
-    public static abstract class OneRegister implements Instruction {
-        protected final Register register;
+    public static abstract class WithOneRegister implements Instruction {
+        public final Register register;
 
         protected abstract UShort getBaseCode();
         protected abstract int getRegOffset();
         
-        public OneRegister(byte register) {
+        public WithOneRegister(byte register) {
             this.register = new Register(register);
         }
         
@@ -40,7 +41,7 @@ public interface Instruction {
             return InstructionUtils.setRegister(getBaseCode(), register, getRegOffset());
         }
         
-        public static Seq<Instruction> getAllInstances(Function<Byte, Instruction> ctor) {
+        public static Seq<WithOneRegister> getAllInstances(Function<Byte, WithOneRegister> ctor) {
             return Seq.range((byte)0, (byte)16).map(ctor);
         }
     }
@@ -48,17 +49,21 @@ public interface Instruction {
     /**
      * An abstract instruction with two register parameters.
      */
-    public static abstract class TwoRegister implements Instruction {
-        protected final Register registerX;
-        protected final Register registerY;
+    public static abstract class WithTwoRegisters implements Instruction {
+        public final Register registerX;
+        public final Register registerY;
 
         protected abstract UShort getBaseCode();
         protected abstract int getRegXOffset();
         protected abstract int getRegYOffset();
         
-        public TwoRegister(byte registerX, byte registerY) {
-            this.registerX = new Register(registerX);
-            this.registerY = new Register(registerY);
+        public WithTwoRegisters(byte registerX, byte registerY) {
+            this(new Register(registerX), new Register(registerY));
+        }
+        
+        public WithTwoRegisters(Register x, Register y) {
+            this.registerX = x;
+            this.registerY = y;
         }
         
         @Override
@@ -66,7 +71,7 @@ public interface Instruction {
             return InstructionUtils.setRegister(InstructionUtils.setRegister(getBaseCode(), registerX, getRegXOffset()), registerY, getRegYOffset());
         }
         
-        public static Seq<Instruction> getAllInstances(BiFunction<Byte, Byte, Instruction> ctor) {
+        public static Seq<WithTwoRegisters> getAllInstances(BiFunction<Byte, Byte, WithTwoRegisters> ctor) {
             return
                 Seq.range((byte)0, (byte)16).crossJoin(Seq.range((byte)0, (byte)15)) 
                 .map(t -> ctor.apply(t.v1, t.v2));
@@ -76,17 +81,49 @@ public interface Instruction {
     /**
      * An abstract instruction with one 12-bit address parameter.
      */
-    public static abstract class Address implements Instruction {
-        protected final UShort address;
+    public static abstract class WithAddress implements Instruction {
+        public final UShort address;
         
-        public Address(UShort address) {
+        protected abstract UShort getBaseCode();
+        
+        public WithAddress(UShort address) {
             this.address = address;
         }
         
-        public static Seq<Instruction> getAllInstances(Function<UShort, Instruction> ctor) {
+        @Override
+        public UShort getCode() {
+            return UShort.valueOf(getBaseCode().intValue() | address.intValue());
+        }
+        
+        public static Seq<WithAddress> getAllInstances(Function<UShort, WithAddress> ctor) {
             return
                 Seq.range(0, 4096)
                 .map(i -> ctor.apply(UShort.valueOf(i)));
         }
+    }
+    
+    public static abstract class With4BitConstant implements Instruction {
+        public final UByte constant;
+        
+        protected abstract int getOffset();
+        protected abstract UShort getBaseCode();
+
+        public With4BitConstant(byte constant) {
+            this.constant = UByte.valueOf(constant);
+        }
+        
+        @Override
+        public UShort getCode() {
+            return UShort.valueOf(getBaseCode().intValue() | (constant.intValue() << (getOffset() * 4)));
+        }
+        
+        // TODO: Same as WithOneRegister.getAllInstances
+        public static Seq<With4BitConstant> getAllInstances(Function<Byte, With4BitConstant> ctor) {
+            return Seq.range((byte)0, (byte)16).map(ctor);
+        }
+    }
+    
+    public static abstract class With8BitConstant implements Instruction {
+        
     }
 }

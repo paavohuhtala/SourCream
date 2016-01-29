@@ -10,4 +10,8 @@ public class VMConfiguration {
         this.resolutionX = resolutionX;
         this.resolutionY = resolutionY;
     }
+    
+    public static VMConfiguration getDefault() {
+        return new VMConfiguration(4096, 64, 32);
+    }
 }

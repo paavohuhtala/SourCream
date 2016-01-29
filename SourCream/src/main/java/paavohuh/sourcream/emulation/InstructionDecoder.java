@@ -5,9 +5,9 @@
  */
 package paavohuh.sourcream.emulation;
 
+import java.util.Optional;
+import org.joou.UShort;
 
-public interface InstructionCache extends InstructionDecoder {
-
-    void register(Instruction instr);
-    
+public interface InstructionDecoder {
+    Optional<Instruction> decode(UShort code);
 }

@@ -42,10 +42,4 @@ public class InstructionUtilsTest {
         modified = InstructionUtils.setRegister(modified, Register.V1, 1);
         assertEquals(UShort.valueOf(0x8110), modified);
     }
-    
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

@@ -22,3 +22,8 @@ Tulkki ja emulaattori binäärimuotoisille [CHIP-8](https://en.wikipedia.org/wik
 * "Aikamatkustus"
   * Automaattinen save state joka ruduunpäivityksellä, joiden välillä voi liikkua vapaasti. Määrä rajattu käyttäjän asettaman rajan mukaan.
 * Tuki CHIP48/SuperChip-peleille
+
+## Määrittelyvaiheen luokkakaavio
+
+![Luokkakaavio](/uml/concept.png)
+

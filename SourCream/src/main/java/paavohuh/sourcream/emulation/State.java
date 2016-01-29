@@ -59,13 +59,20 @@ public class State implements Cloneable {
         this.soundTimer = UByte.valueOf(0);
     }
     
-    public UByte register(Register reg) {
+    public UByte getRegister(Register reg) {
         return registers[reg.id];
     }
     
     public State withRegister(Register reg, UByte value) {
         State state = new State(this);
         state.registers[reg.id] = value;
+        
+        return state;
+    }
+    
+    public State withAddressRegister(UShort value) {
+        State state = new State(this);
+        state.addressRegister = value;
         
         return state;
     }
