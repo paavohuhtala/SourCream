@@ -1,6 +1,7 @@
 
 package paavohuh.sourcream.tests.instructions;
 
+import org.jooq.lambda.Seq;
 import org.joou.UByte;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,8 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import paavohuh.sourcream.configuration.VMConfiguration;
+import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.emulation.Instruction;
+import paavohuh.sourcream.emulation.InstructionFactory;
 import paavohuh.sourcream.emulation.Register;
 import paavohuh.sourcream.emulation.State;
 import paavohuh.sourcream.emulation.instructions.Bitwise;
@@ -35,7 +37,7 @@ public class BitwiseTest {
     
     @Before
     public void setUp() {
-        initialState = new State(VMConfiguration.getDefault());
+        initialState = new State(DeviceConfiguration.getDefault());
     }
     
     @After
@@ -113,7 +115,9 @@ public class BitwiseTest {
     
     @Test
     public void andAllInstances() {
-        for (Instruction.WithTwoRegisters instr : Instruction.WithTwoRegisters.getAllInstances(And::new)) {
+        Seq<And> instances = InstructionFactory.getAllInstances(And::new).cast(And.class);
+        
+        for (Instruction.WithTwoRegisters instr : instances) {
             State testState =
                 initialState
                 .withRegister(instr.registerX, UByte.valueOf(0b1111))
@@ -126,7 +130,9 @@ public class BitwiseTest {
     @Test
     @Ignore
     public void orAllInstances() {
-        for (Instruction.WithTwoRegisters instr : Instruction.WithTwoRegisters.getAllInstances(Or::new)) {
+        Seq<Or> instances = InstructionFactory.getAllInstances(Or::new).cast(Or.class);
+        
+        for (Instruction.WithTwoRegisters instr : instances) {
             State testState =
                 initialState
                 .withRegister(instr.registerX, UByte.valueOf(0b1010))
@@ -139,7 +145,9 @@ public class BitwiseTest {
     @Test
     @Ignore
     public void xorAllInstances() {
-        for (Instruction.WithTwoRegisters instr : Instruction.WithTwoRegisters.getAllInstances(Xor::new)) {
+        Seq<Xor> instances = InstructionFactory.getAllInstances(Xor::new).cast(Xor.class);
+        
+        for (Instruction.WithTwoRegisters instr : instances) {
             State testState =
                 initialState
                 .withRegister(instr.registerX, UByte.valueOf(0b1100))

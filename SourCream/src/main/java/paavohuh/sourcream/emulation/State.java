@@ -1,16 +1,17 @@
 package paavohuh.sourcream.emulation;
 
+import java.io.Serializable;
 import org.joou.UByte;
 import org.joou.UShort;
 
-import paavohuh.sourcream.configuration.VMConfiguration;
+import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.utils.ArrayUtils;
 
 /**
- * Represents the state of the system. Exposes a fluent API, which is the only
- * way to mutate the state from outside.
+ * Represents the state of the system. Exposes a fluent API, which returns new 
+ * mutated instances.
  */
-public class State implements Cloneable {
+public class State implements Cloneable, Serializable {
     // 4K (by default) of system RAM
     private byte[] ram;
     
@@ -48,7 +49,12 @@ public class State implements Cloneable {
         this.soundTimer = previous.soundTimer;
     }
     
-    public State(VMConfiguration config) {
+    /**
+     * Returns a new bootup state, using the given device configuration.
+     * The program counter is set to 0x200, everything else is zeroed out.
+     * @param config 
+     */
+    public State(DeviceConfiguration config) {
         this.ram = new byte[config.ramSize];
         this.registers = new UByte[16];
         this.addressRegister = UShort.valueOf(0);
@@ -59,10 +65,21 @@ public class State implements Cloneable {
         this.soundTimer = UByte.valueOf(0);
     }
     
+    /**
+     * Gets the value of the given register
+     * @param reg
+     * @return 
+     */
     public UByte getRegister(Register reg) {
         return registers[reg.id];
     }
     
+    /**
+     * Returns a new state with the given register set to the given value
+     * @param reg
+     * @param value
+     * @return 
+     */
     public State withRegister(Register reg, UByte value) {
         State state = new State(this);
         state.registers[reg.id] = value;
@@ -70,10 +87,111 @@ public class State implements Cloneable {
         return state;
     }
     
+    /**
+     * Returns a new state with the address register set to the given value
+     * @param value
+     * @return 
+     */
     public State withAddressRegister(UShort value) {
         State state = new State(this);
         state.addressRegister = value;
         
         return state;
+    }
+    
+    /**
+     * Gets the program counter.
+     * @return the program counter
+     */
+    public UShort getProgramCounter() {
+        return pc;
+    }
+    
+    /**
+     * Gets 8 bits of memory from the given offset.
+     * @param memoryOffset the offset
+     * @return 8 bits of data at the given offset
+     */
+    public UByte get8BitsAt(UShort memoryOffset) {
+        int offset = memoryOffset.intValue();
+        
+        if (offset < 0 || offset > ram.length) {
+            throw new IllegalArgumentException();
+        }
+        
+        return UByte.valueOf(ram[offset]);
+    }
+    
+    /**
+     * Gets 16 bits of memory from the given offset.
+     * @param memoryOffset the offset
+     * @return 16 bits of data at the given offset
+     */
+    public UShort get16BitsAt(UShort memoryOffset) {
+        int offset = memoryOffset.intValue();
+        
+        if (offset < 0 || offset + 1 > ram.length) {
+            // TODO: explain why
+            throw new IllegalArgumentException();
+        }
+        
+        return UShort.valueOf(ram[offset] << 8 | ram[offset + 1]);
+    }
+    
+    /**
+     * Returns a new state with the program counter incremented by 2.
+     * @return The new state
+     */
+    public State withIncrementedPc() {
+        State state = new State(this);
+        state.pc = UShort.valueOf(pc.intValue() + 2);
+        
+        return state;
+    }
+
+    /**
+     * Gets the value of the address register
+     * @return The value of the address register
+     */
+    public UShort getAddressRegister() {
+        return addressRegister;
+    }
+    
+    /**
+     * Returns a new state with the given buffer copied to memory.
+     * @param from The buffer to copy
+     * @param destinationAddress The destination in RAM where the buffer is copied to
+     * @return A new state
+     */
+    public State withCopiedMemory(byte[] from, UShort destinationAddress) {
+        int destination = destinationAddress.intValue();
+        
+        if (destination < 0 || destination + from.length > ram.length) {
+            throw new IllegalArgumentException();
+        }
+        
+        State state = new State(this);
+        System.arraycopy(from, 0, this.ram, destination, from.length);
+        
+        return state;
+    }
+    
+    /**
+     * Reads a chunk of memory from the given address to a new buffer.
+     * @param sourceAddress The address where to start reading
+     * @param length The number of bytes to read
+     * @return Bytes between [sourceAddress, sourceAddress.length[
+     */
+    public byte[] getMemoryFrom(UShort sourceAddress, int length) {
+        int source = sourceAddress.intValue();
+        
+        if (source < 0 || source + length > ram.length) {
+            throw new IllegalArgumentException();
+        }
+        
+        byte[] buffer = new byte[length];
+        System.arraycopy(ram, source, buffer, 0, length);
+        
+        return buffer;
     }
 }

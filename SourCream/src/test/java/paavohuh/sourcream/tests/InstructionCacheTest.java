@@ -44,7 +44,14 @@ public class InstructionCacheTest {
     @Test
     public void canCacheBitwise() {
         ArrayInstructionCache cache = new ArrayInstructionCache();
-        Bitwise.registerAll(cache);
+        Bitwise.getAll().forEach(cache::register);
+    }
+    
+        
+    @Test
+    public void canCacheTransfer() {
+        ArrayInstructionCache cache = new ArrayInstructionCache();
+        Bitwise.getAll().forEach(cache::register);
     }
     
     @Test

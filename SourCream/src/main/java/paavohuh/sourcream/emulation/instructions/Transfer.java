@@ -1,8 +1,10 @@
 package paavohuh.sourcream.emulation.instructions;
 
+import org.jooq.lambda.Seq;
 import org.joou.UShort;
 import paavohuh.sourcream.emulation.Instruction;
 import paavohuh.sourcream.emulation.State;
+import static paavohuh.sourcream.emulation.InstructionFactory.*;
 
 public class Transfer {
     public static class SetAddressRegister extends Instruction.WithAddress {
@@ -49,7 +51,12 @@ public class Transfer {
         @Override
         public State execute(State state) {
             return state.withRegister(registerX, state.getRegister(registerY));
-        }
+        }    
+    }
     
+    public static Seq<Instruction> getAll() {
+        return Seq.concat(
+            getAllInstances(SetAddressRegister::new),
+            getAllInstances(MoveRegister::new));
     }
 }

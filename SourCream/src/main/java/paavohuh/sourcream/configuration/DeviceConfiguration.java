@@ -1,17 +1,17 @@
 package paavohuh.sourcream.configuration;
 
-public class VMConfiguration {
+public class DeviceConfiguration {
     public final int ramSize;
     public final int resolutionX;
     public final int resolutionY;
 
-    public VMConfiguration(int ramSize, int resolutionX, int resolutionY) {
+    public DeviceConfiguration(int ramSize, int resolutionX, int resolutionY) {
         this.ramSize = ramSize;
         this.resolutionX = resolutionX;
         this.resolutionY = resolutionY;
     }
     
-    public static VMConfiguration getDefault() {
-        return new VMConfiguration(4096, 64, 32);
+    public static DeviceConfiguration getDefault() {
+        return new DeviceConfiguration(4096, 64, 32);
     }
 }

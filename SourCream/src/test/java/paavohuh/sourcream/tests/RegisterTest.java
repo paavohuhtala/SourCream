@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import paavohuh.sourcream.emulation.InstructionUtils;
 import paavohuh.sourcream.emulation.Register;
 
 public class RegisterTest {
@@ -71,6 +70,8 @@ public class RegisterTest {
         Assert.assertTrue("Registers with the same id are equal, with register shorthand.", regA.equals(Register.V0));
         Assert.assertFalse("Registers with different ids are not equal.", regA.equals(regC));
         Assert.assertFalse("Registers with different ids are not equal, with register shorthand.", regA.equals(Register.V1));
+        Assert.assertFalse("No register is equal with null.", regA.equals(null));
+        Assert.assertFalse("No register is equal with non-register.", regA.equals("hello"));
     }
     
     @Test
@@ -88,5 +89,9 @@ public class RegisterTest {
         Register reg = new Register(6);
         assertEquals(6, reg.id);
         assertEquals(6, reg.hashCode());
+        
+        Register reg2 = new Register(7);
+        Assert.assertNotEquals(reg, reg2);
+        Assert.assertNotEquals(reg.hashCode(), reg2.hashCode());
     }
 }

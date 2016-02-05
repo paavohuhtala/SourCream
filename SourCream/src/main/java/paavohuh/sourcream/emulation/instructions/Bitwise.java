@@ -1,13 +1,13 @@
 package paavohuh.sourcream.emulation.instructions;
 
+import org.jooq.lambda.Seq;
 import org.joou.UByte;
 import org.joou.UShort;
 
-import paavohuh.sourcream.emulation.ArrayInstructionCache;
 import paavohuh.sourcream.emulation.Instruction;
-import paavohuh.sourcream.emulation.InstructionCache;
 import paavohuh.sourcream.emulation.Register;
 import paavohuh.sourcream.emulation.State;
+import static paavohuh.sourcream.emulation.InstructionFactory.*;
 
 public class Bitwise {
     public static class And extends Instruction.WithTwoRegisters {        
@@ -105,9 +105,10 @@ public class Bitwise {
         }
     }
     
-    public static void registerAll(InstructionCache cache) {
-        Instruction.WithTwoRegisters.getAllInstances(And::new).forEach(cache::register);
-        Instruction.WithTwoRegisters.getAllInstances(Or::new).forEach(cache::register);
-        Instruction.WithTwoRegisters.getAllInstances(Xor::new).forEach(cache::register);
+    public static Seq<Instruction> getAll() {
+        return Seq.concat(
+            getAllInstances(And::new),
+            getAllInstances(Or::new),
+            getAllInstances(Xor::new));
     }
 }

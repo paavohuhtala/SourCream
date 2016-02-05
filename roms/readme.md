@@ -1,0 +1,1 @@
+The binary files in this directory are from the public domain Chip-8 Games Pack from [Zophar's Domain](http://www.zophar.net/pdroms/chip8.html).
