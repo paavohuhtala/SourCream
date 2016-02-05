@@ -1,4 +1,5 @@
 # SourCream
+[![Build Status](https://travis-ci.org/paavohuhtala/SourCream.svg?branch=master)](https://travis-ci.org/paavohuhtala/SourCream)
 
 SourCream is an interpreter-based implementation of the [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) virtual machine, written in Java 8, for the University of Helsinki computer science course [Ohjelmoinnin harjoitustyö](https://github.com/javaLabra/Javalabra2016-3).
 
