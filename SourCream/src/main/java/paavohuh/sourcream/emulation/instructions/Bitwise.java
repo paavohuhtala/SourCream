@@ -17,6 +17,10 @@ public final class Bitwise {
     
     private Bitwise() { }
     
+    
+    /**
+     * Sets register X to register X & register Y.
+     */
     public static class And extends Instruction.WithTwoRegisters {        
 
         public And(Register x, Register y) {
@@ -46,6 +50,9 @@ public final class Bitwise {
         }
     }
     
+    /**
+     * Sets register X to register X | register Y.
+     */
     public static class Or extends Instruction.WithTwoRegisters {
         
         public Or(Register x, Register y) {
@@ -75,6 +82,9 @@ public final class Bitwise {
         }
     }
     
+    /**
+     * Sets register X to register X ^ register Y.
+     */
     public static class Xor extends Instruction.WithTwoRegisters {
 
         public Xor(Register x, Register y) {
@@ -102,6 +112,10 @@ public final class Bitwise {
         }
     }
     
+    /**
+     * Sets register X to register Y shifted left by one bit. The most
+     * significant bit is copied to register VF.
+     */
     public static class ShiftLeft extends Instruction.WithTwoRegisters {
 
         public ShiftLeft(Register x, Register y) {
@@ -138,6 +152,10 @@ public final class Bitwise {
         }
     }
     
+    /**
+     * Sets register X to register Y shifted right by one bit. The least
+     * significant bit is copied to register VF. 
+     */
     public static class ShiftRight extends Instruction.WithTwoRegisters {
 
         public ShiftRight(Register x, Register y) {
@@ -174,7 +192,10 @@ public final class Bitwise {
         }
     }
     
-    
+    /**
+     * Returns all instances of all instructions.
+     * @return A sequence of instructions
+     */
     public static Seq<Instruction> getAll() {
         return Seq.concat(
             getAllInstances(And::new),

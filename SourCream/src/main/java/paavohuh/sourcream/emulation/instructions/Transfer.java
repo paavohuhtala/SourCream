@@ -12,6 +12,10 @@ import paavohuh.sourcream.emulation.Register;
  * This class shouldn't be instantiated.
  */
 public class Transfer {
+    
+    /**
+     * Sets the address register (VI) to a constant. 
+     */
     public static class SetAddressRegister extends Instruction.WithAddress {
 
         public SetAddressRegister(UShort address) {
@@ -30,7 +34,7 @@ public class Transfer {
     }
     
     /**
-     * Sets register VX to register VY
+     * Sets register VX to register VY.
      */
     public static class MoveRegister extends Instruction.WithTwoRegisters {
 

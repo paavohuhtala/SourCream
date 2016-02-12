@@ -108,6 +108,9 @@ public interface Instruction {
         }
     }
     
+    /**
+     * An abstract instruction with one 4-bit constant.
+     */
     public static abstract class With4BitConstant extends Instruction.Parametrized {
         public final UByte constant;
         
@@ -130,6 +133,9 @@ public interface Instruction {
         }
     }
     
+    /**
+     * An abstract instruction with one register and one 8-bit constant.
+     */
     public static abstract class WithRegisterAnd8BitConstant extends Instruction.Parametrized {
         public final Register register;
         public final UByte constant;
@@ -156,6 +162,9 @@ public interface Instruction {
         }
     }
     
+    /**
+     * NOT IMPLEMENTED: An abstract instruction with one 8-bit constant.
+     */
     public static abstract class With8BitConstant implements Instruction {
         
     }

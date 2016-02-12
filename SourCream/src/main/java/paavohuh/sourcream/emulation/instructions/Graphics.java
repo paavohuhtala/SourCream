@@ -9,6 +9,10 @@ import paavohuh.sourcream.emulation.State;
  * This class shouldn't be instantiated.
  */
 public final class Graphics {
+    
+    /**
+     * Clears the screen.
+     */
     public class ClearScreen implements Instruction {
 
         @Override

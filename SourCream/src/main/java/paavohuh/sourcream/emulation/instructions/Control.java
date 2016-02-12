@@ -106,6 +106,9 @@ public final class Control {
         }
     }
     
+    /**
+     * Skips the next instruction if the values of registers X and Y equal.
+     */
     public class SkipIfEqualsRegister extends Instruction.WithTwoRegisters {
 
         public SkipIfEqualsRegister(Register x, Register y) {

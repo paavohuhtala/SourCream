@@ -18,7 +18,7 @@ public final class Arithmetic {
     private Arithmetic() { }    
     
     /**
-     * Adds a constant to a register. *Doesn't* set the carry flag.
+     * Sets register X to register X + constant. *Doesn't* set the carry flag.
      */
     public static class AddConstantToRegister extends Instruction.WithRegisterAnd8BitConstant {
 
@@ -54,7 +54,7 @@ public final class Arithmetic {
     }
     
     /**
-     * Adds two registers together. Sets the carry flag if the sum exceeds 255.
+     * Sets register X to register X + register Y. Sets the carry flag if the sum exceeds 255.
      */
     public static class AddRegisterToRegister extends Instruction.WithTwoRegisters {
 
@@ -91,6 +91,10 @@ public final class Arithmetic {
         }        
     }
     
+    /**
+     * Sets register X to register X - register Y. Sets the borrow flag if
+     * required.
+     */
     public static class SubtractRegisterYFromX extends Instruction.WithTwoRegisters {
 
         public SubtractRegisterYFromX(Register x, Register y) {
@@ -128,6 +132,10 @@ public final class Arithmetic {
     
     // CONSIDER: Shares 99% of code with the class above. However, very hard to
     // abstract without additional inheritance, which I'd like to avoid.
+    /**
+     * Sets register X to register Y - register X. Sets the borrow flag if
+     * required.
+     */
     public static class SubtractRegisterXFromY extends Instruction.WithTwoRegisters {
 
         public SubtractRegisterXFromY(Register x, Register y) {
