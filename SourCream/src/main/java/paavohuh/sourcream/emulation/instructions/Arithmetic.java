@@ -1,11 +1,13 @@
     
 package paavohuh.sourcream.emulation.instructions;
 
+import org.jooq.lambda.Seq;
 import org.joou.UByte;
 import org.joou.UShort;
 import paavohuh.sourcream.emulation.Instruction;
 import paavohuh.sourcream.emulation.Register;
 import paavohuh.sourcream.emulation.State;
+import static paavohuh.sourcream.emulation.InstructionFactory.*;
 
 /**
  * Contains arithmetic instructions.
@@ -13,12 +15,12 @@ import paavohuh.sourcream.emulation.State;
  */
 public final class Arithmetic {
     
-    private Arithmetic() { }
+    private Arithmetic() { }    
     
     /**
      * Adds a constant to a register. *Doesn't* set the carry flag.
      */
-    public class AddConstantToRegister extends Instruction.WithRegisterAnd8BitConstant {
+    public static class AddConstantToRegister extends Instruction.WithRegisterAnd8BitConstant {
 
         public AddConstantToRegister(Register register, UByte constant) {
             super(register, constant);
@@ -54,10 +56,10 @@ public final class Arithmetic {
     /**
      * Adds two registers together. Sets the carry flag if the sum exceeds 255.
      */
-    public class AddRegisterToRegister extends Instruction.WithTwoRegisters {
+    public static class AddRegisterToRegister extends Instruction.WithTwoRegisters {
 
-        public AddRegisterToRegister(byte registerX, byte registerY) {
-            super(registerX, registerY);
+        public AddRegisterToRegister(Register x, Register y) {
+            super(x, y);
         }
 
         @Override
@@ -89,12 +91,12 @@ public final class Arithmetic {
         }        
     }
     
-    public class SubtractRegisterYFromX extends Instruction.WithTwoRegisters {
-        
-        public SubtractRegisterYFromX(byte registerX, byte registerY) {
-            super(registerX, registerY);
-        }
+    public static class SubtractRegisterYFromX extends Instruction.WithTwoRegisters {
 
+        public SubtractRegisterYFromX(Register x, Register y) {
+            super(x, y);
+        }
+        
         @Override
         protected int getRegXOffset() {
             return 2;
@@ -126,12 +128,12 @@ public final class Arithmetic {
     
     // CONSIDER: Shares 99% of code with the class above. However, very hard to
     // abstract without additional inheritance, which I'd like to avoid.
-    public class SubtractRegisterXFromY extends Instruction.WithTwoRegisters {
-        
-        public SubtractRegisterXFromY(byte registerX, byte registerY) {
-            super(registerX, registerY);
-        }
+    public static class SubtractRegisterXFromY extends Instruction.WithTwoRegisters {
 
+        public SubtractRegisterXFromY(Register x, Register y) {
+            super(x, y);
+        }
+        
         @Override
         protected int getRegXOffset() {
             return 2;
@@ -159,5 +161,13 @@ public final class Arithmetic {
                 .withRegister(Register.Borrow, UByte.valueOf(borrow ? 1 : 0))
                 .withRegister(registerX, UByte.valueOf(subtraction & 0xFF));
         }  
+    }
+    
+    public static Seq<Instruction> getAll() {
+        return Seq.concat(
+            getAllInstances(AddConstantToRegister::new),
+            getAllInstances(AddRegisterToRegister::new),
+            getAllInstances(SubtractRegisterXFromY::new),
+            getAllInstances(SubtractRegisterYFromX::new));
     }
 }

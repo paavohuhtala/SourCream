@@ -36,8 +36,8 @@ public interface Instruction {
 
         protected abstract int getRegOffset();
         
-        public WithRegister(byte register) {
-            this.register = new Register(register);
+        public WithRegister(Register register) {
+            this.register = register;
         }
         
         @Override
@@ -47,7 +47,7 @@ public interface Instruction {
         
         @FunctionalInterface
         public interface Constructor {
-            WithRegister build(Byte register);
+            WithRegister build(Register register);
         }
     }
     
@@ -60,10 +60,6 @@ public interface Instruction {
 
         protected abstract int getRegXOffset();
         protected abstract int getRegYOffset();
-        
-        public WithTwoRegisters(byte registerX, byte registerY) {
-            this(new Register(registerX), new Register(registerY));
-        }
         
         public WithTwoRegisters(Register x, Register y) {
             this.registerX = x;
@@ -85,7 +81,7 @@ public interface Instruction {
        
         @FunctionalInterface
         public interface Constructor {
-            WithTwoRegisters build(Byte registerX, Byte registerY);
+            WithTwoRegisters build(Register registerX, Register registerY);
         }
     }
     
@@ -156,7 +152,7 @@ public interface Instruction {
         
         @FunctionalInterface
         public interface Constructor {
-            With4BitConstant build(Byte register, UByte constant);
+            WithRegisterAnd8BitConstant build(Register register, UByte constant);
         }
     }
     

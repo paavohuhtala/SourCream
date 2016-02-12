@@ -10,12 +10,17 @@ import org.joou.UShort;
  */
 public class InstructionFactory {
     public static Seq<Instruction> getAllInstances(Instruction.WithRegister.Constructor ctor) {
-        return Seq.range((byte)0, (byte)16).map(ctor::build);
+        return
+            Seq.range(0, 16)
+            .map(Register::new)
+            .map(ctor::build);
     }
     
     public static Seq<Instruction> getAllInstances(Instruction.WithTwoRegisters.Constructor ctor) {
         return
-            Seq.range((byte)0, (byte)16).crossJoin(Seq.range((byte)0, (byte)15)) 
+            Seq.range(0, 16)
+            .map(Register::new)
+            .crossJoin(Seq.range(0, 15).map(Register::new))
             .map(t -> ctor.build(t.v1, t.v2));
     }
     
@@ -28,8 +33,16 @@ public class InstructionFactory {
     
     public static Seq<Instruction> getAllInstances(Instruction.With4BitConstant.Constructor ctor) {
         return
-            Seq.range((byte)0, (byte)16)
+            Seq.range(0, 0xF)
             .map(UByte::valueOf)
             .map(ctor::build);
+    }
+    
+    public static Seq<Instruction> getAllInstances(Instruction.WithRegisterAnd8BitConstant.Constructor ctor) {
+        return
+            Seq.range(0, 0xF)
+            .map(Register::new)
+            .crossJoin(Seq.range(0, 0xFF).map(UByte::valueOf))
+            .map(t -> ctor.build(t.v1, t.v2));
     }
 }

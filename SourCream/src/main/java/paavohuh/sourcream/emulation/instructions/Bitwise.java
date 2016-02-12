@@ -19,10 +19,6 @@ public final class Bitwise {
     
     public static class And extends Instruction.WithTwoRegisters {        
 
-        public And(byte registerX, byte registerY) {
-            super(registerX, registerY);
-        }
-        
         public And(Register x, Register y) {
             super(x, y);
         }
@@ -51,10 +47,7 @@ public final class Bitwise {
     }
     
     public static class Or extends Instruction.WithTwoRegisters {
-        public Or(byte registerX, byte registerY) {
-            super(registerX, registerY);
-        }
-
+        
         public Or(Register x, Register y) {
             super(x, y);
         }
@@ -83,9 +76,6 @@ public final class Bitwise {
     }
     
     public static class Xor extends Instruction.WithTwoRegisters {
-        public Xor(byte registerX, byte registerY) {
-            super(registerX, registerY);
-        }
 
         public Xor(Register x, Register y) {
             super(x, y);
@@ -112,10 +102,85 @@ public final class Bitwise {
         }
     }
     
+    public static class ShiftLeft extends Instruction.WithTwoRegisters {
+
+        public ShiftLeft(Register x, Register y) {
+            super(x, y);
+        }
+
+        @Override
+        protected int getRegXOffset() {
+            return 2;
+        }
+
+        @Override
+        protected int getRegYOffset() {
+            return 1;
+        }
+
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0x8006);
+        }
+
+        @Override
+        public State execute(State state) {
+            int registerYValue = getRegisterY(state).intValue();
+            
+            int shifted = registerYValue << 1;
+            
+            // The most significant (first) bit of register y
+            int msb = registerYValue & 0b10000000;
+            
+            return state
+                .withRegister(registerX, UByte.valueOf(shifted & 0xFF))
+                .withRegister(Register.VF, UByte.valueOf(msb));
+        }
+    }
+    
+    public static class ShiftRight extends Instruction.WithTwoRegisters {
+
+        public ShiftRight(Register x, Register y) {
+            super(x, y);
+        }
+
+        @Override
+        protected int getRegXOffset() {
+            return 2;
+        }
+
+        @Override
+        protected int getRegYOffset() {
+            return 1;
+        }
+
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0x800E);
+        }
+
+        @Override
+        public State execute(State state) {
+            int registerYValue = getRegisterY(state).intValue();
+            
+            int shifted = registerYValue >>> 1;
+            
+            // The least significant (last) bit of register y
+            int lsb = registerYValue & 0b00000001;
+            
+            return state
+                .withRegister(registerX, UByte.valueOf(shifted & 0xFF))
+                .withRegister(Register.VF, UByte.valueOf(lsb));
+        }
+    }
+    
+    
     public static Seq<Instruction> getAll() {
         return Seq.concat(
             getAllInstances(And::new),
             getAllInstances(Or::new),
-            getAllInstances(Xor::new));
+            getAllInstances(Xor::new),
+            getAllInstances(ShiftLeft::new),
+            getAllInstances(ShiftRight::new));
     }
 }

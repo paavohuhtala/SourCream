@@ -108,8 +108,8 @@ public final class Control {
     
     public class SkipIfEqualsRegister extends Instruction.WithTwoRegisters {
 
-        public SkipIfEqualsRegister(byte registerX, byte registerY) {
-            super(registerX, registerY);
+        public SkipIfEqualsRegister(Register x, Register y) {
+            super(x, y);
         }
 
         @Override

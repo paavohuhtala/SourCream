@@ -5,6 +5,7 @@ import org.joou.UShort;
 import paavohuh.sourcream.emulation.Instruction;
 import paavohuh.sourcream.emulation.State;
 import static paavohuh.sourcream.emulation.InstructionFactory.*;
+import paavohuh.sourcream.emulation.Register;
 
 /**
  * Contains transfer instructions.
@@ -33,8 +34,8 @@ public class Transfer {
      */
     public static class MoveRegister extends Instruction.WithTwoRegisters {
 
-        public MoveRegister(byte registerX, byte registerY) {
-            super(registerX, registerY);
+        public MoveRegister(Register x, Register y) {
+            super(x, y);
         }
 
         @Override
