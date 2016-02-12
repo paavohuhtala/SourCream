@@ -1,5 +1,8 @@
 package paavohuh.sourcream.configuration;
 
+/**
+ * Configuration for the emulated device.
+ */
 public class DeviceConfiguration {
     public final int ramSize;
     public final int resolutionX;

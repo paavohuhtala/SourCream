@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paavohuh.sourcream.emulation;
 
 import java.util.Optional;
 import org.joou.UShort;
 
+/**
+ * Decodes a 16-bit integer into a instruction.
+ */
 public interface InstructionDecoder {
     Optional<Instruction> decode(UShort code);
 }

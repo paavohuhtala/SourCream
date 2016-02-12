@@ -8,6 +8,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * The main window of the emulator.
+ */
 public class MainWindow extends JFrame {
 
     public MainWindow() {        

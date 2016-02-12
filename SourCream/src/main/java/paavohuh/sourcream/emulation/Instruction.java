@@ -70,6 +70,14 @@ public interface Instruction {
             this.registerY = y;
         }
         
+        protected UByte getRegisterX(State state) {
+            return state.getRegister(registerX);
+        }
+        
+        protected UByte getRegisterY(State state) {
+            return state.getRegister(registerY);
+        }
+        
         @Override
         public UShort getCode() {
             return InstructionUtils.setRegister(InstructionUtils.setRegister(getBaseCode(), registerX, getRegXOffset()), registerY, getRegYOffset());
@@ -93,7 +101,9 @@ public interface Instruction {
         
         @Override
         public UShort getCode() {
-            return UShort.valueOf(getBaseCode().intValue() | address.intValue());
+            return UShort.valueOf(
+                getBaseCode().intValue() |
+                address.intValue());
         }
         
         @FunctionalInterface
@@ -113,7 +123,9 @@ public interface Instruction {
         
         @Override
         public UShort getCode() {
-            return UShort.valueOf(getBaseCode().intValue() | (constant.intValue() << (getOffset() * 4)));
+            return UShort.valueOf(
+                getBaseCode().intValue() | 
+                constant.intValue() << (getOffset() * 4));
         }
         
         @FunctionalInterface
@@ -132,6 +144,14 @@ public interface Instruction {
         public WithRegisterAnd8BitConstant(Register register, UByte constant) {
             this.register = register;
             this.constant = constant;
+        }
+        
+        @Override
+        public UShort getCode() {
+            return UShort.valueOf(
+                getBaseCode().intValue() |
+                (constant.intValue() << getConstantOffset() * 4) |
+                (register.id << getRegisterOffset() * 4));
         }
         
         @FunctionalInterface

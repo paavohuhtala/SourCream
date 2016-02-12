@@ -3,6 +3,10 @@ package paavohuh.sourcream.emulation;
 import java.util.Optional;
 import org.joou.UShort;
 
+/**
+ * The virtual CPU of the device. Contains the machine state, and handles the
+ * fetch-decode-execute -loop.
+ */
 public class CPU {
     private State state;
     private InstructionDecoder decoder;

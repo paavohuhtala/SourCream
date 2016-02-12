@@ -15,6 +15,9 @@ public class State implements Cloneable, Serializable {
     // 4K (by default) of system RAM
     private byte[] ram;
     
+    // 64x32 (by default) 1-bit screen buffer
+    private ScreenBuffer screen; 
+    
     // 16 8-bit registers, from V0 to VF. VF is the carry flag.
     private UByte[] registers;
     
@@ -40,6 +43,7 @@ public class State implements Cloneable, Serializable {
      */
     public State(State previous) {
         this.ram = ArrayUtils.clone(previous.ram);
+        this.screen = previous.screen;
         this.registers = ArrayUtils.clone(previous.registers);
         this.addressRegister = previous.addressRegister;
         this.pc = previous.pc;
@@ -56,6 +60,7 @@ public class State implements Cloneable, Serializable {
      */
     public State(DeviceConfiguration config) {
         this.ram = new byte[config.ramSize];
+        this.screen = new ScreenBuffer(config);
         this.registers = new UByte[16];
         this.addressRegister = UShort.valueOf(0);
         this.pc = UShort.valueOf(0x200);
@@ -139,14 +144,23 @@ public class State implements Cloneable, Serializable {
     }
     
     /**
+     * Returns a new state with the program counter set to supplied value.
+     * @param pc
+     * @return The new state
+     */
+    public State withProgamCounter(UShort pc) {
+        State state = new State(this);
+        state.pc = pc;
+        
+        return state;
+    }
+    
+    /**
      * Returns a new state with the program counter incremented by 2.
      * @return The new state
      */
     public State withIncrementedPc() {
-        State state = new State(this);
-        state.pc = UShort.valueOf(pc.intValue() + 2);
-        
-        return state;
+        return withProgamCounter(UShort.valueOf(getProgramCounter().intValue() + 2));
     }
 
     /**
@@ -193,5 +207,25 @@ public class State implements Cloneable, Serializable {
         System.arraycopy(ram, source, buffer, 0, length);
         
         return buffer;
+    }
+    
+    /**
+     * Returns a new state with the screen buffer set to the supplied buffer.
+     * @param buffer
+     * @return 
+     */
+    public State withScreenBuffer(ScreenBuffer buffer) {
+        State state = new State(this);
+        state.screen = buffer;
+        
+        return state;
+    }
+    
+    /**
+     * Gets the screen buffer.
+     * @return The screen buffer
+     */
+    public ScreenBuffer getScreenBuffer() {
+        return screen;
     }
 }

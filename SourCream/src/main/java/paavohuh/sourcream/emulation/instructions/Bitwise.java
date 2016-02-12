@@ -9,7 +9,14 @@ import paavohuh.sourcream.emulation.Register;
 import paavohuh.sourcream.emulation.State;
 import static paavohuh.sourcream.emulation.InstructionFactory.*;
 
-public class Bitwise {
+/**
+ * Contains bitwise instructions.
+ * This class shouldn't be instantiated.
+ */
+public final class Bitwise {
+    
+    private Bitwise() { }
+    
     public static class And extends Instruction.WithTwoRegisters {        
 
         public And(byte registerX, byte registerY) {

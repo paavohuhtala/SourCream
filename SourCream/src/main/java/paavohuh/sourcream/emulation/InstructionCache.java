@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paavohuh.sourcream.emulation;
 
 
+/**
+ * An instruction cache is a instruction decoder with caching support.
+ * Instruction can be added to the cache with the register method.
+ */
 public interface InstructionCache extends InstructionDecoder {
 
     void register(Instruction instr);

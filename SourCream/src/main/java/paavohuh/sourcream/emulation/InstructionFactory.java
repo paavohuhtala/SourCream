@@ -5,6 +5,9 @@ import org.jooq.lambda.Seq;
 import org.joou.UByte;
 import org.joou.UShort;
 
+/**
+ * Provides static utility methods for generating instances of instructions.
+ */
 public class InstructionFactory {
     public static Seq<Instruction> getAllInstances(Instruction.WithRegister.Constructor ctor) {
         return Seq.range((byte)0, (byte)16).map(ctor::build);

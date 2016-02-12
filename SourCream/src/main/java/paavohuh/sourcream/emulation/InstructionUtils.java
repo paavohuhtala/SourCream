@@ -2,6 +2,9 @@ package paavohuh.sourcream.emulation;
 
 import org.joou.UShort;
 
+/**
+ * Provides static utility methods for working with instructions and opcodes.
+ */
 public class InstructionUtils {
     /**
      * Sets a register byte at the given offset.

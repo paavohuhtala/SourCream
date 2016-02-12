@@ -6,6 +6,10 @@ import paavohuh.sourcream.emulation.Instruction;
 import paavohuh.sourcream.emulation.State;
 import static paavohuh.sourcream.emulation.InstructionFactory.*;
 
+/**
+ * Contains transfer instructions.
+ * This class shouldn't be instantiated.
+ */
 public class Transfer {
     public static class SetAddressRegister extends Instruction.WithAddress {
 
@@ -25,7 +29,7 @@ public class Transfer {
     }
     
     /**
-     * Sets register VX to registery VY
+     * Sets register VX to register VY
      */
     public static class MoveRegister extends Instruction.WithTwoRegisters {
 

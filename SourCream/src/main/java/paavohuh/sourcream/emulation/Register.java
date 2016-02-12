@@ -52,5 +52,10 @@ public class Register {
     public static final Register VC = new Register(12);
     public static final Register VD = new Register(13);
     public static final Register VE = new Register(14);
+    
+    // All of these are the same register; aliases are supplied for improevd
+    // readability.
     public static final Register VF = new Register(15);
+    public static final Register Carry = VF;
+    public static final Register Borrow = VF;
 }
