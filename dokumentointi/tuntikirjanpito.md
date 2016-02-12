@@ -26,3 +26,19 @@ Eilistä koodia siistitty ja bugeja/suunniteluvirheitä korjattu.
 * Bugeja/testivajavaisuuksia korjattu PIT-raporttien perusteella
 * XOR-käsky ja kaksi rekisterikäskyä
 * Käskycache abstraktoitu rajapinnoiksi ja toteutukseksi
+
+## 5.2.2016: 7h
+
+* Aloita Device ja CPU
+* Aloita UI-toteutus
+* Säädä PIT-raportin rajausta
+* Paljon refaktorointia
+
+## 12.2.2016: 6h
+
+* Runsaasti lisää käskyjä: bitwise, transfer, arithmetic, graphics yms.
+* Paljon lisää JavaDocseja
+* Aloita grafiikkatuki: ScreenBuffer ja sen piirtometodit, lisää näyttöpuskuri Stateen.
+* Refaktoroi käskyrajapintoja
+* Lisää checkstyle ja lisää rapotti mukaan
+* Muutama uusi testi
