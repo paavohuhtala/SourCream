@@ -3,6 +3,7 @@ package paavohuh.sourcream.emulation;
 
 import org.jooq.lambda.Seq;
 import paavohuh.sourcream.configuration.DeviceConfiguration;
+import paavohuh.sourcream.emulation.instructions.Arithmetic;
 import paavohuh.sourcream.emulation.instructions.Bitwise;
 import paavohuh.sourcream.emulation.instructions.Transfer;
 
@@ -27,6 +28,7 @@ public class Device {
     
     private Seq<Instruction> getAllInstructions() {
         return Seq.concat(
+            Arithmetic.getAll(),
             Bitwise.getAll(),
             Transfer.getAll());
     }

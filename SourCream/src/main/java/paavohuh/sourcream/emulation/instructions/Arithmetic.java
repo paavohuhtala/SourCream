@@ -33,7 +33,7 @@ public final class Arithmetic {
 
         @Override
         protected int getConstantOffset() {
-            return 1;
+            return 0;
         }
 
         @Override

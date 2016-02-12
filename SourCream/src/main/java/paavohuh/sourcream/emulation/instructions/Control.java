@@ -17,7 +17,7 @@ public final class Control {
     /**
      * Jumps to address + V0.
      */
-    public class JumpTo extends Instruction.WithAddress {
+    public static class JumpTo extends Instruction.WithAddress {
 
         public JumpTo(UShort address) {
             super(address);
@@ -37,7 +37,7 @@ public final class Control {
     /**
      * Skips the next instruction if value at register equals constant.
      */
-    public class SkipIfEquals extends Instruction.WithRegisterAnd8BitConstant {
+    public static class SkipIfEquals extends Instruction.WithRegisterAnd8BitConstant {
 
         public SkipIfEquals(Register register, UByte constant) {
             super(register, constant);
@@ -50,7 +50,7 @@ public final class Control {
 
         @Override
         protected int getConstantOffset() {
-            return 1;
+            return 0;
         }
 
         @Override
@@ -73,7 +73,7 @@ public final class Control {
     /**
      * Skips the next instruction if value at register doesn't equal constant.
      */
-    public class SkipIfNotEquals extends Instruction.WithRegisterAnd8BitConstant {
+    public static class SkipIfNotEquals extends Instruction.WithRegisterAnd8BitConstant {
 
         public SkipIfNotEquals(Register register, UByte constant) {
             super(register, constant);
@@ -86,7 +86,7 @@ public final class Control {
 
         @Override
         protected int getConstantOffset() {
-            return 1;
+            return 0;
         }
 
         @Override
@@ -109,7 +109,7 @@ public final class Control {
     /**
      * Skips the next instruction if the values of registers X and Y equal.
      */
-    public class SkipIfEqualsRegister extends Instruction.WithTwoRegisters {
+    public static class SkipIfEqualsRegister extends Instruction.WithTwoRegisters {
 
         public SkipIfEqualsRegister(Register x, Register y) {
             super(x, y);
