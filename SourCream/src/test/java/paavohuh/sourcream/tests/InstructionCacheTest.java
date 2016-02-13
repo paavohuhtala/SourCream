@@ -14,6 +14,7 @@ import paavohuh.sourcream.emulation.Instruction;
 import paavohuh.sourcream.emulation.State;
 import paavohuh.sourcream.emulation.instructions.Arithmetic;
 import paavohuh.sourcream.emulation.instructions.Bitwise;
+import paavohuh.sourcream.emulation.instructions.Control;
 
 public class InstructionCacheTest {
     public InstructionCacheTest() {
@@ -59,6 +60,12 @@ public class InstructionCacheTest {
     public void canCacheArithmetic() {
         ArrayInstructionCache cache = new ArrayInstructionCache();
         Arithmetic.getAll().forEach(cache::register);
+    }
+    
+    @Test
+    public void canCacheControl() {
+        ArrayInstructionCache cache = new ArrayInstructionCache();
+        Control.getAll().forEach(cache::register);
     }
     
     @Test

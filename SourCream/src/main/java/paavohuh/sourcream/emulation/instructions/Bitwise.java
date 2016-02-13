@@ -29,9 +29,12 @@ public final class Bitwise {
         
         @Override
         public State execute(State state) {
-            return
-                state
-                .withRegister(registerX, UByte.valueOf(state.getRegister(registerX).intValue() & state.getRegister(registerY).intValue()));
+            int registerXValue = getRegisterX(state).intValue();
+            int registerYValue = getRegisterY(state).intValue();
+            
+            int and = registerXValue & registerYValue;
+            
+            return state.withRegister(registerX, UByte.valueOf(and));
         }
 
         @Override
@@ -61,9 +64,12 @@ public final class Bitwise {
         
         @Override
         public State execute(State state) {
-            return
-                state
-                .withRegister(registerX, UByte.valueOf(state.getRegister(registerX).intValue() | state.getRegister(registerY).intValue()));
+            int registerXValue = getRegisterX(state).intValue();
+            int registerYValue = getRegisterY(state).intValue();
+            
+            int or = registerXValue | registerYValue;
+            
+            return state.withRegister(registerX, UByte.valueOf(or));
         }
         
         @Override
@@ -93,7 +99,12 @@ public final class Bitwise {
         
         @Override
         public State execute(State state) {
-            return state.withRegister(registerX, UByte.valueOf(state.getRegister(registerX).intValue() ^ state.getRegister(registerY).intValue()));
+            int registerXValue = getRegisterX(state).intValue();
+            int registerYValue = getRegisterY(state).intValue();
+            
+            int xor = registerXValue ^ registerYValue;
+            
+            return state.withRegister(registerX, UByte.valueOf(xor));
         }
         
         @Override

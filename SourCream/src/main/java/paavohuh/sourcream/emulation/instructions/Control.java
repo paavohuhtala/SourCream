@@ -1,11 +1,13 @@
 
 package paavohuh.sourcream.emulation.instructions;
 
+import org.jooq.lambda.Seq;
 import org.joou.UByte;
 import org.joou.UShort;
 import paavohuh.sourcream.emulation.Instruction;
 import paavohuh.sourcream.emulation.Register;
 import paavohuh.sourcream.emulation.State;
+import static paavohuh.sourcream.emulation.InstructionFactory.*;
 
 /**
  * Contains control instructions.
@@ -141,6 +143,13 @@ public final class Control {
                 return new State(state);
             }
         }
-        
+    }
+    
+    public static Seq<Instruction> getAll() {
+        return Seq.concat(
+            getAllInstances(JumpTo::new),
+            getAllInstances(SkipIfEquals::new),
+            getAllInstances(SkipIfNotEquals::new),
+            getAllInstances(SkipIfEqualsRegister::new));
     }
 }

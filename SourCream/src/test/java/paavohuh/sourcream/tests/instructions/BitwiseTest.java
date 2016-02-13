@@ -3,6 +3,7 @@ package paavohuh.sourcream.tests.instructions;
 
 import org.jooq.lambda.Seq;
 import org.joou.UByte;
+import org.joou.UShort;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -107,7 +108,7 @@ public class BitwiseTest {
                     initialState
                     .withRegister(Register.V0, UByte.valueOf(x))
                     .withRegister(Register.V1, UByte.valueOf(y));
-                State afterState =  instr.execute(testState);
+                State afterState = instr.execute(testState);
                 assertEquals(expected, afterState.getRegister(Register.V0));
             }
         }
@@ -118,42 +119,52 @@ public class BitwiseTest {
         Seq<And> instances = InstructionFactory.getAllInstances(And::new).cast(And.class);
         
         for (Instruction.WithTwoRegisters instr : instances) {
+            if (instr.registerX.equals(instr.registerY)) {
+                continue;
+            }
+            
             State testState =
                 initialState
-                .withRegister(instr.registerX, UByte.valueOf(0b1111))
-                .withRegister(instr.registerY, UByte.valueOf(0b0101));
+                .withRegister(instr.registerX, UByte.valueOf(0b01111))
+                .withRegister(instr.registerY, UByte.valueOf(0b00101));
             State afterState = instr.execute(testState);
-            assertEquals(UByte.valueOf(0b0101), afterState.getRegister(instr.registerX));
+            assertEquals(UByte.valueOf(0b00101), afterState.getRegister(instr.registerX));
         }
     }
     
     @Test
-    @Ignore
     public void orAllInstances() {
         Seq<Or> instances = InstructionFactory.getAllInstances(Or::new).cast(Or.class);
         
         for (Instruction.WithTwoRegisters instr : instances) {
+            if (instr.registerX.equals(instr.registerY)) {
+                continue;
+            }
+            
             State testState =
                 initialState
-                .withRegister(instr.registerX, UByte.valueOf(0b1010))
-                .withRegister(instr.registerY, UByte.valueOf(0b0101));
+                .withRegister(instr.registerX, UByte.valueOf(0xF0))
+                .withRegister(instr.registerY, UByte.valueOf(0x0F));
             State afterState = instr.execute(testState);
-            assertEquals(UByte.valueOf(0b1111 | 0b0101), afterState.getRegister(instr.registerX));
+            assertEquals(0xFF, afterState.getRegister(instr.registerX).intValue());
         }
     }
-    
+
     @Test
-    @Ignore
     public void xorAllInstances() {
         Seq<Xor> instances = InstructionFactory.getAllInstances(Xor::new).cast(Xor.class);
         
         for (Instruction.WithTwoRegisters instr : instances) {
+            if (instr.registerX.equals(instr.registerY)) {
+                continue;
+            }
+            
             State testState =
                 initialState
-                .withRegister(instr.registerX, UByte.valueOf(0b1100))
-                .withRegister(instr.registerY, UByte.valueOf(0b0011));
+                .withRegister(instr.registerX, UByte.valueOf(0xF0))
+                .withRegister(instr.registerY, UByte.valueOf(0x0F));
             State afterState = instr.execute(testState);
-            assertEquals(UByte.valueOf(0b1100 ^ 0b0011), afterState.getRegister(instr.registerX));
+            assertEquals(0xF0 ^ 0x0F, afterState.getRegister(instr.registerX).intValue());
         }
     }
 }
