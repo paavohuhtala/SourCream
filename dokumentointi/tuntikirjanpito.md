@@ -47,7 +47,7 @@ Eilistä koodia siistitty ja bugeja/suunniteluvirheitä korjattu.
 
 * Unit testien korjausta ja siistimistä
 
-## 17.2.2015: 3h?
+## 17.2.2015: 5h
 
 * Muutama uutta käskyä
 * Mahdollisuus ladata näyttöpuskuri tekstitiedostosta
@@ -63,3 +63,10 @@ Eilistä koodia siistitty ja bugeja/suunniteluvirheitä korjattu.
 
 * Apuluokkia, siistimistä
 * Konfiguraation laajentamista
+
+## 19.2.2015: 4h
+
+* Uusia testejä ja entisten parantelua
+* Checkstylen mukaisia korjauksia
+* Uutta dokumentaatiota
+* Sekvenssikuvaaja emulaatiosyklistä

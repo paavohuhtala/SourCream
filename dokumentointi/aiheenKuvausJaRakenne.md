@@ -27,6 +27,9 @@ Tulkki ja emulaattori binäärimuotoisille [CHIP-8](https://en.wikipedia.org/wik
 
 ![Luokkakaavio](/dokumentointi/uml/concept.png)
 
+## Emulaatiosyklin sekvenssikaavio
+![Emulaatiosykli](/dokumentointi/uml/cyclesequence.png)
+
 ## Riippuvuudet
 
 * Projekti hyödyntää jOOq-prjektin [jOOλ](https://github.com/jOOQ/jOOL) ja [jOOu](https://github.com/jOOQ/jOOU)-kirjastoja, jota Maven asentaa automaattisesti.

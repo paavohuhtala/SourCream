@@ -1,0 +1,24 @@
+title (Yksinkertaistettu) tyypillinen emulaatiosykli 
+participant Device
+participant CPU
+participant InstructionDecoder
+participant state1
+Device->+CPU: runCycle()
+activate state1
+CPU->state1: pc := getProgramCounter()
+CPU->state1: code := get16BitsAt(pc)
+participant instruction
+activate instruction
+CPU->InstructionDecoder: instruction := decode(code)
+deactivate state1
+CPU->instruction: state2 := execute(state1.withIncrementedPc())
+deactivate instruction
+CPU->state2: screenBuffer := getScreenBuffer()
+CPU->screenBuffer: isModified()
+opt screen buffer is modified
+loop for each updateGraphicsHandler
+    CPU->updateGraphicsHandler: update(screenBuffer)
+end
+end
+CPU->CPU: setState(state2)
+destroy state1
