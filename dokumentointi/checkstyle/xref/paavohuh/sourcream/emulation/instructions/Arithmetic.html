@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_GB" lang="en_GB">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi_FI" lang="fi_FI">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Arithmetic xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
@@ -55,7 +55,7 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>              
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>              <em class="jxr_comment">// This instruction doesn't set the carry flag. Instead, it merely</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>              <em class="jxr_comment">// mods by 256.</em>
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>              UByte sum = UByte.valueOf((registerValue + constant.intValue()) % 256);
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>              UByte sum = UByte.valueOf((registerValue + constant.intValue()) % 0xFF);
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>              
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>              <strong class="jxr_keyword">return</strong> state.withRegister(register, sum);
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          }
@@ -94,7 +94,7 @@
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>              <strong class="jxr_keyword">boolean</strong> carry = sum &gt; 0xFF;
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>              
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>              <strong class="jxr_keyword">return</strong> state
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  .withRegister(Register.Carry, UByte.valueOf(carry ? 1 : 0))
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  .withRegister(Register.CARRY, UByte.valueOf(carry ? 1 : 0))
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>                  .withRegister(registerX, UByte.valueOf(sum &amp; 0xFF));
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          }        
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      }
@@ -133,7 +133,7 @@
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>             <strong class="jxr_keyword">boolean</strong> borrow = subtraction &lt; 0;
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>             
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>             <strong class="jxr_keyword">return</strong> state
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>                 .withRegister(Register.Borrow, UByte.valueOf(borrow ? 1 : 0))
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>                 .withRegister(Register.BORROW, UByte.valueOf(borrow ? 1 : 0))
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>                 .withRegister(registerX, UByte.valueOf(subtraction &amp; 0xFF));
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         }  
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>     }
@@ -174,7 +174,7 @@
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>             <strong class="jxr_keyword">boolean</strong> borrow = subtraction &lt; 0;
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>             
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>             <strong class="jxr_keyword">return</strong> state
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>                 .withRegister(Register.Borrow, UByte.valueOf(borrow ? 1 : 0))
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>                 .withRegister(Register.BORROW, UByte.valueOf(borrow ? 1 : 0))
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>                 .withRegister(registerX, UByte.valueOf(subtraction &amp; 0xFF));
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>         }  
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>     }

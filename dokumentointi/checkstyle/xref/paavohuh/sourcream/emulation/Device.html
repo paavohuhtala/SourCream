@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_GB" lang="en_GB">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi_FI" lang="fi_FI">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Device xref</title>
 <link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
@@ -9,42 +9,59 @@
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   <strong class="jxr_keyword">package</strong> paavohuh.sourcream.emulation;
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.jooq.lambda.Seq;
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.configuration.DeviceConfiguration;
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.emulation.instructions.Arithmetic;
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.emulation.instructions.Bitwise;
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.emulation.instructions.Transfer;
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * The composition root of the emulator. </em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * Creates the CPU and initial state and builds the instruction cache.</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../paavohuh/sourcream/emulation/Device.html">Device</a> {
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/emulation/CPU.html">CPU</a> cpu;
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>      <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/emulation/Device.html">Device</a>(<a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> config) {
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>          <a href="../../../paavohuh/sourcream/emulation/State.html">State</a> bootupState = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/emulation/State.html">State</a>(config);
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>          <a href="../../../paavohuh/sourcream/emulation/InstructionCache.html">InstructionCache</a> cache = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/emulation/ArrayInstructionCache.html">ArrayInstructionCache</a>();
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>          registerAllInstructions(cache);
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>          
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>          <strong class="jxr_keyword">this</strong>.cpu = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/emulation/CPU.html">CPU</a>(cache, bootupState);
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>      }
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start() {
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>          
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>      }
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>      
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">private</strong> Seq&lt;Instruction&gt; getAllInstructions() {
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>          <strong class="jxr_keyword">return</strong> Seq.concat(
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>              Arithmetic.getAll(),
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>              Bitwise.getAll(),
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>              Transfer.getAll());
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> registerAllInstructions(<a href="../../../paavohuh/sourcream/emulation/InstructionCache.html">InstructionCache</a> cache) {
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>          getAllInstructions().forEach(cache::register);
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      }
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  }
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> java.util.function.Consumer;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> org.jooq.lambda.Seq;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.configuration.DeviceConfiguration;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.emulation.instructions.*;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * The composition root of the emulator. </em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * Creates the CPU and the initial state and builds the instruction cache.</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../paavohuh/sourcream/emulation/Device.html">Device</a> {
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/emulation/CPU.html">CPU</a> cpu;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>      
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>      <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/emulation/Device.html">Device</a>(<a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> config, byte[] program) {
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>          <a href="../../../paavohuh/sourcream/emulation/State.html">State</a> bootupState = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/emulation/State.html">State</a>(config);
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>          bootupState = bootupState.withCopiedMemory(program, bootupState.getProgramCounter());
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>          <a href="../../../paavohuh/sourcream/emulation/InstructionCache.html">InstructionCache</a> cache = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/emulation/ArrayInstructionCache.html">ArrayInstructionCache</a>();
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>          registerAllInstructions(cache);
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>          cpu = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/emulation/CPU.html">CPU</a>(cache, bootupState);
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      }
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * Creates a new CPU thread, and starts executing it.</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     * @return A new CPU thread.</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">public</strong> Thread start() {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          Thread thread = <strong class="jxr_keyword">new</strong> Thread(cpu, <span class="jxr_string">"CPU Emulation Thread"</span>);
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>          thread.start();
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          <strong class="jxr_keyword">return</strong> thread;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      }
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * Signals the CPU that it should stop executing instructions.</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * This will stop the CPU thread after the current cycle is finished.</em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> stop() {
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          cpu.stop();
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>      }
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     * Registers a handler to be called when the screen is updated.</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">     * @param handler </em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> onUpdateGraphics(Consumer&lt;ScreenBuffer&gt; handler) {
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          cpu.onUpdateGraphics(handler);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      }
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> registerAllInstructions(<a href="../../../paavohuh/sourcream/emulation/InstructionCache.html">InstructionCache</a> cache) {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          AllInstructions.get().forEach(cache::register);
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      }
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2016. All rights reserved.</div>
