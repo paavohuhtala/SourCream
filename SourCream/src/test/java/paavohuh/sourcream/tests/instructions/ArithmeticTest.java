@@ -48,7 +48,7 @@ public class ArithmeticTest extends TestWithState {
         
         for (WithTwoRegisters instr : instances) {
             
-            if (instr.registerX.equals(Register.Carry)) {
+            if (instr.registerX.equals(Register.CARRY)) {
                 continue;
             }
             
@@ -62,7 +62,7 @@ public class ArithmeticTest extends TestWithState {
             State afterState = instr.execute(testState);
             
             Assert.assertEquals(expected, afterState.getRegister(instr.registerX));
-            Assert.assertEquals(isCarrySet ? 1 : 0, afterState.getRegister(Register.Carry).intValue());
+            Assert.assertEquals(isCarrySet ? 1 : 0, afterState.getRegister(Register.CARRY).intValue());
         }
     }
 }

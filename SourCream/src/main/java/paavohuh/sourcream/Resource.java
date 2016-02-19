@@ -13,27 +13,27 @@ import paavohuh.sourcream.utils.ResourceUtils;
  */
 public class Resource {
     public static final String LOGO = "/buffers/logo.buffer";
-    private static final Cached<ScreenBuffer> logo;
+    private static final Cached<ScreenBuffer> CACHED_LOGO;
 
     public static ScreenBuffer getLogo() {
-        return logo.get();
+        return CACHED_LOGO.get();
     }
     
     public static final String SYSTEM_FONT = "systemfont.bin";
-    private static final Cached<Byte[]> systemFont;
+    private static final Cached<Byte[]> CACHED_SYSTEM_FONT;
     
     public static byte[] getSystemFont() {
-        return ArrayUtils.toPrimitive(systemFont.get());
+        return ArrayUtils.toPrimitive(CACHED_SYSTEM_FONT.get());
     }
     
     /**
      * Initializes the cached resources.
      */
     static {
-        logo = new Cached<>(() ->
+        CACHED_LOGO = new Cached<>(() ->
             ResourceUtils.getAsString(LOGO).flatMap(ScreenBufferLoader::tryLoad).get());
         
-        systemFont = new Cached<>(() ->
+        CACHED_SYSTEM_FONT = new Cached<>(() ->
             ResourceUtils.getAsBytes(SYSTEM_FONT).get());
     }
 }

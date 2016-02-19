@@ -137,19 +137,27 @@ public class ScreenBuffer {
      * @return The value of the pixel
      */
     public boolean get(int x, int y) {
-        if (x < 0 || x >= width) throw new IllegalArgumentException("X was out of range");
-        if (y < 0 || y >= height) throw new IllegalArgumentException("Y was out of range");
+        if (x < 0 || x >= width) {
+            throw new IllegalArgumentException("X was out of range");
+        }
+        
+        if (y < 0 || y >= height) {
+            throw new IllegalArgumentException("Y was out of range");
+        }
         
         return buffer[y][x];
     }
     
     public boolean buffersEqual(ScreenBuffer other) {
-        if (other.width != this.width) return false;
-        if (other.height != this.height) return false;
+        if (other.width != this.width || other.height != this.height) {
+            return false;
+        }
         
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (other.buffer[y][x] != buffer[y][x]) return false;
+                if (other.buffer[y][x] != buffer[y][x]) {
+                    return false;
+                }
             }
         }
         

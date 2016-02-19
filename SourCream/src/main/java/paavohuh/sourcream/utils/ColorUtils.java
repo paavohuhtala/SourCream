@@ -18,7 +18,7 @@ public class ColorUtils {
 
         float blue =
             (one.getBlue() / 255f) * level +
-            (zero.getBlue() / 255f )* inverseLevel;
+            (zero.getBlue() / 255f) * inverseLevel;
 
         return new Color(
             MathUtils.clamp(0.0f, red, 1.0f),

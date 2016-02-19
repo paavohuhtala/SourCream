@@ -22,7 +22,7 @@ public class CPU implements Runnable {
         this.decoder = decoder;
         this.state = state;
         this.onUpdateGraphicsHandlers = new ArrayList<>(1);
-   }
+    }
     
     /**
      * Runs the CPU for one cycle.
@@ -71,7 +71,7 @@ public class CPU implements Runnable {
         shouldRun = true;
         
         try {
-            while(shouldRun) {
+            while (shouldRun) {
                 runCycle();
             }
         } catch (Exception e) {

@@ -6,6 +6,6 @@ import javax.swing.JFrame;
 /**
  * A window that shows program log.
  */
-public class LogWindow extends JFrame{
+public class LogWindow extends JFrame {
 
 }

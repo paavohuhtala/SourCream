@@ -86,7 +86,7 @@ public final class Arithmetic {
             boolean carry = sum > 0xFF;
             
             return state
-                .withRegister(Register.Carry, UByte.valueOf(carry ? 1 : 0))
+                .withRegister(Register.CARRY, UByte.valueOf(carry ? 1 : 0))
                 .withRegister(registerX, UByte.valueOf(sum & 0xFF));
         }        
     }
@@ -125,7 +125,7 @@ public final class Arithmetic {
             boolean borrow = subtraction < 0;
             
             return state
-                .withRegister(Register.Borrow, UByte.valueOf(borrow ? 1 : 0))
+                .withRegister(Register.BORROW, UByte.valueOf(borrow ? 1 : 0))
                 .withRegister(registerX, UByte.valueOf(subtraction & 0xFF));
         }  
     }
@@ -166,7 +166,7 @@ public final class Arithmetic {
             boolean borrow = subtraction < 0;
             
             return state
-                .withRegister(Register.Borrow, UByte.valueOf(borrow ? 1 : 0))
+                .withRegister(Register.BORROW, UByte.valueOf(borrow ? 1 : 0))
                 .withRegister(registerX, UByte.valueOf(subtraction & 0xFF));
         }  
     }

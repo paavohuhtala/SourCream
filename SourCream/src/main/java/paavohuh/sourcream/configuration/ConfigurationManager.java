@@ -13,7 +13,7 @@ import org.apache.commons.io.FileUtils;
 
 public class ConfigurationManager {
     
-    private static final Gson gson = new Gson();
+    private static final Gson GSON = new Gson();
     
     private static final String CONFIGURATION_DIRECTORY = "config/";
     private static final String DEVICE_CONFIGURATION_FILE = "device.json";
@@ -39,7 +39,7 @@ public class ConfigurationManager {
             serializeToFile(path.toFile(), config);
         } else {
             String json = FileUtils.readFileToString(path.toFile());
-            config = gson.fromJson(json, configType);
+            config = GSON.fromJson(json, configType);
         }
         
         return config;
@@ -56,6 +56,6 @@ public class ConfigurationManager {
     }
     
     private static void serializeToFile(File file, Object o) throws IOException {
-        FileUtils.writeStringToFile(file, gson.toJson(o));
+        FileUtils.writeStringToFile(file, GSON.toJson(o));
     }
 }

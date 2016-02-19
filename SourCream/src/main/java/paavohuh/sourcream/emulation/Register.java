@@ -56,6 +56,6 @@ public class Register {
     // All of these are the same register; aliases are supplied for improevd
     // readability.
     public static final Register VF = new Register(15);
-    public static final Register Carry = VF;
-    public static final Register Borrow = VF;
+    public static final Register CARRY = VF;
+    public static final Register BORROW = VF;
 }
