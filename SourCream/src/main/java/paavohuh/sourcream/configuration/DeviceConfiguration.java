@@ -1,7 +1,7 @@
 package paavohuh.sourcream.configuration;
 
 /**
- * Configuration for the emulated device.
+ * Configuration for the emulated device. These settings can affect emulation.
  */
 public class DeviceConfiguration {
     public final int ramSize;

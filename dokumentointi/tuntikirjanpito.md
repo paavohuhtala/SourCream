@@ -42,3 +42,24 @@ Eilistä koodia siistitty ja bugeja/suunniteluvirheitä korjattu.
 * Refaktoroi käskyrajapintoja
 * Lisää checkstyle ja lisää rapotti mukaan
 * Muutama uusi testi
+
+## 13.2.2015: 1h
+
+* Unit testien korjausta ja siistimistä
+
+## 17.2.2015: 3h?
+
+* Muutama uutta käskyä
+* Mahdollisuus ladata näyttöpuskuri tekstitiedostosta
+* Grafiikkatoimintoja
+* Perustoiminnallisuus!
+    * Lataa ohjelmia tiedostoista
+    * Suorittaa päälooppia (rajoitetulla käskykannalla)
+    * Piirtää grafiikat
+* LCD-emulaatio
+    * Näytön vilkkuminen on CHIP8:n tyyppivika, jonka korjaaminen on haastavaa. LCD-emulaatiolla emuloidaan nestekidenäyttöjen ghosting-efektiä.
+
+## 18.2.2015: 2h
+
+* Apuluokkia, siistimistä
+* Konfiguraation laajentamista

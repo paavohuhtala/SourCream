@@ -34,7 +34,7 @@ public interface Instruction {
     public static abstract class WithRegister extends Instruction.Parametrized {
         public final Register register;
 
-        protected abstract int getRegOffset();
+        protected abstract int getRegisterOffset();
         
         public WithRegister(Register register) {
             this.register = register;
@@ -42,7 +42,7 @@ public interface Instruction {
         
         @Override
         public UShort getCode() {
-            return InstructionUtils.setRegister(getBaseCode(), register, getRegOffset());
+            return InstructionUtils.setRegister(getBaseCode(), register, getRegisterOffset());
         }
         
         @FunctionalInterface
@@ -82,6 +82,33 @@ public interface Instruction {
         @FunctionalInterface
         public interface Constructor {
             WithTwoRegisters build(Register registerX, Register registerY);
+        }
+    }
+    
+    /**
+     * An abstract instruction with two registers and one 4-bit constant.
+     */
+    public static abstract class WithTwoRegistersAnd4BitConstant extends WithTwoRegisters {
+        
+        public final UByte constant;
+        
+        protected abstract int getConstantOffset();
+        
+        public WithTwoRegistersAnd4BitConstant(Register x, Register y, UByte constant) {
+            super(x, y);
+            this.constant = constant;
+        }
+        
+        @Override
+        public UShort getCode() {
+            return UShort.valueOf(
+                super.getCode().intValue() |
+                (constant.intValue() << (getConstantOffset() * 4)));
+        }
+        
+        @FunctionalInterface
+        public interface Constructor {
+            WithTwoRegistersAnd4BitConstant build(Register registerX, Register registerY, UByte constant);
         }
     }
     

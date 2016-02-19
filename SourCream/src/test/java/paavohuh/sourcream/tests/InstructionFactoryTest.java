@@ -13,24 +13,6 @@ import paavohuh.sourcream.emulation.instructions.Bitwise;
 import paavohuh.sourcream.emulation.instructions.Control;
 
 public class InstructionFactoryTest {
-    public InstructionFactoryTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void twoRegisterInstructionsHaveValidCodes() {

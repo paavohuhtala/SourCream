@@ -140,7 +140,7 @@ public class State implements Cloneable, Serializable {
             throw new IllegalArgumentException();
         }
         
-        return UShort.valueOf(ram[offset] << 8 | ram[offset + 1]);
+        return UShort.valueOf(Byte.toUnsignedInt(ram[offset]) << 8 | Byte.toUnsignedInt(ram[offset + 1]));
     }
     
     /**
@@ -184,10 +184,10 @@ public class State implements Cloneable, Serializable {
             throw new IllegalArgumentException();
         }
         
-        State state = new State(this);
-        System.arraycopy(from, 0, this.ram, destination, from.length);
+        State newState = new State(this);
+        System.arraycopy(from, 0, newState.ram, destination, from.length);
         
-        return state;
+        return newState;
     }
     
     /**

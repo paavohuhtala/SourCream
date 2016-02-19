@@ -7,16 +7,25 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import paavohuh.sourcream.configuration.EmulatorConfiguration;
 
 /**
  * The main window of the emulator.
  */
 public class MainWindow extends JFrame {
+    
+    private EmulatorPanel emulatorPanel;
+    private EmulatorConfiguration config;
 
-    public MainWindow() {        
+    public MainWindow(EmulatorConfiguration config) {
+        this.config = config;
         initComponents();
     }
 
+    public EmulatorPanel getEmulatorPanel() {
+        return emulatorPanel;
+    }
+    
     private void initComponents() {
         setTitle("SourCream");
         setResizable(false);
@@ -42,8 +51,8 @@ public class MainWindow extends JFrame {
         
         menubar.add(menu);
         
-        EmulatorPanel mainCanvas = new EmulatorPanel();
-        add(mainCanvas);
+        emulatorPanel = new EmulatorPanel(config);
+        add(emulatorPanel);
         pack();
         setVisible(true);
         

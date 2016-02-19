@@ -9,34 +9,17 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import paavohuh.sourcream.emulation.ArrayInstructionCache;
 import paavohuh.sourcream.emulation.Instruction;
 import paavohuh.sourcream.emulation.State;
 import paavohuh.sourcream.emulation.instructions.Arithmetic;
 import paavohuh.sourcream.emulation.instructions.Bitwise;
 import paavohuh.sourcream.emulation.instructions.Control;
+import paavohuh.sourcream.emulation.instructions.Graphics;
+import paavohuh.sourcream.emulation.instructions.Transfer;
 
 public class InstructionCacheTest {
-    public InstructionCacheTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-        
-    }
-    
-    @After
-    public void tearDown() {
-        
-    }
 
     @Test
     public void canCreateInstance() {
@@ -53,7 +36,7 @@ public class InstructionCacheTest {
     @Test
     public void canCacheTransfer() {
         ArrayInstructionCache cache = new ArrayInstructionCache();
-        Bitwise.getAll().forEach(cache::register);
+        Transfer.getAll().forEach(cache::register);
     }
     
     @Test
@@ -66,6 +49,13 @@ public class InstructionCacheTest {
     public void canCacheControl() {
         ArrayInstructionCache cache = new ArrayInstructionCache();
         Control.getAll().forEach(cache::register);
+    }
+    
+        
+    @Test
+    public void canCacheGraphics() {
+        ArrayInstructionCache cache = new ArrayInstructionCache();
+        Graphics.getAll().forEach(cache::register);
     }
     
     @Test

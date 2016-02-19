@@ -13,25 +13,6 @@ import paavohuh.sourcream.emulation.Register;
 
 public class InstructionUtilsTest {
     
-    public InstructionUtilsTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void registersAreSetProperly() {
         UShort base = UShort.valueOf(0x8000);

@@ -17,7 +17,7 @@ public final class Control {
     private Control() { }
     
     /**
-     * Jumps to address + V0.
+     * Jumps to address.
      */
     public static class JumpTo extends Instruction.WithAddress {
 
@@ -27,7 +27,7 @@ public final class Control {
 
         @Override
         protected UShort getBaseCode() {
-            return UShort.valueOf(0xB000);
+            return UShort.valueOf(0x1000);
         }
 
         @Override

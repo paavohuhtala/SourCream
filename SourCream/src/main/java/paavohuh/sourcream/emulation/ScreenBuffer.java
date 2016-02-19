@@ -9,12 +9,15 @@ import paavohuh.sourcream.utils.ArrayUtils;
  * All drawing is done in XOR-mode.
  */
 public class ScreenBuffer {
-    private final int width;
-    private final int height;
+    public final int width;
+    public final int height;
     private final boolean[][] buffer;
     
     // Set to true if a bit is flipped from 1 to 0 during blit.
-    private final boolean flipped;
+    public final boolean flipped;
+    
+    // Set to true if the screen has been modified.
+    public final boolean modified;
     
     /**
      * Creates a new screen buffer for the supplied device configuration.
@@ -24,14 +27,23 @@ public class ScreenBuffer {
         width = config.resolutionX;
         height = config.resolutionY;
         flipped = false;
+        modified = false;
         
         buffer = new boolean[height][width];
     }
     
-    public ScreenBuffer(boolean[][] buffer, boolean flipped) {
+    /**
+     * Creates a new screen buffer from the supplied byte buffer. Also takes a
+     * boolean to indicate whether or not the "flipped" flag should be set.
+     * @param buffer
+     * @param flipped 
+     * @param modified 
+     */
+    public ScreenBuffer(boolean[][] buffer, boolean flipped, boolean modified) {
         height = buffer.length;
         width = buffer[0].length;
         this.flipped = flipped;
+        this.modified = modified;
         
         this.buffer = ArrayUtils.clone(buffer);
     }
@@ -47,12 +59,13 @@ public class ScreenBuffer {
         width = 8;
         buffer = new boolean[memory.length][8];
         flipped = false;
+        modified = false;
         
         // For each row
         for (int y = 0; y < memory.length; y++) {
             // For each column
             for (int i = 0; i < 8; i++) {
-                buffer[y][i] = ((memory[y] >> i) & 1) == 1;
+                buffer[y][7 - i] = ((memory[y] >> i) & 1) == 1;
             }
         }
     }
@@ -63,8 +76,23 @@ public class ScreenBuffer {
      * @return An empty screen buffer
      */
     public ScreenBuffer cleared() {
+        
+        boolean anyWasSet = false;
+        
+        // We have to loop over all of the pixels to check if any of them is set
+        findSetLoop:
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (buffer[y][x]) {
+                    anyWasSet = true;
+                    break findSetLoop;
+                }
+            }
+        }
+        
         boolean[][] cleared = new boolean[height][width];
-        return new ScreenBuffer(cleared, false);
+        
+        return new ScreenBuffer(cleared, anyWasSet, true);
     }
     
     /**
@@ -85,10 +113,10 @@ public class ScreenBuffer {
             for (int xi = 0; xi < sprite.width; xi++) {
                 // Calculate buffer coordinates. They will wrap around the screen.
                 int bufferY = (y + yi) % height;
-                int bufferX = (x + xi) & width;
+                int bufferX = (x + xi) % width;
                 // Drawing is done in XOR mode.
                 boolean spriteBit = sprite.buffer[yi][xi];
-                boolean bufferBit = buffer[bufferX][bufferY];
+                boolean bufferBit = buffer[bufferY][bufferX];
                 
                 // If a pixel is cleared, set the cleared bit.
                 if (!newFlipped) {
@@ -99,6 +127,19 @@ public class ScreenBuffer {
             }
         }
         
-        return new ScreenBuffer(newBuffer, newFlipped);
+        return new ScreenBuffer(newBuffer, newFlipped, true);
+    }
+    
+    /**
+     * Gets a pixel from the screen buffer.
+     * @param x The x coordinate
+     * @param y The y coordinate
+     * @return The value of the pixel
+     */
+    public boolean get(int x, int y) {
+        if (x < 0 || x >= width) throw new IllegalArgumentException("X was out of range");
+        if (y < 0 || y >= height) throw new IllegalArgumentException("Y was out of range");
+        
+        return buffer[y][x];
     }
 }

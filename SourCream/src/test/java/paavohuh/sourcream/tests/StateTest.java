@@ -3,34 +3,12 @@ package paavohuh.sourcream.tests;
 
 import org.joou.UByte;
 import org.joou.UShort;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.emulation.State;
 
-public class StateTest {
-    private State initialState;
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-        this.initialState = new State(DeviceConfiguration.getDefault());
-    }
-    
-    @After
-    public void tearDown() {
-    }
+public class StateTest extends TestWithState {
     
     @Test
     public void programCounterStartsAt0x200() {

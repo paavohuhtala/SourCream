@@ -44,4 +44,34 @@ public class ArrayUtils {
         System.arraycopy(array, 0, clone, 0, array.length);
         return (T[]) clone;
     }
+    
+    /**
+     * Unboxes an array of bytes.
+     * @param bytes
+     * @return 
+     */
+    public static byte[] toPrimitive(Byte[] bytes) {
+        byte[] array = new byte[bytes.length];
+        
+        for (int i = 0; i < bytes.length; i++) {
+            array[i] = bytes[i];
+        }
+        
+        return array;
+    }
+    
+    /**
+     * Boxes an array of bytes.
+     * @param bytes
+     * @return 
+     */
+    public static Byte[] toBoxed(byte[] bytes) {
+        Byte[] array = new Byte[bytes.length];
+        
+        for (int i = 0; i < bytes.length; i++) {
+            array[i] = bytes[i];
+        }
+        
+        return array;
+    }
 }

@@ -204,7 +204,7 @@ public final class Bitwise {
     }
     
     /**
-     * Returns all instances of all instructions.
+     * Returns all instances of all bitiwse instructions.
      * @return A sequence of instructions
      */
     public static Seq<Instruction> getAll() {
