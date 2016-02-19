@@ -11,6 +11,9 @@ public class ArrayInstructionCache implements InstructionCache {
     
     private final Instruction[] cache;
     
+    /**
+     * Creates a new instruction cache, backed by an array.
+     */
     public ArrayInstructionCache() {
         cache = new Instruction[UShort.MAX_VALUE + 1];
     }

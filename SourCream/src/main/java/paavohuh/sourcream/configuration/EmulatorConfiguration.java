@@ -11,19 +11,22 @@ public class EmulatorConfiguration {
 
     public final ScreenConfiguration screen;
 
+    /**
+     * Creates a new emulator config.
+     * @param screen 
+     */
     public EmulatorConfiguration(ScreenConfiguration screen) {
         this.screen = screen;
     }
     
+    /**
+     * Returns the default emulator configuration.
+     * @return 
+     */
     public static EmulatorConfiguration getDefault() {
         return new EmulatorConfiguration(ScreenConfiguration.getDefault());
     }
-    
-    public enum ScreenEmulationStrategy {
-        REDRAW_ON_BLIT,
-        EMULATE_GHOSTING
-    }
-    
+        
     /**
      * Contains the settings for screen emulation.
      */
@@ -36,6 +39,14 @@ public class EmulatorConfiguration {
         public final boolean emulateGhosting;
         public final GhostingEmulationConfiguration ghosting;
 
+        /**
+         * Creates a new screen config.
+         * @param scaleFactor
+         * @param backgroundColor
+         * @param foregroundColor
+         * @param emulateGhosting
+         * @param ghosting 
+         */
         public ScreenConfiguration(int scaleFactor, Color backgroundColor, Color foregroundColor, boolean emulateGhosting, GhostingEmulationConfiguration ghosting) {
             this.scaleFactor = scaleFactor;
             this.backgroundColor = backgroundColor;
@@ -44,6 +55,10 @@ public class EmulatorConfiguration {
             this.ghosting = ghosting;
         }
         
+        /**
+         * Returns the default screen configuration.
+         * @return 
+         */
         public static ScreenConfiguration getDefault() {
             return new ScreenConfiguration(10, Color.green, Color.darkGray, true, GhostingEmulationConfiguration.getDefault());
         }
@@ -56,11 +71,20 @@ public class EmulatorConfiguration {
         public final float addBy;
         public final float subtractBy;
 
+        /**
+         * Creates a new ghosting emulation config.
+         * @param addBy
+         * @param subtractBy 
+         */
         public GhostingEmulationConfiguration(float addBy, float subtractBy) {
             this.addBy = addBy;
             this.subtractBy = subtractBy;
         }
         
+        /**
+         * Returns the default ghosting emulation config.
+         * @return 
+         */
         public static GhostingEmulationConfiguration getDefault() {
             return new GhostingEmulationConfiguration(0.50f, 0.015f);
         }

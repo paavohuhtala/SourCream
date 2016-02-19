@@ -4,6 +4,9 @@ package paavohuh.sourcream.emulation;
  * Represents an immutable register id.
  */
 public class Register {
+    /**
+     * The numeric id for the register.
+     */
     public final int id;
     
     public Register(int offset) {

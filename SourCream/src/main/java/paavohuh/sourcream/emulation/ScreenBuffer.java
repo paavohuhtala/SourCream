@@ -9,14 +9,26 @@ import paavohuh.sourcream.utils.ArrayUtils;
  * All drawing is done in XOR-mode.
  */
 public class ScreenBuffer {
+    /**
+     * The width of the buffer.
+     */
     public final int width;
+    
+    /**
+     * The height of the buffer.
+     */
     public final int height;
+    
     private final boolean[][] buffer;
     
-    // Set to true if a bit is flipped from 1 to 0 during blit.
+    /**
+     * Set to true if a bit is flipped from 1 to 0 during blit.
+     */
     public final boolean flipped;
     
-    // Set to true if the screen has been modified.
+    /**
+     * Set to true if the screen has been modified.
+     */
     public final boolean modified;
     
     /**
@@ -148,6 +160,12 @@ public class ScreenBuffer {
         return buffer[y][x];
     }
     
+    /**
+     * Compares the buffers bit-by-bit for equality.
+     * "Flipped" and "modified"- flags are ignored. 
+     * @param other The other screenbuffer.
+     * @return If the buffers are equal.
+     */
     public boolean buffersEqual(ScreenBuffer other) {
         if (other.width != this.width || other.height != this.height) {
             return false;

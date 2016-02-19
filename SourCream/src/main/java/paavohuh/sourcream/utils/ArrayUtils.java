@@ -62,8 +62,8 @@ public class ArrayUtils {
     
     /**
      * Boxes an array of bytes.
-     * @param bytes
-     * @return 
+     * @param bytes The bytes to box.
+     * @return Boxed bytes.
      */
     public static Byte[] toBoxed(byte[] bytes) {
         Byte[] array = new Byte[bytes.length];

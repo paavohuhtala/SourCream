@@ -71,8 +71,8 @@ public class State implements Cloneable, Serializable {
     }
     
     /**
-     * Gets the value of the given register
-     * @param reg
+     * Gets the value of the given register.
+     * @param reg The register.
      * @return 
      */
     public UByte getRegister(Register reg) {
@@ -80,10 +80,10 @@ public class State implements Cloneable, Serializable {
     }
     
     /**
-     * Returns a new state with the given register set to the given value
-     * @param reg
-     * @param value
-     * @return 
+     * Returns a new state with the given register set to the given value.
+     * @param reg The register.
+     * @param value The value.
+     * @return The new state.
      */
     public State withRegister(Register reg, UByte value) {
         State state = new State(this);
@@ -93,7 +93,7 @@ public class State implements Cloneable, Serializable {
     }
     
     /**
-     * Returns a new state with the address register set to the given value
+     * Returns a new state with the address register set to the given value.
      * @param value
      * @return 
      */

@@ -2,6 +2,11 @@
 package paavohuh.sourcream.emulation;
 
 public class ProgramBuilder {
+    /**
+     * Builds a new program from a list of instructions.
+     * @param instructions Variable number of instructions.
+     * @return A byte array containing the code for the program.
+     */
     public static byte[] assemble(Instruction... instructions) {
         byte[] byteCode = new byte[instructions.length * 2];
         int i = 0;

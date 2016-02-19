@@ -13,6 +13,11 @@ import paavohuh.sourcream.emulation.instructions.*;
 public class Device {
     private final CPU cpu;
     
+    /**
+     * Creates a new device.
+     * @param config
+     * @param program 
+     */
     public Device(DeviceConfiguration config, byte[] program) {
         State bootupState = new State(config);
         bootupState = bootupState.withCopiedMemory(program, bootupState.getProgramCounter());

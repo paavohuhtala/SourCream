@@ -15,6 +15,11 @@ import paavohuh.sourcream.ui.*;
  * The entry point for SourCream.
  */
 public class Main {
+    /**
+     * The entry point
+     * @param args Not used.
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
 
         try {

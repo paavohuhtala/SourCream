@@ -18,6 +18,11 @@ public class CPU implements Runnable {
     private final List<Consumer<ScreenBuffer>> onUpdateGraphicsHandlers;
     private boolean shouldRun;
     
+    /**
+     * Creates a new CPU.
+     * @param decoder
+     * @param state 
+     */
     public CPU(InstructionDecoder decoder, State state) {
         this.decoder = decoder;
         this.state = state;
@@ -80,6 +85,9 @@ public class CPU implements Runnable {
         }
     }
 
+    /**
+     * Signals the CPU that it should stop executing instructions.
+     */
     public void stop() {
         this.shouldRun = false;
     }

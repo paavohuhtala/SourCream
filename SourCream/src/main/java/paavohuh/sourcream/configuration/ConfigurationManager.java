@@ -19,12 +19,22 @@ public class ConfigurationManager {
     private static final String DEVICE_CONFIGURATION_FILE = "device.json";
     private static final String EMULATOR_CONFIGURATION_FILE = "emulator.json";
     
+    /**
+     * Loads or creates the device config.
+     * @return The config
+     * @throws IOException 
+     */
     public static DeviceConfiguration loadOrCreateDeviceConfig() throws IOException {
         Path path = Paths.get(CONFIGURATION_DIRECTORY, DEVICE_CONFIGURATION_FILE);
         
         return loadOrCreateConfig(path, DeviceConfiguration::getDefault, DeviceConfiguration.class);
     }
     
+    /**
+     * Loads or creates the emulator config.
+     * @return The config
+     * @throws IOException 
+     */
     public static EmulatorConfiguration loadorCreateEmulatorConfig() throws IOException {
         Path path = Paths.get(CONFIGURATION_DIRECTORY, EMULATOR_CONFIGURATION_FILE);
         
@@ -45,11 +55,21 @@ public class ConfigurationManager {
         return config;
     }
     
+    /**
+     * Saves the device config.
+     * @param config
+     * @throws IOException 
+     */
     public static void saveDeviceConfiguration(DeviceConfiguration config) throws IOException {
         File target = new File(CONFIGURATION_DIRECTORY, DEVICE_CONFIGURATION_FILE);
         serializeToFile(target, config);
     }
     
+    /**
+     * Saves the emulator config.
+     * @param config
+     * @throws IOException 
+     */
     public static void saveEmulatorConfiguration(EmulatorConfiguration config) throws IOException {
         File target = new File(CONFIGURATION_DIRECTORY, EMULATOR_CONFIGURATION_FILE);
         serializeToFile(target, config);

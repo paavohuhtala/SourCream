@@ -16,7 +16,8 @@ public interface Instruction {
     State execute(State state);
     
     /**
-     * @return Returns the bytecode for this instruction.
+     * Gets the code for this instructions.
+     * @return A 16-bit bytecode.
     */
     UShort getCode();
     
@@ -32,10 +33,17 @@ public interface Instruction {
      * An abstract instruction with one register parameter.
      */
     public static abstract class WithRegister extends Instruction.Parametrized {
+        /**
+         * The register used by this instruction.
+         */
         public final Register register;
 
         protected abstract int getRegisterOffset();
         
+        /**
+         * Creates a new instruction that uses a single register.
+         * @param register The register.
+         */
         public WithRegister(Register register) {
             this.register = register;
         }
@@ -46,6 +54,9 @@ public interface Instruction {
         }
         
         @FunctionalInterface
+        /**
+         * The constructor interface for WithRegister
+         */
         public interface Constructor {
             WithRegister build(Register register);
         }
@@ -55,12 +66,24 @@ public interface Instruction {
      * An abstract instruction with two register parameters.
      */
     public static abstract class WithTwoRegisters extends Instruction.Parametrized {
+        /**
+         * The first register used by this instruction.
+         */
         public final Register registerX;
+        
+        /**
+         * The second register used by this instruction.
+         */
         public final Register registerY;
 
         protected abstract int getRegXOffset();
         protected abstract int getRegYOffset();
         
+        /**
+         * Creates a new instruction that uses two registers. 
+         * @param x
+         * @param y 
+         */
         public WithTwoRegisters(Register x, Register y) {
             this.registerX = x;
             this.registerY = y;
@@ -79,6 +102,9 @@ public interface Instruction {
             return InstructionUtils.setRegister(InstructionUtils.setRegister(getBaseCode(), registerX, getRegXOffset()), registerY, getRegYOffset());
         }
        
+        /**
+         * The constructor interface for WithTwoRegisters.
+         */
         @FunctionalInterface
         public interface Constructor {
             WithTwoRegisters build(Register registerX, Register registerY);
@@ -94,6 +120,12 @@ public interface Instruction {
         
         protected abstract int getConstantOffset();
         
+        /**
+         * Creates a new instruction with two registers and a 4-bit constant.
+         * @param x
+         * @param y
+         * @param constant 
+         */
         public WithTwoRegistersAnd4BitConstant(Register x, Register y, UByte constant) {
             super(x, y);
             this.constant = constant;
@@ -107,6 +139,9 @@ public interface Instruction {
         }
         
         @FunctionalInterface
+        /**
+         * The constructor interface for WithTwoRegistersAnd4BitConstant.
+         */
         public interface Constructor {
             WithTwoRegistersAnd4BitConstant build(Register registerX, Register registerY, UByte constant);
         }
@@ -117,8 +152,12 @@ public interface Instruction {
      */
     public static abstract class WithAddress extends Instruction.Parametrized {
         public final UShort address;
-                
-        public WithAddress(UShort address) {
+        
+        /**
+         * Creates a new instruction with one 12-bit address.
+         * @param address 
+         */
+        protected WithAddress(UShort address) {
             this.address = address;
         }
         
@@ -130,6 +169,9 @@ public interface Instruction {
         }
         
         @FunctionalInterface
+        /**
+         * The constructor interface for WithAddress.
+         */
         public interface Constructor {
             WithAddress build(UShort address);
         }
@@ -143,7 +185,11 @@ public interface Instruction {
         
         protected abstract int getOffset();
         
-        public With4BitConstant(UByte constant) {
+        /**
+         * Creates a new instruction with one 4-bit constant.
+         * @param constant 
+         */
+        protected With4BitConstant(UByte constant) {
             this.constant = constant;
         }
         
@@ -155,6 +201,9 @@ public interface Instruction {
         }
         
         @FunctionalInterface
+        /**
+         * The constructor interface for With4BitConstant.
+         */
         public interface Constructor {
             With4BitConstant build(UByte constant);
         }
@@ -170,7 +219,12 @@ public interface Instruction {
         protected abstract int getRegisterOffset();
         protected abstract int getConstantOffset();
         
-        public WithRegisterAnd8BitConstant(Register register, UByte constant) {
+        /**
+         * Creates a new instruction with a register and a 8-bit constant.
+         * @param register
+         * @param constant 
+         */
+        protected WithRegisterAnd8BitConstant(Register register, UByte constant) {
             this.register = register;
             this.constant = constant;
         }
@@ -184,6 +238,9 @@ public interface Instruction {
         }
         
         @FunctionalInterface
+        /**
+         * The constructor interface for WithRegisterAnd8BitConstant.
+         */
         public interface Constructor {
             WithRegisterAnd8BitConstant build(Register register, UByte constant);
         }
