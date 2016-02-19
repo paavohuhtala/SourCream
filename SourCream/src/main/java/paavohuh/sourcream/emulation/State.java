@@ -228,4 +228,15 @@ public class State implements Cloneable, Serializable {
     public ScreenBuffer getScreenBuffer() {
         return screen;
     }
+    
+    /**
+     * Returns a new state with the given block of bytes copied at the initial
+     * position of the program counter (0x200).
+     * Memory and/or registers doesn't get cleared.
+     * @param byteCode The program to copy
+     * @return 
+     */
+    public State withProgram(byte[] byteCode) {
+        return this.withCopiedMemory(byteCode, UShort.valueOf(0x200));
+    }
 }

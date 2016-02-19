@@ -23,9 +23,23 @@ public class Device {
         cpu = new CPU(cache, bootupState);
     }
     
-    public void start() {
+    /**
+     * Creates a new CPU thread, and starts executing it.
+     * @return A new CPU thread.
+     */
+    public Thread start() {
         Thread thread = new Thread(cpu, "CPU Emulation Thread");
         thread.start();
+        
+        return thread;
+    }
+    
+    /**
+     * Signals the CPU that it should stop executing instructions.
+     * This will stop the CPU thread after the current cycle is finished.
+     */
+    public void stop() {
+        cpu.stop();
     }
     
     /**
@@ -35,17 +49,8 @@ public class Device {
     public void onUpdateGraphics(Consumer<ScreenBuffer> handler) {
         cpu.onUpdateGraphics(handler);
     }
-    
-    private Seq<Instruction> getAllInstructions() {
-        return Seq.concat(
-            Arithmetic.getAll(),
-            Bitwise.getAll(),
-            Control.getAll(),
-            Graphics.getAll(),
-            Transfer.getAll());
-    }
-    
+
     private void registerAllInstructions(InstructionCache cache) {
-        getAllInstructions().forEach(cache::register);
+        AllInstructions.get().forEach(cache::register);
     }
 }

@@ -2,12 +2,10 @@
 package paavohuh.sourcream;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import paavohuh.sourcream.configuration.*;
 import paavohuh.sourcream.emulation.*;
@@ -18,16 +16,14 @@ import paavohuh.sourcream.ui.*;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         
         ScreenBuffer logoBuffer = Resource.getLogo();
-        
-        byte[] rom = Files.readAllBytes(Paths.get("../", "roms", "LOGO"));
         
         // JMP 0x200
         byte[] nopRom = new byte[] {0x12, 0x00};

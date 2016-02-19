@@ -16,6 +16,7 @@ public class CPU implements Runnable {
     private State state;
     private final InstructionDecoder decoder;
     private final List<Consumer<ScreenBuffer>> onUpdateGraphicsHandlers;
+    private boolean shouldRun;
     
     public CPU(InstructionDecoder decoder, State state) {
         this.decoder = decoder;
@@ -29,9 +30,8 @@ public class CPU implements Runnable {
      * 2. Decodes the instruction
      * 3. Replaces current state with modified state
      * @throws paavohuh.sourcream.emulation.UnknownInstructionException
-     * @throws java.lang.InterruptedException
      */
-    public void runCycle() throws UnknownInstructionException, InterruptedException {
+    public void runCycle() throws UnknownInstructionException {
         UShort code = state.get16BitsAt(state.getProgramCounter());
         Optional<Instruction> decoded = decoder.decode(code);
         
@@ -49,8 +49,6 @@ public class CPU implements Runnable {
         }
         
         this.state = newState;
-        
-        Thread.sleep(20);
     }
 
     private void updateGraphics(ScreenBuffer buffer) {
@@ -70,13 +68,27 @@ public class CPU implements Runnable {
     
     @Override
     public void run() {
+        shouldRun = true;
+        
         try {
-            while(true) {
+            while(shouldRun) {
                 runCycle();
             }
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("CPU error: " + Arrays.toString(e.getStackTrace()));
         }
+    }
+
+    public void stop() {
+        this.shouldRun = false;
+    }
+    
+    public State getState() {
+        return state;
+    }
+    
+    public void setState(State state) {
+        this.state = state;
     }
 }

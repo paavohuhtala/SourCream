@@ -1,10 +1,6 @@
 package paavohuh.sourcream.tests;
 
 import org.joou.UShort;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

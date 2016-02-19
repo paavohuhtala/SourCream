@@ -142,4 +142,17 @@ public class ScreenBuffer {
         
         return buffer[y][x];
     }
+    
+    public boolean buffersEqual(ScreenBuffer other) {
+        if (other.width != this.width) return false;
+        if (other.height != this.height) return false;
+        
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (other.buffer[y][x] != buffer[y][x]) return false;
+            }
+        }
+        
+        return true;
+    }
 }

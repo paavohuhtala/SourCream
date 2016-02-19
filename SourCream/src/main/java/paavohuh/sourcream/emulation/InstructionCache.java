@@ -7,6 +7,10 @@ package paavohuh.sourcream.emulation;
  */
 public interface InstructionCache extends InstructionDecoder {
 
+    /**
+     * Adds an instruction to the instruction cache.
+     * @param instr The instruction
+     */
     void register(Instruction instr);
     
 }

@@ -19,7 +19,9 @@ public class ArrayInstructionCache implements InstructionCache {
     public void register(Instruction instr) {
         int code = instr.getCode().intValue();
         
-        verifyCodeBounds(code);
+        if (code < 0 ||  code >= cache.length) {
+            throw new IllegalArgumentException(String.format("Code %d is out of range (%d is maximum)", code, cache.length - 1));
+        }
         
         if (cache[code] != null) {
             throw new IllegalArgumentException(String.format("An instruction with code %04X has already been registered.", code));
@@ -32,14 +34,10 @@ public class ArrayInstructionCache implements InstructionCache {
     public Optional<Instruction> decode(UShort code) {
         int intCode = code.intValue();
         
-        verifyCodeBounds(intCode);
-        
-        return Optional.ofNullable(cache[code.intValue()]);
-    }
-    
-    private void verifyCodeBounds(int code) {
-        if (code < 0 ||  code >= cache.length) {
+        if (intCode < 0 || intCode >= cache.length) {
             throw new IllegalArgumentException(String.format("Code %d is out of range (%d is maximum)", code, cache.length - 1));
         }
+        
+        return Optional.ofNullable(cache[code.intValue()]);
     }
 }
