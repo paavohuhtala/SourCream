@@ -47,7 +47,7 @@ public final class Arithmetic {
             
             // This instruction doesn't set the carry flag. Instead, it merely
             // mods by 256.
-            UByte sum = UByte.valueOf((registerValue + constant.intValue()) % 0xFF);
+            UByte sum = UByte.valueOf((registerValue + constant.intValue()) & 0xFF);
             
             return state.withRegister(register, sum);
         }
@@ -122,10 +122,10 @@ public final class Arithmetic {
             int registerYValue = getRegisterY(state).intValue();
             
             int subtraction = registerXValue - registerYValue;
-            boolean borrow = subtraction < 0;
+            boolean borrow = registerYValue > registerXValue;
             
             return state
-                .withRegister(Register.BORROW, UByte.valueOf(borrow ? 1 : 0))
+                .withRegister(Register.BORROW, UByte.valueOf(borrow ? 0 : 1))
                 .withRegister(registerX, UByte.valueOf(subtraction & 0xFF));
         }  
     }
@@ -163,12 +163,37 @@ public final class Arithmetic {
             int registerYValue = getRegisterY(state).intValue();
             
             int subtraction = registerYValue - registerXValue;
-            boolean borrow = subtraction < 0;
+            boolean borrow = registerXValue > registerYValue;
             
             return state
-                .withRegister(Register.BORROW, UByte.valueOf(borrow ? 1 : 0))
+                .withRegister(Register.BORROW, UByte.valueOf(borrow ? 0 : 1))
                 .withRegister(registerX, UByte.valueOf(subtraction & 0xFF));
         }  
+    }
+    
+    public static class AddRegisterToAddressRegister extends Instruction.WithRegister {
+
+        public AddRegisterToAddressRegister(Register register) {
+            super(register);
+        }
+        
+        @Override
+        protected int getRegisterOffset() {
+            return 2;
+        }
+
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0xF01E);
+        }
+
+        @Override
+        public State execute(State state) {
+            
+            int sum = getRegister(state).intValue() + state.getAddressRegister().intValue();
+            
+            return state.withAddressRegister(UShort.valueOf(sum));
+        }
     }
     
     public static Seq<Instruction> getAll() {
@@ -176,6 +201,7 @@ public final class Arithmetic {
             getAllInstances(AddConstantToRegister::new),
             getAllInstances(AddRegisterToRegister::new),
             getAllInstances(SubtractRegisterXFromY::new),
-            getAllInstances(SubtractRegisterYFromX::new));
+            getAllInstances(SubtractRegisterYFromX::new),
+            getAllInstances(AddRegisterToAddressRegister::new));
     }
 }

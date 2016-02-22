@@ -11,10 +11,6 @@ import paavohuh.sourcream.emulation.Register;
 import paavohuh.sourcream.emulation.State;
 import paavohuh.sourcream.emulation.instructions.Arithmetic.*;
 
-/**
- *
- * @author paavohuh
- */
 public class ArithmeticTest extends TestWithState {
     
     @Test
@@ -24,7 +20,7 @@ public class ArithmeticTest extends TestWithState {
             .cast(AddConstantToRegister.class);
         
         for (WithRegisterAnd8BitConstant instr : instances) {
-            UByte expected = UByte.valueOf((127 + instr.constant.intValue()) % 0xFF);
+            UByte expected = UByte.valueOf((127 + instr.constant.intValue()) & 0xFF);
             
             State testState = initialState.withRegister(instr.register, UByte.valueOf(127));
             

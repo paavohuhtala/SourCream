@@ -37,6 +37,27 @@ public final class Control {
     }
     
     /**
+     * Jumps to address + V0.
+     */
+    public static class JumpToWithOffset extends Instruction.WithAddress {
+
+        public JumpToWithOffset(UShort address) {
+            super(address);
+        }
+        
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0xB000);
+        }
+
+        @Override
+        public State execute(State state) {
+            int newAddress = address.intValue() + state.getRegister(Register.V0).intValue();
+            return state.withProgamCounter(UShort.valueOf(newAddress));
+        }   
+    }
+    
+    /**
      * Skips the next instruction if value at register equals constant.
      */
     public static class SkipIfEquals extends Instruction.WithRegisterAnd8BitConstant {
@@ -109,7 +130,7 @@ public final class Control {
     }
     
     /**
-     * Skips the next instruction if the values of registers X and Y equal.
+     * Skips the next instruction if the values of registers X and Y are equal.
      */
     public static class SkipIfEqualsRegister extends Instruction.WithTwoRegisters {
 
@@ -133,11 +154,8 @@ public final class Control {
         }
 
         @Override
-        public State execute(State state) {
-            UByte registerXValue = state.getRegister(registerX);
-            UByte registerYValue = state.getRegister(registerY);
-            
-            if (registerXValue.equals(registerYValue)) {
+        public State execute(State state) {            
+            if (getRegisterX(state).equals(getRegisterY(state))) {
                 return state.withIncrementedPc();
             } else {
                 return new State(state);
@@ -145,11 +163,81 @@ public final class Control {
         }
     }
     
+    /**
+     * Skips the next instruction if the values of register X and Y are not equal.
+     */
+    public static class SkipIfNotEqualsRegister extends Instruction.WithTwoRegisters {
+
+        public SkipIfNotEqualsRegister(Register x, Register y) {
+            super(x, y);
+        }
+        
+        @Override
+        protected int getRegXOffset() {
+            return 2;
+        }
+
+        @Override
+        protected int getRegYOffset() {
+            return 1;
+        }
+
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0x9000);
+        }
+
+        @Override
+        public State execute(State state) {
+            if (!getRegisterX(state).equals(getRegisterY(state))) {
+                return state.withIncrementedPc();
+            } else {
+                return new State(state);
+            }
+        }
+        
+    }
+    
+    public static class CallSubroutine extends Instruction.WithAddress {
+
+        public CallSubroutine(UShort address) {
+            super(address);
+        }
+        
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0x2000);
+        }
+
+        @Override
+        public State execute(State state) {
+            return state.withCallTo(address);
+        }
+    }
+    
+    public static class Return implements Instruction {
+
+        @Override
+        public State execute(State state) {
+            return state.withReturn();
+        }
+
+        @Override
+        public UShort getCode() {
+            return UShort.valueOf(0x00EE);
+        }
+        
+    }
+    
     public static Seq<Instruction> getAll() {
         return Seq.concat(
+            Seq.of(new Return()),
             getAllInstances(JumpTo::new),
+            getAllInstances(JumpToWithOffset::new),
             getAllInstances(SkipIfEquals::new),
             getAllInstances(SkipIfNotEquals::new),
-            getAllInstances(SkipIfEqualsRegister::new));
+            getAllInstances(SkipIfEqualsRegister::new),
+            getAllInstances(SkipIfNotEqualsRegister::new),
+            getAllInstances(CallSubroutine::new));
     }
 }

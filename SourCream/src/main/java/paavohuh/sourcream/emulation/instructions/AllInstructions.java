@@ -15,6 +15,7 @@ public class AllInstructions {
             Bitwise.getAll(),
             Control.getAll(),
             Graphics.getAll(),
-            Transfer.getAll());
+            Transfer.getAll(),
+            Input.getAll());
     }
 }

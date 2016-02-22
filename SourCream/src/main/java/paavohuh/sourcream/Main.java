@@ -1,7 +1,10 @@
 
 package paavohuh.sourcream;
 
+import java.awt.KeyboardFocusManager;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
@@ -28,15 +31,21 @@ public class Main {
             JOptionPane.showMessageDialog(null, e);
         }
         
+        DeviceConfiguration deviceConfig = ConfigurationManager.loadOrCreateDeviceConfig();
+        EmulatorConfiguration emulatorConfig = ConfigurationManager.loadOrCreateEmulatorConfig();
+        
         ScreenBuffer logoBuffer = Resource.getLogo();
         
-        // JMP 0x200
-        byte[] nopRom = new byte[] {0x12, 0x00};
+        byte[] testRom = Files.readAllBytes(Paths.get("../roms/PONG"));
         
-        Device device = new Device(DeviceConfiguration.getDefault(), nopRom);
+        Device device = new Device(deviceConfig);
+        device.setState(device.getState().withProgram(testRom));
         
-        MainWindow window = new MainWindow(EmulatorConfiguration.getDefault());
+        MainWindow window = new MainWindow(emulatorConfig, deviceConfig);
         window.getEmulatorPanel().updateScreenBuffer(logoBuffer);
+        
+        InputMapper mapper = new InputMapper(device, emulatorConfig.getInput());
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(mapper);
 
         EmulatorPanel emulatorPanel = window.getEmulatorPanel();
         

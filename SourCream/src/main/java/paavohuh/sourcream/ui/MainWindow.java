@@ -2,11 +2,13 @@
 package paavohuh.sourcream.ui;
 
 import java.awt.event.WindowEvent;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.configuration.EmulatorConfiguration;
 
 /**
@@ -15,10 +17,13 @@ import paavohuh.sourcream.configuration.EmulatorConfiguration;
 public class MainWindow extends JFrame {
     
     private EmulatorPanel emulatorPanel;
-    private EmulatorConfiguration config;
+    private final EmulatorConfiguration emulatorConfig;
+    private final DeviceConfiguration deviceConfig;
 
-    public MainWindow(EmulatorConfiguration config) {
-        this.config = config;
+    public MainWindow(EmulatorConfiguration emulatorConfig, DeviceConfiguration deviceConfig) {
+        this.emulatorConfig = emulatorConfig;
+        this.deviceConfig = deviceConfig;
+
         initComponents();
     }
 
@@ -32,26 +37,36 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         JMenuBar menubar = new JMenuBar();
-        JMenu menu = new JMenu("File");
+        
+        JMenu fileMenu = new JMenu("File");
         
         JMenuItem item = new JMenuItem("Load ROM...");
         item.addActionListener(event -> {
             JFileChooser chooser = new JFileChooser();
             chooser.showOpenDialog(this);
         });
-        menu.add(item);
+        fileMenu.add(item);
         
-        menu.addSeparator();
+        fileMenu.addSeparator();
         
         item = new JMenuItem("Exit");
         item.addActionListener(event -> {
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
-        menu.add(item);
+        fileMenu.add(item);
+        menubar.add(fileMenu);
         
-        menubar.add(menu);
+        JMenu settingsMenu = new JMenu("Options");
         
-        emulatorPanel = new EmulatorPanel(config);
+        item = new JMenuItem("Configuration...");
+        item.addActionListener(event -> {
+            ConfigWindow window = new ConfigWindow(this, emulatorConfig, deviceConfig);
+            window.setVisible(true);
+        });
+        settingsMenu.add(item);
+        menubar.add(settingsMenu);
+        
+        emulatorPanel = new EmulatorPanel(emulatorConfig, deviceConfig);
         add(emulatorPanel);
         pack();
         setVisible(true);

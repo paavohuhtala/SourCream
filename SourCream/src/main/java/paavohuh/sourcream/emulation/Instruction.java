@@ -21,6 +21,7 @@ public interface Instruction {
     */
     UShort getCode();
     
+    
     /**
      * Represents a parametrized instruction. All instances of the instruction
      * have a shared opcode, which is modified to produce the final code.
@@ -44,7 +45,7 @@ public interface Instruction {
          * Creates a new instruction that uses a single register.
          * @param register The register.
          */
-        public WithRegister(Register register) {
+        protected WithRegister(Register register) {
             this.register = register;
         }
         
@@ -53,12 +54,21 @@ public interface Instruction {
             return InstructionUtils.setRegister(getBaseCode(), register, getRegisterOffset());
         }
         
+        protected UByte getRegister(State state) {
+            return state.getRegister(register);
+        }
+        
         @FunctionalInterface
         /**
          * The constructor interface for WithRegister
          */
         public interface Constructor {
             WithRegister build(Register register);
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%s(%s)", this.getClass().getSimpleName(), register.toString());
         }
     }
     
@@ -84,7 +94,7 @@ public interface Instruction {
          * @param x
          * @param y 
          */
-        public WithTwoRegisters(Register x, Register y) {
+        protected WithTwoRegisters(Register x, Register y) {
             this.registerX = x;
             this.registerY = y;
         }
@@ -109,6 +119,14 @@ public interface Instruction {
         public interface Constructor {
             WithTwoRegisters build(Register registerX, Register registerY);
         }
+        
+        @Override
+        public String toString() {
+            return String.format("%s(%s, %s)",
+                this.getClass().getSimpleName(),
+                registerX.toString(),
+                registerY.toString());
+        }
     }
     
     /**
@@ -126,7 +144,7 @@ public interface Instruction {
          * @param y
          * @param constant 
          */
-        public WithTwoRegistersAnd4BitConstant(Register x, Register y, UByte constant) {
+        protected WithTwoRegistersAnd4BitConstant(Register x, Register y, UByte constant) {
             super(x, y);
             this.constant = constant;
         }
@@ -144,6 +162,13 @@ public interface Instruction {
          */
         public interface Constructor {
             WithTwoRegistersAnd4BitConstant build(Register registerX, Register registerY, UByte constant);
+        }
+        
+        @Override
+        public String toString() {
+            return String.format("%s(%02X)",
+                this.getClass().getSimpleName(),
+                constant.intValue());
         }
     }
     
@@ -174,6 +199,13 @@ public interface Instruction {
          */
         public interface Constructor {
             WithAddress build(UShort address);
+        }
+        
+        @Override
+        public String toString() {
+            return String.format("%s(%04X)",
+                this.getClass().getSimpleName(),
+                address.intValue());
         }
     }
     
@@ -206,6 +238,13 @@ public interface Instruction {
          */
         public interface Constructor {
             With4BitConstant build(UByte constant);
+        }
+        
+        @Override
+        public String toString() {
+            return String.format("%s(%1X)",
+                this.getClass().getSimpleName(),
+                constant.intValue());
         }
     }
     
@@ -244,12 +283,13 @@ public interface Instruction {
         public interface Constructor {
             WithRegisterAnd8BitConstant build(Register register, UByte constant);
         }
-    }
-    
-    /**
-     * NOT IMPLEMENTED: An abstract instruction with one 8-bit constant.
-     */
-    public static abstract class With8BitConstant implements Instruction {
         
+        @Override
+        public String toString() {
+            return String.format("%s(%s, %02X)",
+                this.getClass().getSimpleName(),
+                register.toString(),
+                constant.intValue());
+        }
     }
 }

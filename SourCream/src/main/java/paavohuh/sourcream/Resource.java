@@ -19,7 +19,7 @@ public class Resource {
         return CACHED_LOGO.get();
     }
     
-    public static final String SYSTEM_FONT = "systemfont.bin";
+    public static final String SYSTEM_FONT = "/systemfont.bin";
     private static final Cached<Byte[]> CACHED_SYSTEM_FONT;
     
     public static byte[] getSystemFont() {

@@ -35,7 +35,7 @@ public class ConfigurationManager {
      * @return The config
      * @throws IOException 
      */
-    public static EmulatorConfiguration loadorCreateEmulatorConfig() throws IOException {
+    public static EmulatorConfiguration loadOrCreateEmulatorConfig() throws IOException {
         Path path = Paths.get(CONFIGURATION_DIRECTORY, EMULATOR_CONFIGURATION_FILE);
         
         return loadOrCreateConfig(path, EmulatorConfiguration::getDefault, EmulatorConfiguration.class);

@@ -36,8 +36,8 @@ public class ScreenBuffer {
      * @param config 
      */
     public ScreenBuffer(DeviceConfiguration config) {
-        width = config.resolutionX;
-        height = config.resolutionY;
+        width = config.getResolutionX();
+        height = config.getResolutionY();
         flipped = false;
         modified = false;
         

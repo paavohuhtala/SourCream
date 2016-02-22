@@ -64,14 +64,43 @@ public final class Graphics {
             ScreenBuffer sprite = new ScreenBuffer(buffer);
             ScreenBuffer modifiedScreen = state.getScreenBuffer().blit(sprite, getRegisterX(state).intValue(), getRegisterY(state).intValue());
             
-            return state.withScreenBuffer(modifiedScreen).withRegister(Register.VF, UByte.valueOf(modifiedScreen.flipped ? 1 : 0));
+            return state
+                .withScreenBuffer(modifiedScreen)
+                .withRegister(Register.VF, UByte.valueOf(modifiedScreen.flipped ? 1 : 0));
+        }
+    }
+    
+    public static class GetCharacterAddress extends Instruction.WithRegister {
+
+        public GetCharacterAddress(Register register) {
+            super(register);
+        }
+
+        @Override
+        protected int getRegisterOffset() {
+            return 2;
+        }
+
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0xF029);
+        }
+
+        @Override
+        public State execute(State state) {
+            // Each character takes 5 bytes in system ROM.
+            // Therefore, each character can be found at RAM[VX * 5].
+            int intOffset = getRegister(state).intValue() * 5;
+            UShort charAddr = UShort.valueOf(intOffset);
+            
+            return state.withAddressRegister(charAddr);
         }
     }
     
     public static Seq<Instruction> getAll() {
         return Seq.concat(
             Seq.of(new ClearScreen()),
-            getAllInstances(DrawSprite::new)
-        );
+            getAllInstances(DrawSprite::new),
+            getAllInstances(GetCharacterAddress::new));
     }
 }

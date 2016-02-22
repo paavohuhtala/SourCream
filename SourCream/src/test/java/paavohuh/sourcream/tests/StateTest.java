@@ -33,8 +33,9 @@ public class StateTest extends TestWithState {
     }
     
     @Test
-    public void ramStartsEmpty() {
-        for (int i = 0; i < DeviceConfiguration.getDefault().ramSize; i++) {
+    public void ramStartsEmptyExceptForSystemFont() {
+        // System fonts take the first 5 * 16 bytes.
+        for (int i = 5 * 16; i < DeviceConfiguration.getDefault().getRamSize(); i++) {
             Assert.assertEquals(UByte.valueOf(0), initialState.get8BitsAt(UShort.valueOf(i)));
         }
     }

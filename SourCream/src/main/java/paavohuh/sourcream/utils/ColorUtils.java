@@ -25,4 +25,11 @@ public class ColorUtils {
             MathUtils.clamp(0.0f, green, 1.0f),
             MathUtils.clamp(0.0f, blue, 1.0f));
     }
+    
+    public static Color invert(Color other) {
+        return new Color(
+            255 - other.getRed(),
+            255 - other.getGreen(),
+            255 - other.getBlue());
+    }
 }

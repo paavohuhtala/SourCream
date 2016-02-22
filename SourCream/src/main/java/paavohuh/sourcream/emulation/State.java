@@ -1,8 +1,10 @@
 package paavohuh.sourcream.emulation;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import org.joou.UByte;
 import org.joou.UShort;
+import paavohuh.sourcream.Resource;
 
 import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.utils.ArrayUtils;
@@ -12,6 +14,10 @@ import paavohuh.sourcream.utils.ArrayUtils;
  * mutated instances.
  */
 public class State implements Cloneable, Serializable {
+    
+    // The current execution state. Defaults to PAUSED.
+    private ExecutionState executionState;
+    
     // 4K (by default) of system RAM
     private byte[] ram;
     
@@ -34,14 +40,21 @@ public class State implements Cloneable, Serializable {
     private UShort[] stack;
     
     // Two 8-bit timers.
-    private UByte delayTimer;
-    private UByte soundTimer;
+    private UByte delayTimerValue;
+    private UByte soundTimerValue;
+    
+    // Set to true if an instruction changes the timers.
+    private boolean delayTimerChanged;
+    private boolean soundTimerChanged;
+    
+    private InputState inputState;
     
     /**
      * Copy constructor. Doesn't modify the state at all.
      * @param previous The previous state.
      */
     public State(State previous) {
+        this.executionState = previous.executionState;
         this.ram = ArrayUtils.clone(previous.ram);
         this.screen = previous.screen;
         this.registers = ArrayUtils.clone(previous.registers);
@@ -49,25 +62,42 @@ public class State implements Cloneable, Serializable {
         this.pc = previous.pc;
         this.sp = previous.sp;
         this.stack = ArrayUtils.clone(previous.stack);
-        this.delayTimer = previous.delayTimer;
-        this.soundTimer = previous.soundTimer;
+        this.delayTimerValue = previous.delayTimerValue;
+        this.soundTimerValue = previous.soundTimerValue;
+        this.delayTimerChanged = previous.delayTimerChanged;
+        this.soundTimerChanged = previous.soundTimerChanged;
+        this.inputState = previous.inputState;
     }
     
     /**
      * Returns a new bootup state, using the given device configuration.
      * The program counter is set to 0x200, everything else is zeroed out.
+     * The execution state is set to PAUSED.
      * @param config 
      */
     public State(DeviceConfiguration config) {
-        this.ram = new byte[config.ramSize];
+        this.executionState = ExecutionState.paused();
+        this.ram = new byte[config.getRamSize()];
         this.screen = new ScreenBuffer(config);
         this.registers = new UByte[16];
+        
+        for (int i = 0; i < registers.length; i++) {
+            registers[i] = UByte.valueOf(0);
+        }
+        
         this.addressRegister = UShort.valueOf(0);
         this.pc = UShort.valueOf(0x200);
         this.sp = UByte.valueOf(0);
         this.stack = new UShort[16];
-        this.delayTimer = UByte.valueOf(0);
-        this.soundTimer = UByte.valueOf(0);
+        this.delayTimerValue = UByte.valueOf(0);
+        this.soundTimerValue = UByte.valueOf(0);
+        this.delayTimerChanged = false;
+        this.soundTimerChanged = false;
+        this.inputState = new InputState();
+        
+        // We need the system font, so load it from resources and copy it.
+        byte[] systemFont = Resource.getSystemFont();
+        System.arraycopy(systemFont, 0, ram, 0, systemFont.length);
     }
     
     /**
@@ -238,5 +268,105 @@ public class State implements Cloneable, Serializable {
      */
     public State withProgram(byte[] byteCode) {
         return this.withCopiedMemory(byteCode, UShort.valueOf(0x200));
+    }
+    
+    /**
+     * Returns a new state with PC set to the given address and the current PC
+     * is pushed to call stack. The stack point is also incremented.
+     * @param subroutine The address to jump to.
+     * @return The new state.
+     */
+    public State withCallTo(UShort subroutine) {
+        State state = new State(this);
+        state.stack[state.sp.intValue() + 1] = state.pc;
+        state.sp = UByte.valueOf(state.sp.intValue() + 1);
+        state.pc = subroutine;
+        
+        return state;
+    }
+    
+    /**
+     * Returns a new state with with PC set to the topmost item in the call
+     * stack. The stack pointer is also decremetned.
+     * @return The new state.
+     */
+    public State withReturn() {
+        State state = new State(this);
+        state.pc = state.stack[state.sp.intValue()];
+        state.sp = UByte.valueOf(state.sp.intValue() - 1);
+        
+        return state;
+    }
+    
+    public State withDelayTimer(UByte value, boolean setFlag) {
+        State state = new State(this);
+        state.delayTimerValue = value;
+        state.delayTimerChanged = setFlag;
+        
+        return state;
+    }
+    
+    public State withSoundTimer(UByte value, boolean setFlag) {
+        State state = new State(this);
+        state.soundTimerValue = value;
+        state.delayTimerChanged = setFlag;
+        
+        return state;
+    }
+        
+    public UByte getDelayTimer() {
+        return delayTimerValue;
+    }
+    
+    public UByte getSoundTimer() {
+        return soundTimerValue;
+    }
+    
+    public State asPaused() {
+        State state = new State(this);
+        state.executionState = ExecutionState.paused();
+        
+        return state;
+    }
+    
+    public State asRunning() {
+        State state = new State(this);
+        state.executionState = ExecutionState.running();
+        
+        return state;
+    }
+    
+    public State asWaitingForKey(Register storeIn) {
+        State state = new State(this);
+        state.executionState = ExecutionState.waitingForKey(storeIn);
+        
+        return state;
+    }
+
+    public InputState getInputState() {
+        return inputState;
+    }
+    
+    public State withClearedTimerFlags() {
+        State state = new State(this);
+        state.soundTimerChanged = false;
+        state.delayTimerChanged = false;
+        
+        return state;
+    }
+
+    public boolean isDelayTimerChanged() {
+        return delayTimerChanged;
+    }
+
+    public boolean isSoundTimerChanged() {
+        return soundTimerChanged;
+    }
+
+    public State withInputState(InputState inputState) {
+        State state = new State(this);
+        state.inputState = inputState;
+        
+        return state;
     }
 }

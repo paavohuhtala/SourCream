@@ -1,0 +1,29 @@
+
+
+// Memory map
+// SPRITES
+// 0x200 - S (5 bytes)
+
+// Store the characters
+
+A200
+
+// 11100000
+// 10000000
+// 11100000
+// 00100000
+// 11100000
+
+0x200 00E0 // Clear
+0x201 A300 // I = 0x300
+0x202 60E0
+0x203 6180
+0x204 62E0
+0x205 6320
+0x206 64E0
+0x207 F455 // Copy sprite to RAM
+0x209
+0x20A 6002
+0x20B 6102
+0x20C D015 // Draw 5 rows of sprite at V0, V1 (2, 2)
+0x20D 1200 // Jump to 0x200
