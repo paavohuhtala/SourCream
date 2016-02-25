@@ -13,12 +13,6 @@ import paavohuh.sourcream.tests.StateTest;
 public class ControlTest extends StateTest {
     
     @Test
-    public void skipIfEqualsHasValidCode() {
-        Instruction instr = new SkipIfEquals(Register.VA, UByte.valueOf(0xFF));
-        Assert.assertEquals(UShort.valueOf(0x3AFF), instr.getCode());
-    }
-    
-    @Test
     public void jumpWorks() throws UnknownInstructionException {
         byte[] program = ProgramBuilder.assemble(
             new AddConstantToRegister(Register.V0, UByte.valueOf(1)),

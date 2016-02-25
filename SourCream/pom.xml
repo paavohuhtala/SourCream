@@ -57,7 +57,6 @@
                     <targetClasses>
                         <param>paavohuh.sourcream.emulation.*</param>
                         <param>paavohuh.sourcream.utils.*</param>
-                        <param>paavohuh.sourcream.configuration.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>paavohuh.sourcream.tests.*</param>

@@ -6,14 +6,8 @@ import org.joou.UShort;
 import org.junit.Assert;
 import org.junit.Test;
 
-import paavohuh.sourcream.emulation.ArrayInstructionCache;
-import paavohuh.sourcream.emulation.Instruction;
-import paavohuh.sourcream.emulation.State;
-import paavohuh.sourcream.emulation.instructions.Arithmetic;
-import paavohuh.sourcream.emulation.instructions.Bitwise;
-import paavohuh.sourcream.emulation.instructions.Control;
-import paavohuh.sourcream.emulation.instructions.Graphics;
-import paavohuh.sourcream.emulation.instructions.Transfer;
+import paavohuh.sourcream.emulation.*;
+import paavohuh.sourcream.emulation.instructions.*;
 
 public class InstructionCacheTest {
 
@@ -47,11 +41,16 @@ public class InstructionCacheTest {
         Control.getAll().forEach(cache::register);
     }
     
-        
     @Test
     public void canCacheGraphics() {
         ArrayInstructionCache cache = new ArrayInstructionCache();
         Graphics.getAll().forEach(cache::register);
+    }
+    
+    @Test
+    public void canCacheInput() {
+        ArrayInstructionCache cache = new ArrayInstructionCache();
+        Input.getAll().forEach(cache::register);
     }
     
     @Test
