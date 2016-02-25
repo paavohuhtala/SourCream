@@ -84,12 +84,42 @@ public final class Input {
     }
     
     /**
+     * Halts the interpreter until a key is pressed. The key is stored at the
+     * register.
+     */
+    public static class HaltUntilKeyPressed extends Instruction.WithRegister {
+        
+        /**
+         * Halts the interpreter until a key is pressed.
+         * @param register The register to store they key id in.
+         */
+        public HaltUntilKeyPressed(Register register) {
+            super(register);
+        }
+        
+        @Override
+        protected int getRegisterOffset() {
+            return 2;
+        }
+
+        @Override
+        protected UShort getBaseCode() {
+            return UShort.valueOf(0xF00A);
+        }
+
+        @Override
+        public State execute(State state) {
+            return state.asWaitingForKey(register);
+        }
+    }
+    
+    /**
      * Gets all input instructions.
      * @return A sequence of instructions.
      */
     public static Seq<Instruction> getAll() {
-        return Seq.concat(
-                getAllInstances(SkipIfKeyPressed::new),
-                getAllInstances(SkipIfKeyNotPressed::new));
+        return Seq.concat(getAllInstances(SkipIfKeyPressed::new),
+                getAllInstances(SkipIfKeyNotPressed::new),
+                getAllInstances(HaltUntilKeyPressed::new));
     }
 }
