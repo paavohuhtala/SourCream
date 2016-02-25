@@ -45,8 +45,6 @@ public final class Arithmetic {
         public State execute(State state) {
             int registerValue = state.getRegister(register).intValue();
             
-            // This instruction doesn't set the carry flag. Instead, it merely
-            // mods by 256.
             UByte sum = UByte.valueOf((registerValue + constant.intValue()) & 0xFF);
             
             return state.withRegister(register, sum);

@@ -21,6 +21,8 @@ import paavohuh.sourcream.emulation.instructions.AllInstructions;
  * fetch-decode-execute -loop.
  */
 public class Device {
+    private final DeviceConfiguration configuration;
+    
     private State state;
     private final InstructionDecoder decoder;
     private final List<Consumer<ScreenBuffer>> onUpdateGraphicsHandlers;
@@ -30,7 +32,6 @@ public class Device {
     
     private boolean isRunning;
     
-    private static final int CLOCK_RATE = 500;
     private static final int TIMER_RATE = 60;
     
     private final Timer delayTimer;
@@ -38,16 +39,19 @@ public class Device {
     private final InputState inputState;
     
     private final HashSet<Instruction> instructionSet;
+    private final List<Instruction> instructions;
     
     /**
      * Creates a new device.
+     * @param configuration The configuration for the device.
      * @param state Initial state of the device.
      */
-    public Device(State state) {
+    public Device(DeviceConfiguration configuration, State state) {
         InstructionCache cache = new ArrayInstructionCache();
         AllInstructions.get().forEach(cache::register);
         
         this.decoder = cache;
+        this.configuration = configuration;
         this.state = state;
         this.onUpdateGraphicsHandlers = new ArrayList<>(1);
         this.scheduler = new ScheduledThreadPoolExecutor(1);
@@ -58,10 +62,11 @@ public class Device {
         this.inputState = new InputState();
         
         this.instructionSet = new HashSet<>();
+        this.instructions = new ArrayList<>();
     }
     
     public Device(DeviceConfiguration configuration) {
-        this(new State(configuration));
+        this(configuration, new State(configuration));
     }
     
     /**
@@ -71,14 +76,7 @@ public class Device {
      * 3. Replaces current state with modified state
      * @throws paavohuh.sourcream.emulation.UnknownInstructionException
      */
-    public void runCycle() throws UnknownInstructionException {
-        
-        /*try {
-            System.in.read();
-        } catch (IOException ex) {
-            Logger.getLogger(Device.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        
+    public void runCycle() throws UnknownInstructionException {        
         UShort code = state.get16BitsAt(state.getProgramCounter());
         Optional<Instruction> decoded = decoder.decode(code);
         
@@ -87,7 +85,8 @@ public class Device {
         }
         
         Instruction instruction = decoded.get();
-        //instructionSet.add(instruction);
+        instructionSet.add(instruction);
+        instructions.add(instruction);
         //System.out.println(instruction);
         
         //System.out.println(delayTimer.getValue());
@@ -140,7 +139,7 @@ public class Device {
         this.state = this.state.asRunning();
         this.delayTimer.start();
         this.soundTimer.start();
-        this.ticker = scheduler.scheduleAtFixedRate(this::tryRunCycle, 0, 1000 / CLOCK_RATE, TimeUnit.MILLISECONDS);
+        this.ticker = scheduler.scheduleAtFixedRate(this::tryRunCycle, 0, 1000 / configuration.getClockSpeed(), TimeUnit.MILLISECONDS);
         this.isRunning = true;
     }
     

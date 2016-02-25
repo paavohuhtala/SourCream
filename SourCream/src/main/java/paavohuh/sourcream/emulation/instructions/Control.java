@@ -85,7 +85,7 @@ public final class Control {
         public State execute(State state) {
             UByte registerValue = state.getRegister(register);
             
-            if (registerValue.equals(constant)) {
+            if (registerValue.intValue() == constant.intValue()) {
                 return state.withIncrementedPc();
             } else {
                 return new State(state);
@@ -121,7 +121,7 @@ public final class Control {
         public State execute(State state) {
             UByte registerValue = state.getRegister(register);
             
-            if (!registerValue.equals(constant)) {
+            if (registerValue.intValue() != constant.intValue()) {
                 return state.withIncrementedPc();
             } else {
                 return new State(state);
@@ -155,7 +155,7 @@ public final class Control {
 
         @Override
         public State execute(State state) {            
-            if (getRegisterX(state).equals(getRegisterY(state))) {
+            if (getRegisterX(state).intValue() ==  getRegisterY(state).intValue()) {
                 return state.withIncrementedPc();
             } else {
                 return new State(state);
@@ -189,7 +189,7 @@ public final class Control {
 
         @Override
         public State execute(State state) {
-            if (!getRegisterX(state).equals(getRegisterY(state))) {
+            if (getRegisterX(state) != getRegisterY(state)) {
                 return state.withIncrementedPc();
             } else {
                 return new State(state);

@@ -17,7 +17,7 @@ public class DeviceTest {
 
     public DeviceTest() {
         State initialState = new State(DeviceConfiguration.getDefault());
-        this.cpu = new Device(initialState);
+        this.cpu = new Device(DeviceConfiguration.getDefault(), initialState);
     }
     
     @Test

@@ -5,7 +5,6 @@ import java.awt.KeyboardFocusManager;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -36,7 +35,7 @@ public class Main {
         
         ScreenBuffer logoBuffer = Resource.getLogo();
         
-        byte[] testRom = Files.readAllBytes(Paths.get("../roms/PONG"));
+        byte[] testRom = Files.readAllBytes(Paths.get("../roms/TETRIS"));
         
         Device device = new Device(deviceConfig);
         device.setState(device.getState().withProgram(testRom));

@@ -284,34 +284,34 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         public static InputConfiguration getDefault() {
             HashMap<Integer, Integer> bindings = new HashMap<>(16);
             
-            // pong:
-            // player 1 up: 1
-            // player 1 down: 4
-            // player 2 up: 12
-            // player 2 down: 13
-            
-            /*mapping.put(KeyEvent.VK_Q, 0);
-            mapping.put(KeyEvent.VK_W, 1);
-            mapping.put(KeyEvent.VK_E, 2);
-            mapping.put(KeyEvent.VK_R, 3);
-            mapping.put(KeyEvent.VK_T, 4);
-            mapping.put(KeyEvent.VK_Y, 5);
-            mapping.put(KeyEvent.VK_U, 6);
-            mapping.put(KeyEvent.VK_I, 7);
-            mapping.put(KeyEvent.VK_O, 8);
-            mapping.put(KeyEvent.VK_P, 9);
-            mapping.put(KeyEvent.VK_A, 10);
-            mapping.put(KeyEvent.VK_S, 11);
-            mapping.put(KeyEvent.VK_D, 12);
-            mapping.put(KeyEvent.VK_F, 13);
-            mapping.put(KeyEvent.VK_G, 14);
-            mapping.put(KeyEvent.VK_H, 15);*/
-            
+            /*bindings.put(KeyEvent.VK_Q, 0);
             bindings.put(KeyEvent.VK_W, 1);
-            bindings.put(KeyEvent.VK_S, 4);
+            bindings.put(KeyEvent.VK_E, 2);
+            bindings.put(KeyEvent.VK_R, 3);
+            bindings.put(KeyEvent.VK_T, 4);
+            bindings.put(KeyEvent.VK_Y, 5);
+            bindings.put(KeyEvent.VK_U, 6);
+            bindings.put(KeyEvent.VK_I, 7);
+            bindings.put(KeyEvent.VK_O, 8);
+            bindings.put(KeyEvent.VK_P, 9);
+            bindings.put(KeyEvent.VK_A, 10);
+            bindings.put(KeyEvent.VK_S, 11);
+            bindings.put(KeyEvent.VK_D, 12);
+            bindings.put(KeyEvent.VK_F, 13);
+            bindings.put(KeyEvent.VK_G, 14);
+            bindings.put(KeyEvent.VK_H, 15);*/
             
+            // PONG
+            /*bindings.put(KeyEvent.VK_W, 1);
+            bindings.put(KeyEvent.VK_S, 4);
             bindings.put(KeyEvent.VK_UP, 12);
-            bindings.put(KeyEvent.VK_DOWN, 13);
+            bindings.put(KeyEvent.VK_DOWN, 13);*/
+            
+            // TETRIS
+            bindings.put(KeyEvent.VK_LEFT, 5);
+            bindings.put(KeyEvent.VK_RIGHT, 6);
+            bindings.put(KeyEvent.VK_UP, 4);
+            bindings.put(KeyEvent.VK_DOWN, 7);
             
             return new InputConfiguration(bindings);
         }

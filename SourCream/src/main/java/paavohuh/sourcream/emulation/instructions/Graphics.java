@@ -62,11 +62,15 @@ public final class Graphics {
             byte[] buffer = state.getMemoryFrom(state.getAddressRegister(), constant.intValue());
             
             ScreenBuffer sprite = new ScreenBuffer(buffer);
-            ScreenBuffer modifiedScreen = state.getScreenBuffer().blit(sprite, getRegisterX(state).intValue(), getRegisterY(state).intValue());
+            ScreenBuffer modifiedScreen = state
+                .getScreenBuffer()
+                .blit(sprite, getRegisterX(state).intValue(), getRegisterY(state).intValue());
+            
+            boolean flipped = modifiedScreen.flipped;
             
             return state
                 .withScreenBuffer(modifiedScreen)
-                .withRegister(Register.VF, UByte.valueOf(modifiedScreen.flipped ? 1 : 0));
+                .withRegister(Register.VF, UByte.valueOf(flipped ? 1 : 0));
         }
     }
     

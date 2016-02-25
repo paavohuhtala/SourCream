@@ -152,13 +152,13 @@ public final class Bitwise {
         public State execute(State state) {
             int registerYValue = getRegisterY(state).intValue();
             
-            int shifted = registerYValue << 1;
+            int shifted = (registerYValue << 1) & 0xFF;
             
             // The most significant (first) bit of register y
             int msb = registerYValue & 0b10000000;
             
             return state
-                .withRegister(registerX, UByte.valueOf(shifted & 0xFF))
+                .withRegister(registerX, UByte.valueOf(shifted))
                 .withRegister(Register.VF, UByte.valueOf(msb));
         }
     }
@@ -192,13 +192,13 @@ public final class Bitwise {
         public State execute(State state) {
             int registerYValue = getRegisterY(state).intValue();
             
-            int shifted = registerYValue >>> 1;
+            int shifted = (registerYValue >>> 1) & 0xFF;
             
             // The least significant (last) bit of register y
             int lsb = registerYValue & 0b00000001;
             
             return state
-                .withRegister(registerX, UByte.valueOf(shifted & 0xFF))
+                .withRegister(registerX, UByte.valueOf(shifted))
                 .withRegister(Register.VF, UByte.valueOf(lsb));
         }
     }

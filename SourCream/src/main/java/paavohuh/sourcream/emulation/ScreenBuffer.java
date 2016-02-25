@@ -117,7 +117,7 @@ public class ScreenBuffer {
     public ScreenBuffer blit(ScreenBuffer sprite, int x, int y) {
         
         boolean[][] newBuffer = ArrayUtils.clone(buffer);
-        boolean newFlipped = false;
+        boolean didFlip = false;
         
         // For each row in sprite
         for (int yi = 0; yi < sprite.height; yi++) {
@@ -131,15 +131,15 @@ public class ScreenBuffer {
                 boolean bufferBit = buffer[bufferY][bufferX];
                 
                 // If a pixel is cleared, set the cleared bit.
-                if (!newFlipped) {
-                    newFlipped = bufferBit && spriteBit;
+                if (!didFlip) {
+                    didFlip = bufferBit && spriteBit;
                 }
                 
                 newBuffer[bufferY][bufferX] = spriteBit != bufferBit;
             }
         }
         
-        return new ScreenBuffer(newBuffer, newFlipped, true);
+        return new ScreenBuffer(newBuffer, didFlip, true);
     }
     
     /**
