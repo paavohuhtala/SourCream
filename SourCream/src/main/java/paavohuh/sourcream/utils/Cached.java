@@ -15,7 +15,7 @@ public class Cached<T> {
     /**
      * Creates a new Cached instace. The value is initialized with the
      * initializer when get() is called.
-     * @param initializer 
+     * @param initializer The function used for lazily initializing the value.
      */
     public Cached(Supplier<T> initializer) {
         this.initializer = initializer;
@@ -24,7 +24,7 @@ public class Cached<T> {
     /**
      * Gets the value. If it doesn't exist yet, the initializer is run and the
      * value is returned.
-     * @return The value
+     * @return The value.
      */
     public T get() {
         if (value == null) {

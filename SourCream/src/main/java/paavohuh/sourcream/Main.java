@@ -18,9 +18,9 @@ import paavohuh.sourcream.ui.*;
  */
 public class Main {
     /**
-     * The entry point
+     * The entry point.
      * @param args Not used.
-     * @throws IOException
+     * @throws IOException if loading a ROM fails.
      */
     public static void main(String[] args) throws IOException {
 

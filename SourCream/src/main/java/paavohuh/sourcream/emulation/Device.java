@@ -80,7 +80,8 @@ public class Device {
      * 1. Fetches an instruction
      * 2. Decodes the instruction
      * 3. Replaces current state with modified state
-     * @throws paavohuh.sourcream.emulation.UnknownInstructionException
+     * @throws paavohuh.sourcream.emulation.UnknownInstructionException when 
+     * decoding an instruction fails.
      */
     public void runCycle() throws UnknownInstructionException {
         
@@ -148,11 +149,11 @@ public class Device {
         
         // If the timers should be synchronized, do so.
         
-        if (newState.shouldDelayTimerBeSynced()) {
+        if (newState.getShouldDelayTimerBeSynced()) {
             delayTimer.setValue(newState.getDelayTimer().intValue());
         }
         
-        if (newState.shouldSoundTimerBeSynced()) {
+        if (newState.getShouldSoundTimerBeSynced()) {
             soundTimer.setValue(newState.getSoundTimer().intValue());
         }
         
@@ -170,7 +171,7 @@ public class Device {
     /**
      * Registers a new graphics handler. The caller should call .notify on the 
      * screen buffer after drawing.
-     * @param handler 
+     * @param handler The handler to register.
      */
     public void onUpdateGraphics(Consumer<ScreenBuffer> handler) {
         onUpdateGraphicsHandlers.add(handler);
@@ -221,6 +222,7 @@ public class Device {
     public State getState() {
         return state;
     }
+    
     
     public void setState(State state) {
         this.state = state;

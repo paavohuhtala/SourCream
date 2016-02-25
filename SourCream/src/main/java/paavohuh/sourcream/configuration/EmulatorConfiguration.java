@@ -2,7 +2,6 @@
 package paavohuh.sourcream.configuration;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,7 +93,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
             return new ScreenConfiguration(
                 getDisplayScale(),
                 getColors().cloned(),
-                emulateGhosting(),
+                getEmulateGhosting(),
                 getGhosting().cloned());
         }
 
@@ -114,7 +113,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
             this.colors = colors;
         }
 
-        public boolean emulateGhosting() {
+        public boolean getEmulateGhosting() {
             return emulateGhosting;
         }
 
@@ -137,6 +136,11 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
             private Color background;
             private Color foreground;
 
+            /**
+             * Creates a new colo scheme.
+             * @param background The background color.
+             * @param foreground The foreground color.
+             */
             public ColorScheme(Color background, Color foreground) {
                 this.background = background;
                 this.foreground = foreground;
@@ -145,7 +149,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
             /**
              * Returns the default color scheme, consisting of a green
              * background color and a dark gray foreground color.
-             * @return 
+             * @return The default color scheme.
              */
             public static ColorScheme getDefault() {
                 return new ColorScheme(Color.green, Color.darkGray);
@@ -183,8 +187,10 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
 
         /**
          * Creates a new ghosting emulation config.
-         * @param addBy
-         * @param subtractBy 
+         * @param addBy The value added to LCD buffer when blending between 0
+         * and 1.
+         * @param subtractBy The value subtracted from LCD buffer when blending
+         * between 1 and 0.
          */
         public GhostingConfiguration(float addBy, float subtractBy) {
             this.addBy = addBy;
@@ -229,21 +235,34 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         private final HashMap<Integer, Integer> bindings;
 
         /**
-         * Creates new 
-         * @param bindings 
+         * Creates new input configuration.
+         * @param bindings The key bindings.
          */
         public InputConfiguration(HashMap<Integer, Integer> bindings) {
             this.bindings = bindings;
         }
         
+        /**
+         * Gets the default configuration.
+         * @return The default configuration.
+         */
         public static InputConfiguration getDefault() {
             return KnownBindings.pong();
         }
         
+        /**
+         * Gets the key bindings.
+         * @return The key bindings.
+         */
         public Map<Integer, Integer> getBindings() {
             return Collections.unmodifiableMap(bindings);
         }
 
+        /**
+         * Adds a new key binding to the binding map.
+         * @param keyCode The Swing virtual keycode.
+         * @param deviceKey The Chip-8 key code (between 0 and 15).
+         */
         public void bind(int keyCode, int deviceKey) {
             bindings.put(keyCode, deviceKey);
         }

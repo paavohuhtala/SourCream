@@ -24,7 +24,7 @@ public class ConfigurationManager {
     
     /**
      * Loads or creates the device config.
-     * @return The config
+     * @return The config.
      * @throws IOException 
      */
     public static DeviceConfiguration loadOrCreateDeviceConfig() throws IOException {
@@ -35,7 +35,7 @@ public class ConfigurationManager {
     
     /**
      * Loads or creates the emulator config.
-     * @return The config
+     * @return The config.
      * @throws IOException 
      */
     public static EmulatorConfiguration loadOrCreateEmulatorConfig() throws IOException {
@@ -60,7 +60,7 @@ public class ConfigurationManager {
     
     /**
      * Saves the device config.
-     * @param config
+     * @param config The confg.
      * @throws IOException 
      */
     public static void saveDeviceConfiguration(DeviceConfiguration config) throws IOException {
@@ -70,7 +70,7 @@ public class ConfigurationManager {
     
     /**
      * Saves the emulator config.
-     * @param config
+     * @param config The config.
      * @throws IOException 
      */
     public static void saveEmulatorConfiguration(EmulatorConfiguration config) throws IOException {

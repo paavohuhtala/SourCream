@@ -7,7 +7,9 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A thread-safe tick-down timer, with configurable rate.
+ * A thread-safe tick-down timer. Ticks down at the configured rate until 
+ * reaching zero. When zero is reached, the timer continues ticking, but doesn't
+ * decrement the value any further.
  */
 public class Timer implements Runnable {
     private int value;
@@ -16,6 +18,11 @@ public class Timer implements Runnable {
     private final ScheduledExecutorService scheduler;
     private ScheduledFuture<?> future;
     
+    /**
+     * Creates a new timer.
+     * @param value The initial value of the timer.
+     * @param ratePerSecond The number of ticks per second.
+     */
     public Timer(int value, float ratePerSecond) {
         this.value = value;
         this.valueLock = true;
@@ -23,6 +30,9 @@ public class Timer implements Runnable {
         this.ratePerSecond = ratePerSecond;
     }
     
+    /**
+     * Starts the timer.
+     */
     public void start() {
         if (future != null) {
             future.cancel(false);
@@ -31,6 +41,10 @@ public class Timer implements Runnable {
         future = scheduler.scheduleAtFixedRate(this, 0, (long) (1.0f / ratePerSecond * 1000), TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * Gets whether or not the timer is running.
+     * @return True if the timer is running.
+     */
     public boolean isRunning() {
         if (future == null) {
             return false;
@@ -39,6 +53,9 @@ public class Timer implements Runnable {
         return !future.isDone();
     }
     
+    /**
+     * Stops the timer.
+     */
     public void stop() {
         if (future == null) {
             return;
@@ -47,21 +64,29 @@ public class Timer implements Runnable {
         future.cancel(true);
     }
     
+    /**
+     * Gets the value of the timer.
+     * @return The value.
+     */
     public int getValue() {
-        synchronized(valueLock) {
+        synchronized (valueLock) {
             return value;
         }
     }
 
+    /**
+     * Sets the value of the timer.
+     * @param value The value.
+     */
     public void setValue(int value) {
-        synchronized(valueLock) {
+        synchronized (valueLock) {
             this.value = value;
         }
     }
 
     @Override
     public void run() {
-        synchronized(valueLock) {
+        synchronized (valueLock) {
             if (value > 0) {
                 value--;
             }

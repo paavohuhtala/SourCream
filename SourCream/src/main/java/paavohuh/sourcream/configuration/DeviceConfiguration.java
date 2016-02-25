@@ -13,10 +13,10 @@ public class DeviceConfiguration implements DeepCloneable<DeviceConfiguration> {
 
     /**
      * Creates a new device config.
-     * @param clockSpeed
-     * @param ramSize
-     * @param resolutionX
-     * @param resolutionY 
+     * @param clockSpeed The clock speed.
+     * @param ramSize The ram size in bytes.
+     * @param resolutionX The width of the display buffer.
+     * @param resolutionY The height of the display buffer.
      */
     public DeviceConfiguration(int clockSpeed, int ramSize, int resolutionX, int resolutionY) {
         this.clockSpeed = clockSpeed;

@@ -18,13 +18,18 @@ public class EmulatorPanel extends JPanel {
     private final EmulatedLcdBuffer screen;
     private final EmulatorConfiguration config;
     
+    /**
+     * Creates a new emulator panel.
+     * @param emulatorConfig The emulator config.
+     * @param deviceConfig The device config.
+     */
     public EmulatorPanel(EmulatorConfiguration emulatorConfig, DeviceConfiguration deviceConfig) {
         super(true);
         
         int scale = emulatorConfig.getScreen().getDisplayScale();
-        
         int width = deviceConfig.getResolutionX() * scale;
-        int height = deviceConfig.getResolutionY()* scale;
+        int height = deviceConfig.getResolutionY() * scale;
+        
         setPreferredSize(new Dimension(width, height));
         
         this.config = emulatorConfig;
@@ -50,6 +55,10 @@ public class EmulatorPanel extends JPanel {
         }
     }
     
+    /**
+     * Updates the screen buffer with a new one.
+     * @param buffer 
+     */
     public void updateScreenBuffer(ScreenBuffer buffer) {
         screen.updateWith(buffer);
         repaint();

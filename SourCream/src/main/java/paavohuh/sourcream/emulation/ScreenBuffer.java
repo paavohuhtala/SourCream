@@ -33,7 +33,7 @@ public class ScreenBuffer {
     
     /**
      * Creates a new screen buffer for the supplied device configuration.
-     * @param config 
+     * @param config The device configuration.
      */
     public ScreenBuffer(DeviceConfiguration config) {
         width = config.getResolutionX();
@@ -45,11 +45,11 @@ public class ScreenBuffer {
     }
     
     /**
-     * Creates a new screen buffer from the supplied byte buffer. Also takes a
-     * boolean to indicate whether or not the "flipped" flag should be set.
-     * @param buffer
-     * @param flipped 
-     * @param modified 
+     * Creates a new screen buffer from a 2-dimensional boolean array.
+     * @param buffer The internal boolean buffer of the screen buffer.
+     * @param flipped Has a bit been flipped from 1 to 0 during during the
+     * latest draw call?
+     * @param modified Has the buffer been modified after latest render?
      */
     public ScreenBuffer(boolean[][] buffer, boolean flipped, boolean modified) {
         height = buffer.length;
@@ -63,7 +63,7 @@ public class ScreenBuffer {
     /**
      * Reads a sprite from the supplied block of memory.
      * One byte equals one row.
-     * @param memory 
+     * @param memory The buffer to read.
      */
     public ScreenBuffer(byte[] memory) {
         
@@ -109,10 +109,10 @@ public class ScreenBuffer {
     
     /**
      * Returns a new screen buffer, with the supplied sprite XOR-drawn to it.
-     * @param sprite
-     * @param x
-     * @param y
-     * @return A new screen buffer
+     * @param sprite The sprite.
+     * @param x The X location where to draw the sprite.
+     * @param y The Y location where to draw the sprite.
+     * @return A new screen buffer.
      */
     public ScreenBuffer blit(ScreenBuffer sprite, int x, int y) {
         
@@ -144,9 +144,9 @@ public class ScreenBuffer {
     
     /**
      * Gets a pixel from the screen buffer.
-     * @param x The x coordinate
-     * @param y The y coordinate
-     * @return The value of the pixel
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
+     * @return The value of the pixel.
      */
     public boolean get(int x, int y) {
         if (x < 0 || x >= width) {

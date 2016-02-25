@@ -23,7 +23,16 @@ public class OptionalUtils {
     }
     
     @FunctionalInterface
+    /**
+     * A supplier that can throw exceptions.
+     * @param <T> The value returned by the supplier.
+     */
     public interface ThrowingSupplier<T> {
+        /**
+         * Supplies a value of type T.
+         * @return A value of type T.
+         * @throws Exception Can throw any exception.
+         */
         T get() throws Exception;
     }
 }

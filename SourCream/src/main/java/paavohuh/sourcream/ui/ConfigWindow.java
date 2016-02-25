@@ -2,18 +2,24 @@
 package paavohuh.sourcream.ui;
 
 import java.awt.*;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
-import paavohuh.sourcream.configuration.ConfigurationManager;
-import paavohuh.sourcream.configuration.DeviceConfiguration;
-import paavohuh.sourcream.configuration.EmulatorConfiguration;
+import java.io.IOException;
+import paavohuh.sourcream.configuration.*;
 
+/**
+ * The main configuration window of the program.
+ */
 public class ConfigWindow extends JDialog {
     private final EmulatorConfiguration emulatorConfig;
     private final DeviceConfiguration deviceConfig;
 
+    /**
+     * Creates a new modal configuration window.
+     * @param owner The owner of the window.
+     * @param emulatorConfig The emulator configuration.
+     * @param deviceConfig The device configraution.
+     * @throws HeadlessException 
+     */
     public ConfigWindow(Frame owner, EmulatorConfiguration emulatorConfig, DeviceConfiguration deviceConfig) throws HeadlessException {
         super(owner);
         
@@ -32,7 +38,7 @@ public class ConfigWindow extends JDialog {
         JTabbedPane tabs = new JTabbedPane();
         
         EmulatorConfigPanel emulatorSettings = new EmulatorConfigPanel(this, emulatorConfig);
-        DeviceSettingsPanel deviceSettings = new DeviceSettingsPanel(this, deviceConfig);
+        DeviceConfigPanel deviceSettings = new DeviceConfigPanel(this, deviceConfig);
         
         tabs.addTab("Emulator", emulatorSettings);
         tabs.addTab("Device", deviceSettings);

@@ -3,8 +3,18 @@ package paavohuh.sourcream.utils;
 
 import java.awt.Color;
 
+/**
+ * Contains utilities for manipulating colors.
+ */
 public class ColorUtils {
     
+    /**
+     * Linearly interpolates between two colors.
+     * @param one The "one" color. At its maximum when level = 1.0.
+     * @param zero The "zero" color. At its maximum when level = 0.0.
+     * @param level The fade level between the colors.
+     * @return The mixed color.
+     */
     public static Color lerp(Color one, Color zero, float level) {
         float inverseLevel = 1.0f - level;
                 
@@ -26,10 +36,15 @@ public class ColorUtils {
             MathUtils.clamp(0.0f, blue, 1.0f));
     }
     
-    public static Color invert(Color other) {
+    /**
+     * Inverts a color channel by channel.
+     * @param color The color to invert.
+     * @return The inverted color.
+     */
+    public static Color invert(Color color) {
         return new Color(
-            255 - other.getRed(),
-            255 - other.getGreen(),
-            255 - other.getBlue());
+            255 - color.getRed(),
+            255 - color.getGreen(),
+            255 - color.getBlue());
     }
 }

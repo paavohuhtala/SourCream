@@ -3,7 +3,6 @@ package paavohuh.sourcream;
 
 import paavohuh.sourcream.emulation.ScreenBuffer;
 import paavohuh.sourcream.emulation.ScreenBufferLoader;
-import paavohuh.sourcream.utils.ArrayUtils;
 import paavohuh.sourcream.utils.Cached;
 import paavohuh.sourcream.utils.ResourceUtils;
 
@@ -34,7 +33,7 @@ public class Resource {
     
     /**
      * Gets the system font as a byte array.
-     * @return 
+     * @return The system font.
      */
     public static byte[] getSystemFont() {
         return CACHED_SYSTEM_FONT.get();
@@ -48,6 +47,6 @@ public class Resource {
             ResourceUtils.getAsString(LOGO).flatMap(ScreenBufferLoader::tryLoad).get());
         
         CACHED_SYSTEM_FONT = new Cached<>(() ->
-            ArrayUtils.toPrimitive(ResourceUtils.getAsBytes(SYSTEM_FONT).get()));
+            ResourceUtils.getAsBytes(SYSTEM_FONT).get());
     }
 }

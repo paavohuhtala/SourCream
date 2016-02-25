@@ -6,19 +6,23 @@ import java.awt.*;
 import javax.swing.*;
 import paavohuh.sourcream.configuration.EmulatorConfiguration;
 
+/**
+ * The emulator config panel.
+ */
 public class EmulatorConfigPanel extends JPanel {
 
     private final EmulatorConfiguration config;
     
+    /**
+     * Creates a new emulator config panel.
+     * @param parent The parent. 
+     * @param config The emulator configuration.
+     */
     public EmulatorConfigPanel(Dialog parent, EmulatorConfiguration config) {
         this.config = config;
         
         setLayout(new GridLayout(1, 2, 4, 4));
         
-        /*GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(8, 8, 8, 8);
-        setLayout(new GridBagLayout());*/
-
         JPanel leftColumn = new JPanel(new GridLayout(0, 1));
         leftColumn.setBorder(BorderFactory.createTitledBorder("Screen"));
         JPanel rightColumn = new JPanel(new BorderLayout());

@@ -21,6 +21,11 @@ public class MainWindow extends JFrame {
     private final EmulatorConfiguration emulatorConfig;
     private final DeviceConfiguration deviceConfig;
 
+    /**
+     * Creates a new main window.
+     * @param emulatorConfig The emulator configuration.
+     * @param deviceConfig The device configuration.
+     */
     public MainWindow(EmulatorConfiguration emulatorConfig, DeviceConfiguration deviceConfig) {
         this.emulatorConfig = emulatorConfig;
         this.deviceConfig = deviceConfig;

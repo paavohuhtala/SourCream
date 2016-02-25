@@ -1,6 +1,9 @@
 
 package paavohuh.sourcream.emulation;
 
+/**
+ * Contains functions for assembling bytecode programs from Chip-8 instructions.
+ */
 public class ProgramBuilder {
     /**
      * Builds a new program from a list of instructions.

@@ -321,7 +321,7 @@ public class Transfer {
      */
     public static class SetRegisterRandom extends Instruction.WithRegisterAnd8BitConstant {
 
-        private static final Random rng = new Random();
+        private static final Random RNG = new Random();
         
         /**
         * Sets a register to a random value masked (bitwise ANDed) with a
@@ -350,7 +350,7 @@ public class Transfer {
 
         @Override
         public State execute(State state) {
-            int randomByte = rng.nextInt(256);
+            int randomByte = RNG.nextInt(256);
             int mask = constant.intValue();
             int maskedRandom = randomByte & mask;
             

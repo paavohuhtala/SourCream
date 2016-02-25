@@ -12,12 +12,16 @@ public class InputState implements DeepCloneable<InputState> {
     private final boolean[] keyStates;
 
     /**
-     * Creates a new input state. Every key starts 
+     * Creates a new input state.
      */
     public InputState() {
         this.keyStates = new boolean[16];
     }
     
+    /**
+     * Creates a new input state by cloning a previous one.
+     * @param previous The previous input state.
+     */
     public InputState(InputState previous) {
         this.keyStates = ArrayUtils.clone(previous.keyStates);
     }
@@ -41,7 +45,7 @@ public class InputState implements DeepCloneable<InputState> {
      * @return True if the key is pressed, false if not.
      */
     public boolean getKey(int i) {
-        if (i < 0 || i>= keyStates.length) {
+        if (i < 0 || i >= keyStates.length) {
             throw new IllegalArgumentException();
         }
         

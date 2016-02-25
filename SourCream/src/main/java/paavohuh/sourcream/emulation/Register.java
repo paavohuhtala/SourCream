@@ -1,7 +1,7 @@
 package paavohuh.sourcream.emulation;
 
 /*
- * Represents an immutable register id.
+ * Represents an immutable register handle.
  */
 public class Register {
     /**
@@ -9,11 +9,15 @@ public class Register {
      */
     public final int id;
     
-    public Register(int offset) {
-        if (offset < 0 || offset >= 16) {
-            throw new IllegalArgumentException("Register offset must be between 0 and 15.");
+    /**
+     * Creates a new register handle.
+     * @param id The id of the register. Must be between 0 and 15.
+     */
+    public Register(int id) {
+        if (id < 0 || id >= 16) {
+            throw new IllegalArgumentException("Register id must be between 0 and 15.");
         }
-        this.id = offset;
+        this.id = id;
     }
 
     @Override

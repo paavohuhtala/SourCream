@@ -13,7 +13,7 @@ public class KnownBindings {
      * Returns the premade input configuration for Tetris.
      * Left and right arrow keys are used for movement. Up arrow is used for 
      * rotating the tetromino. Down arrow is used for accelerating the fall.
-     * @return An input configuration
+     * @return An input configuration.
      */
     public static InputConfiguration tetris() {
         HashMap<Integer, Integer> bindings = new HashMap<>();
@@ -29,7 +29,7 @@ public class KnownBindings {
     /**
      * Returns the premade input configuration for 2-player Pong.
      * Player 1 uses W and S for movement, player 2 uses up and down arrow keys.
-     * @return An input configuration
+     * @return An input configuration.
      */
     public static InputConfiguration pong() {
         HashMap<Integer, Integer> bindings = new HashMap<>();
@@ -48,7 +48,7 @@ public class KnownBindings {
      * are bound to A - H.
      * This configuration is useful if you don't know which keys should be
      * mapped.
-     * @return 
+     * @return An input configuration.
      */
     public static InputConfiguration allBound() {
         HashMap<Integer, Integer> bindings = new HashMap<>();

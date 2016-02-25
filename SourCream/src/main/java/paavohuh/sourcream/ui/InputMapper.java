@@ -8,24 +8,32 @@ import java.util.Map;
 import paavohuh.sourcream.configuration.EmulatorConfiguration.*;
 import paavohuh.sourcream.emulation.Device;
 
+/**
+ * Listens for key presses globally and dispatches them to the emulated device.
+ */
 public class InputMapper implements KeyEventDispatcher {
     
-    private final Map<Integer, Integer> mappings;
+    private final Map<Integer, Integer> bindings;
     private final Device device;
 
-    public InputMapper(Device device, InputConfiguration mapping) {
-        this.mappings = mapping.getBindings();
+    /**
+     * Creates a new input mapper.
+     * @param device The device which will receive the key presses.
+     * @param config The input configuration containing the key bindings.
+     */
+    public InputMapper(Device device, InputConfiguration config) {
+        this.bindings = config.getBindings();
         this.device = device;
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         
-        if (!mappings.containsKey(e.getKeyCode())) {
+        if (!bindings.containsKey(e.getKeyCode())) {
             return false;
         }
         
-        int key = mappings.get(e.getKeyCode());
+        int key = bindings.get(e.getKeyCode());
         
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             device.sendInput(key, true);

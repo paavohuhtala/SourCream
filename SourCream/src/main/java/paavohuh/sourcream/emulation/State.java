@@ -46,8 +46,8 @@ public class State implements Cloneable, Serializable {
     private UByte soundTimerValue;
     
     // Set to true if the timer value should be synchronized.
-    private boolean syncDelayTimer;
-    private boolean syncSoundTimer;
+    private boolean shouldDelayTimerBeSynced;
+    private boolean shouldSoundTimerBeSynced;
     
     private InputState inputState;
     
@@ -67,8 +67,8 @@ public class State implements Cloneable, Serializable {
         this.stack = ArrayUtils.clone(previous.stack);
         this.delayTimerValue = previous.delayTimerValue;
         this.soundTimerValue = previous.soundTimerValue;
-        this.syncDelayTimer = previous.syncDelayTimer;
-        this.syncSoundTimer = previous.syncSoundTimer;
+        this.shouldDelayTimerBeSynced = previous.shouldDelayTimerBeSynced;
+        this.shouldSoundTimerBeSynced = previous.shouldSoundTimerBeSynced;
         this.inputState = previous.inputState;
     }
     
@@ -95,8 +95,8 @@ public class State implements Cloneable, Serializable {
         this.stack = new UShort[16];
         this.delayTimerValue = UByte.valueOf(0);
         this.soundTimerValue = UByte.valueOf(0);
-        this.syncDelayTimer = false;
-        this.syncSoundTimer = false;
+        this.shouldDelayTimerBeSynced = false;
+        this.shouldSoundTimerBeSynced = false;
         this.inputState = new InputState();
         
         // We need the system font, so load it from resources and copy it.
@@ -128,7 +128,7 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Returns a new state with the address register set to the given value.
-     * @param value
+     * @param value The value.
      * @return The value of the address register.
      */
     public State withAddressRegister(UShort value) {
@@ -140,7 +140,7 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Gets the program counter.
-     * @return the program counter
+     * @return The program counter.
      */
     public UShort getProgramCounter() {
         return pc;
@@ -198,7 +198,7 @@ public class State implements Cloneable, Serializable {
     }
 
     /**
-     * Gets the value of the address register
+     * Gets the value of the address register.
      * @return The value of the address register
      */
     public UShort getAddressRegister() {
@@ -313,7 +313,7 @@ public class State implements Cloneable, Serializable {
     public State withDelayTimer(UByte value, boolean setFlag) {
         State state = new State(this);
         state.delayTimerValue = value;
-        state.syncDelayTimer = setFlag;
+        state.shouldDelayTimerBeSynced = setFlag;
         
         return state;
     }
@@ -327,7 +327,7 @@ public class State implements Cloneable, Serializable {
     public State withSoundTimer(UByte value, boolean setFlag) {
         State state = new State(this);
         state.soundTimerValue = value;
-        state.syncDelayTimer = setFlag;
+        state.shouldDelayTimerBeSynced = setFlag;
         
         return state;
     }
@@ -387,18 +387,19 @@ public class State implements Cloneable, Serializable {
      */
     public State withClearedTimerFlags() {
         State state = new State(this);
-        state.syncSoundTimer = false;
-        state.syncDelayTimer = false;
+        state.shouldSoundTimerBeSynced = false;
+        state.shouldDelayTimerBeSynced = false;
         
         return state;
     }
 
-    public boolean shouldDelayTimerBeSynced() {
-        return syncDelayTimer;
+    
+    public boolean getShouldDelayTimerBeSynced() {
+        return shouldDelayTimerBeSynced;
     }
 
-    public boolean shouldSoundTimerBeSynced() {
-        return syncSoundTimer;
+    public boolean getShouldSoundTimerBeSynced() {
+        return shouldSoundTimerBeSynced;
     }
 
     /**
@@ -413,14 +414,27 @@ public class State implements Cloneable, Serializable {
         return state;
     }
 
+    /**
+     * Gets the current execution state.
+     * @return The execution state.
+     */
     public ExecutionState getExecutionState() {
         return executionState;
     }
 
+    /**
+     * Gets the register that should be used for storing the key after a "halt
+     * until a keypress" instruction.
+     * @return An Optional containing the register.
+     */
     public Optional<Register> getStoreKeyAfterHaltRegister() {
         return storeKeyAfterHaltRegister;
     }
 
+    /**
+     * Gets the stack pointer.
+     * @return The value of the stack pointer.
+     */
     public UByte getStackPointer() {
         return sp;
     }

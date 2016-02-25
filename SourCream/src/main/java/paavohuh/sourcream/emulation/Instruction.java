@@ -63,6 +63,11 @@ public interface Instruction {
          * The constructor interface for WithRegister
          */
         public interface Constructor {
+            /**
+             * Builds a new instruction.
+             * @param register The register.
+             * @return The new instruction.
+             */
             WithRegister build(Register register);
         }
 
@@ -117,6 +122,12 @@ public interface Instruction {
          */
         @FunctionalInterface
         public interface Constructor {
+            /**
+             * Builds a new instruction.
+             * @param registerX The register X.
+             * @param registerY The register Y.
+             * @return The new instruction.
+             */
             WithTwoRegisters build(Register registerX, Register registerY);
         }
         
@@ -133,7 +144,9 @@ public interface Instruction {
      * An abstract instruction with two registers and one 4-bit constant.
      */
     public static abstract class WithTwoRegistersAnd4BitConstant extends WithTwoRegisters {
-        
+        /**
+         * The constant.
+         */
         public final UByte constant;
         
         protected abstract int getConstantOffset();
@@ -161,6 +174,13 @@ public interface Instruction {
          * The constructor interface for WithTwoRegistersAnd4BitConstant.
          */
         public interface Constructor {
+            /**
+             * Builds a new instruction.
+             * @param registerX The register X.
+             * @param registerY The register Y.
+             * @param constant The constant.
+             * @return The new instruction.
+             */
             WithTwoRegistersAnd4BitConstant build(Register registerX, Register registerY, UByte constant);
         }
         
@@ -176,6 +196,9 @@ public interface Instruction {
      * An abstract instruction with one 12-bit address parameter.
      */
     public static abstract class WithAddress extends Instruction.Parametrized {
+        /**
+         * The address.
+         */
         public final UShort address;
         
         /**
@@ -198,6 +221,11 @@ public interface Instruction {
          * The constructor interface for WithAddress.
          */
         public interface Constructor {
+            /**
+             * Builds a new instruction.
+             * @param address The address.
+             * @return The new instruction.
+             */
             WithAddress build(UShort address);
         }
         
@@ -213,13 +241,16 @@ public interface Instruction {
      * An abstract instruction with one 4-bit constant.
      */
     public static abstract class With4BitConstant extends Instruction.Parametrized {
+        /**
+         * The 4-bit constant.
+         */
         public final UByte constant;
         
         protected abstract int getOffset();
         
         /**
          * Creates a new instruction with one 4-bit constant.
-         * @param constant 
+         * @param constant The constant.
          */
         protected With4BitConstant(UByte constant) {
             this.constant = constant;
@@ -237,6 +268,11 @@ public interface Instruction {
          * The constructor interface for With4BitConstant.
          */
         public interface Constructor {
+            /**
+             * Builds a new instruction. 
+             * @param constant The constant.
+             * @return The new instruction.
+             */
             With4BitConstant build(UByte constant);
         }
         
@@ -252,7 +288,14 @@ public interface Instruction {
      * An abstract instruction with one register and one 8-bit constant.
      */
     public static abstract class WithRegisterAnd8BitConstant extends Instruction.Parametrized {
+        /**
+         * The register.
+         */
         public final Register register;
+        
+        /**
+         * The 8-bit constant.
+         */
         public final UByte constant;
 
         protected abstract int getRegisterOffset();
@@ -260,8 +303,8 @@ public interface Instruction {
         
         /**
          * Creates a new instruction with a register and a 8-bit constant.
-         * @param register
-         * @param constant 
+         * @param register The register.
+         * @param constant The constant.
          */
         protected WithRegisterAnd8BitConstant(Register register, UByte constant) {
             this.register = register;
@@ -281,6 +324,12 @@ public interface Instruction {
          * The constructor interface for WithRegisterAnd8BitConstant.
          */
         public interface Constructor {
+            /**
+             * Builds a new instruction. 
+             * @param register The register.
+             * @param constant The constant.
+             * @return The new instruction.
+             */
             WithRegisterAnd8BitConstant build(Register register, UByte constant);
         }
         

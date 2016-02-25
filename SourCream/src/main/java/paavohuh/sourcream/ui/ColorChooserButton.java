@@ -10,9 +10,18 @@ import java.util.function.Consumer;
 import javax.swing.JButton;
 import paavohuh.sourcream.utils.ColorUtils;
 
+/**
+ * A control for selecting colors. Creates a ColorChooserDialog on keypress.
+ */
 public final class ColorChooserButton extends JButton {
     private Color color;
 
+    /**
+     * Creates a new color chooser button.
+     * @param parent The parent.
+     * @param label The label of the button.
+     * @param initialColor The initial color.
+     */
     public ColorChooserButton(Dialog parent, String label, Color initialColor) {
         //this.setPreferredSize(new Dimension(64, 64));
         this.setMinimumSize(new Dimension(64, 32));
@@ -32,14 +41,24 @@ public final class ColorChooserButton extends JButton {
         return color;
     }
 
+    /**
+     * Sets the color.
+     * @param color The color.
+     */
     public void setColor(Color color) {
         this.color = color;
         this.setBackground(color);
         this.setForeground(ColorUtils.invert(color));
     }
     
+    /**
+     * Register a new callback for checking when the color is changed.
+     * @param func 
+     */
     public void onChangeColor(Consumer<Color> func) {
-        addChangeListener(event -> {func.accept(getColor());});
+        addChangeListener(event -> {
+            func.accept(getColor());
+        });
     }
     
     @Override
