@@ -21,6 +21,10 @@ public final class Control {
      */
     public static class JumpTo extends Instruction.WithAddress {
 
+        /**
+         * Jumps to address.
+         * @param address The address.
+         */
         public JumpTo(UShort address) {
             super(address);
         }
@@ -41,6 +45,10 @@ public final class Control {
      */
     public static class JumpToWithOffset extends Instruction.WithAddress {
 
+        /**
+        * Jumps to address + V0.
+         * @param address The address.
+        */
         public JumpToWithOffset(UShort address) {
             super(address);
         }
@@ -62,6 +70,11 @@ public final class Control {
      */
     public static class SkipIfEquals extends Instruction.WithRegisterAnd8BitConstant {
 
+        /**
+        * Skips the next instruction if value at register equals constant.
+         * @param register The register.
+         * @param constant The constant.
+        */
         public SkipIfEquals(Register register, UByte constant) {
             super(register, constant);
         }
@@ -98,6 +111,11 @@ public final class Control {
      */
     public static class SkipIfNotEquals extends Instruction.WithRegisterAnd8BitConstant {
 
+        /**
+         * Skips the next instruction if value at register doesn't equal constant.
+         * @param register The register.
+         * @param constant The constant.
+         */
         public SkipIfNotEquals(Register register, UByte constant) {
             super(register, constant);
         }
@@ -121,7 +139,7 @@ public final class Control {
         public State execute(State state) {
             UByte registerValue = state.getRegister(register);
             
-            if (registerValue.intValue() != constant.intValue()) {
+            if (!registerValue.equals(constant)) {
                 return state.withIncrementedPc();
             } else {
                 return new State(state);
@@ -134,6 +152,12 @@ public final class Control {
      */
     public static class SkipIfEqualsRegister extends Instruction.WithTwoRegisters {
 
+            
+        /**
+         * Skips the next instruction if the values of registers X and Y are equal.
+         * @param x Register x.
+         * @param y Register y.
+         */
         public SkipIfEqualsRegister(Register x, Register y) {
             super(x, y);
         }
@@ -168,6 +192,11 @@ public final class Control {
      */
     public static class SkipIfNotEqualsRegister extends Instruction.WithTwoRegisters {
 
+        /**
+         * Skips the next instruction if the values of register X and Y are not equal.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public SkipIfNotEqualsRegister(Register x, Register y) {
             super(x, y);
         }
@@ -194,12 +223,19 @@ public final class Control {
             } else {
                 return new State(state);
             }
-        }
-        
+        }    
     }
     
+    /**
+     * Calls the subroutine at address. Pushes the current program counter to
+     * the call stack and increment the stack pointer.
+     */
     public static class CallSubroutine extends Instruction.WithAddress {
 
+        /**
+        * Calls the subroutine at address.
+         * @param address The address.
+        */
         public CallSubroutine(UShort address) {
             super(address);
         }
@@ -215,6 +251,10 @@ public final class Control {
         }
     }
     
+    /**
+     * Returns from a subroutine. Replaces the program counter with the
+     * topmost item of the call stack and decrements the stack pointer.
+     */
     public static class Return implements Instruction {
 
         @Override
@@ -229,6 +269,10 @@ public final class Control {
         
     }
     
+    /**
+     * Gets all Control instructions.
+     * @return Sequence of instructions.
+     */
     public static Seq<Instruction> getAll() {
         return Seq.concat(
             Seq.of(new Return()),

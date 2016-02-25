@@ -22,6 +22,11 @@ public final class Arithmetic {
      */
     public static class AddConstantToRegister extends Instruction.WithRegisterAnd8BitConstant {
 
+        /**
+        * Sets register X to register X + constant. *Doesn't* set the carry flag.
+         * @param register The register.
+         * @param constant The constant.
+        */
         public AddConstantToRegister(Register register, UByte constant) {
             super(register, constant);
         }
@@ -56,6 +61,11 @@ public final class Arithmetic {
      */
     public static class AddRegisterToRegister extends Instruction.WithTwoRegisters {
 
+        /**
+         * Sets register X to register X + register Y. Sets the carry flag if the sum exceeds 255.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public AddRegisterToRegister(Register x, Register y) {
             super(x, y);
         }
@@ -94,7 +104,12 @@ public final class Arithmetic {
      * required.
      */
     public static class SubtractRegisterYFromX extends Instruction.WithTwoRegisters {
-
+        /**
+         * Sets register X to register X - register Y. Sets the borrow flag if
+         * required.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public SubtractRegisterYFromX(Register x, Register y) {
             super(x, y);
         }
@@ -127,15 +142,19 @@ public final class Arithmetic {
                 .withRegister(registerX, UByte.valueOf(subtraction & 0xFF));
         }  
     }
-    
-    // CONSIDER: Shares 99% of code with the class above. However, very hard to
-    // abstract without additional inheritance, which I'd like to avoid.
+
     /**
      * Sets register X to register Y - register X. Sets the borrow flag if
      * required.
      */
     public static class SubtractRegisterXFromY extends Instruction.WithTwoRegisters {
 
+        /**
+         * Sets register X to register Y - register X. Sets the borrow flag if
+         * required.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public SubtractRegisterXFromY(Register x, Register y) {
             super(x, y);
         }
@@ -169,8 +188,15 @@ public final class Arithmetic {
         }  
     }
     
+    /**
+     * Increments the address register by the value of a register.
+     */
     public static class AddRegisterToAddressRegister extends Instruction.WithRegister {
 
+        /**
+         * Increments the address register by the value of a register.
+         * @param register The register.
+         */
         public AddRegisterToAddressRegister(Register register) {
             super(register);
         }
@@ -194,6 +220,10 @@ public final class Arithmetic {
         }
     }
     
+    /**
+     * Gets all arithmetic instructions.
+     * @return A sequence of instructions.
+     */
     public static Seq<Instruction> getAll() {
         return Seq.concat(
             getAllInstances(AddConstantToRegister::new),

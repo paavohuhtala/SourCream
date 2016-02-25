@@ -17,12 +17,16 @@ public final class Bitwise {
     
     private Bitwise() { }
     
-    
     /**
      * Sets register X to register X & register Y.
      */
     public static class And extends Instruction.WithTwoRegisters {        
 
+        /**
+         * Sets register X to register X & register Y.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public And(Register x, Register y) {
             super(x, y);
         }
@@ -58,6 +62,11 @@ public final class Bitwise {
      */
     public static class Or extends Instruction.WithTwoRegisters {
         
+        /**
+         * Sets register X to register X | register Y.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public Or(Register x, Register y) {
             super(x, y);
         }
@@ -92,7 +101,12 @@ public final class Bitwise {
      * Sets register X to register X ^ register Y.
      */
     public static class Xor extends Instruction.WithTwoRegisters {
-
+        
+        /**
+         * Sets register X to register X ^ register Y.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public Xor(Register x, Register y) {
             super(x, y);
         }
@@ -128,7 +142,13 @@ public final class Bitwise {
      * significant bit is copied to register VF.
      */
     public static class ShiftLeft extends Instruction.WithTwoRegisters {
-
+        
+        /**
+         * Sets register X to register Y shifted left by one bit. The most
+         * significant bit is copied to register VF.
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public ShiftLeft(Register x, Register y) {
             super(x, y);
         }
@@ -169,6 +189,12 @@ public final class Bitwise {
      */
     public static class ShiftRight extends Instruction.WithTwoRegisters {
 
+        /**
+         * Sets register X to register Y shifted right by one bit. The least
+         * significant bit is copied to register VF. 
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public ShiftRight(Register x, Register y) {
             super(x, y);
         }
@@ -204,8 +230,8 @@ public final class Bitwise {
     }
     
     /**
-     * Returns all instances of all bitiwse instructions.
-     * @return A sequence of instructions
+     * Returns all bitwise instructions.
+     * @return A sequence of instructions.
      */
     public static Seq<Instruction> getAll() {
         return Seq.concat(

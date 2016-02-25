@@ -31,8 +31,19 @@ public final class Graphics {
         }
     }
     
+    /**
+     * Draws the first N lines of a sprite stored at the location pointed by
+     * the address register. The sprite will be drawn at (VX, VY).
+     */
     public static class DrawSprite extends Instruction.WithTwoRegistersAnd4BitConstant {
 
+        /**
+         * Draws the first N lines of a sprite stored at the location pointed by
+         * the address register.
+         * @param x Contains the X coordinate.
+         * @param y Contains the Y coordinate.
+         * @param constant Number of lines to draw.
+         */
         public DrawSprite(Register x, Register y, UByte constant) {
             super(x, y, constant);
         }
@@ -74,8 +85,17 @@ public final class Graphics {
         }
     }
     
+    /**
+     * Sets the address register to the address of the character of the system
+     * font equivalent to the value of a register.
+     */
     public static class GetCharacterAddress extends Instruction.WithRegister {
 
+        /**
+         * Sets the address register to the address of the character of the system
+         * font equivalent to the value of a register.
+         * @param register The register.
+         */
         public GetCharacterAddress(Register register) {
             super(register);
         }
@@ -101,6 +121,10 @@ public final class Graphics {
         }
     }
     
+    /**
+     * Gets all graphics instructions.
+     * @return A sequence of instructions.
+     */
     public static Seq<Instruction> getAll() {
         return Seq.concat(
             Seq.of(new ClearScreen()),

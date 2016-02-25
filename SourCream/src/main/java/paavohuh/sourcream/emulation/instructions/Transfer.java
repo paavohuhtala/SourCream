@@ -20,6 +20,10 @@ public class Transfer {
      */
     public static class SetAddressRegister extends Instruction.WithAddress {
 
+        /**
+         * Sets the address register.
+         * @param address The address.
+         */
         public SetAddressRegister(UShort address) {
             super(address);
         }
@@ -40,6 +44,11 @@ public class Transfer {
      */
     public static class CopyRegister extends Instruction.WithTwoRegisters {
 
+        /**
+         * Copies register VX to register VY. 
+         * @param x Register X.
+         * @param y Register Y.
+         */
         public CopyRegister(Register x, Register y) {
             super(x, y);
         }
@@ -70,6 +79,11 @@ public class Transfer {
      */
     public static class SetRegister extends Instruction.WithRegisterAnd8BitConstant {
 
+        /**
+         * Sets register VX to constant NN.
+         * @param register The register.
+         * @param constant The constant.
+         */
         public SetRegister(Register register, UByte constant) {
             super(register, constant);
         }
@@ -100,6 +114,10 @@ public class Transfer {
      */
     public static class StoreRegisters extends Instruction.With4BitConstant {
 
+        /**
+         * Copies registers V0 - VX to RAM, beginning from address register I.
+         * @param constant 
+         */
         public StoreRegisters(UByte constant) {
             super(constant);
         }
@@ -132,8 +150,15 @@ public class Transfer {
         }   
     }
     
+    /**
+     * Copies memory beginning from I to N registers.
+     */
     public static class CopyToRegisters extends Instruction.WithRegister {
 
+        /**
+         * Copies memory beginning from I to N registers.
+         * @param register The last register to copy to.
+         */
         public CopyToRegisters(Register register) {
             super(register);
         }
@@ -165,8 +190,18 @@ public class Transfer {
         }
     }
     
+    /**
+     * Converts the value of a register to its binary coded decimal
+     * representation, and stores the digits in [I, (I + 2)]. The representation
+     * uses leading zeroes.
+     */
     public static class StoreBinaryCodedDecimal extends Instruction.WithRegister {
 
+        /**
+        * Converts the value of a register to its binary coded decimal
+        * representation.
+        * @param register The register.
+        */
         public StoreBinaryCodedDecimal(Register register) {
             super(register);
         }
@@ -194,8 +229,15 @@ public class Transfer {
         }
     }
     
+    /**
+     * Sets the delay timer to the value of a register.
+     */
     public static class SetDelayTimer extends Instruction.WithRegister {
 
+        /**
+         * Sets the delay timer to the value of a register.
+         * @param register The register.
+         */
         public SetDelayTimer(Register register) {
             super(register);
         }
@@ -216,8 +258,15 @@ public class Transfer {
         }
     }
     
+    /**
+     * Sets the sound timer to the value of a register.
+     */
     public static class SetSoundTimer extends Instruction.WithRegister {
 
+        /**
+         * Sets the sound timer to the value of a register.
+         * @param register The register.
+         */
         public SetSoundTimer(Register register) {
             super(register);
         }
@@ -238,8 +287,15 @@ public class Transfer {
         }
     }
     
+    /**
+     * Sets a register to the value of the delay timer.
+     */
     public static class SetRegisterToDelayTimer extends Instruction.WithRegister {
         
+        /**
+        * Sets a register to the value of the delay timer.
+        * @param register The register.
+        */
         public SetRegisterToDelayTimer(Register register) {
             super(register);
         }
@@ -260,10 +316,19 @@ public class Transfer {
         }
     }
     
+    /**
+     * Sets a register to a random value masked (bitwise ANDed) with a constant.
+     */
     public static class SetRegisterRandom extends Instruction.WithRegisterAnd8BitConstant {
 
         private static final Random rng = new Random();
         
+        /**
+        * Sets a register to a random value masked (bitwise ANDed) with a
+        * constant.
+         * @param register The register.
+         * @param constant The mask.
+        */
         public SetRegisterRandom(Register register, UByte constant) {
             super(register, constant);
         }
@@ -291,9 +356,12 @@ public class Transfer {
             
             return state.withRegister(register, UByte.valueOf(maskedRandom));
         }
-        
     }
     
+    /**
+     * Gets all transfer instructions.
+     * @return A sequence of instructions.
+     */
     public static Seq<Instruction> getAll() {
         return Seq.concat(
             getAllInstances(SetAddressRegister::new),
