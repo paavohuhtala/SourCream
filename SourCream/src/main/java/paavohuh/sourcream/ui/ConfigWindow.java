@@ -25,7 +25,7 @@ public class ConfigWindow extends JDialog {
 
     private void initComponents() {
         setTitle("Configuration");
-        setPreferredSize(new Dimension(500, 400));
+        setPreferredSize(new Dimension(500, 500));
         setResizable(false);
         setModalityType(ModalityType.APPLICATION_MODAL);
         
