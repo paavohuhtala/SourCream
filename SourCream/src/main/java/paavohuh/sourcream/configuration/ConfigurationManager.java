@@ -11,6 +11,9 @@ import java.nio.file.Paths;
 import java.util.function.Supplier;
 import org.apache.commons.io.FileUtils;
 
+/**
+ * Provides functionality for loading and saving configuration files.
+ */
 public class ConfigurationManager {
     
     private static final Gson GSON = new Gson();

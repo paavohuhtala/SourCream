@@ -85,7 +85,7 @@ public final class Control {
         public State execute(State state) {
             UByte registerValue = state.getRegister(register);
             
-            if (registerValue.intValue() == constant.intValue()) {
+            if (registerValue.equals(constant)) {
                 return state.withIncrementedPc();
             } else {
                 return new State(state);

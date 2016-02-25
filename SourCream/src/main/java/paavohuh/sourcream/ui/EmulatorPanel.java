@@ -33,7 +33,6 @@ public class EmulatorPanel extends JPanel {
     
     @Override
     public void paintComponent(Graphics g) {
-        
         Color bg = config.getScreen().getColors().getBackground();
         Color fg = config.getScreen().getColors().getForeground();
         int scale = config.getScreen().getDisplayScale();

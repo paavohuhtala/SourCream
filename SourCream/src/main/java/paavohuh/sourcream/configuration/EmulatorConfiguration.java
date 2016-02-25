@@ -19,8 +19,8 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
 
     /**
      * Creates a new emulator config.
-     * @param screen 
-     * @param mapping 
+     * @param screen The screen configuration
+     * @param mapping The input configuration
      */
     public EmulatorConfiguration(ScreenConfiguration screen, InputConfiguration mapping) {
         this.screen = screen;
@@ -29,7 +29,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
     
     /**
      * Returns the default emulator configuration.
-     * @return 
+     * @return The configuration.
      */
     public static EmulatorConfiguration getDefault() {
         return new EmulatorConfiguration(
@@ -42,30 +42,18 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         return new EmulatorConfiguration(getScreen().cloned(), getInput().cloned());
     }
 
-    /**
-     * @return the screen
-     */
     public ScreenConfiguration getScreen() {
         return screen;
     }
 
-    /**
-     * @param screen the screen to set
-     */
     public void setScreen(ScreenConfiguration screen) {
         this.screen = screen;
     }
 
-    /**
-     * @return the input
-     */
     public InputConfiguration getInput() {
         return input;
     }
 
-    /**
-     * @param input the input to set
-     */
     public void setInput(InputConfiguration input) {
         this.input = input;
     }
@@ -81,10 +69,10 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
 
         /**
          * Creates a new screen config.
-         * @param scaleFactor
-         * @param colors
-         * @param emulateGhosting
-         * @param ghosting 
+         * @param scaleFactor The size of pixels in the emulated screen.
+         * @param colors The color scheme.
+         * @param emulateGhosting Should the emulator emulate LCD ghosting?
+         * @param ghosting Configuration for ghosting emulation.
          */
         public ScreenConfiguration(int scaleFactor, ColorScheme colors, boolean emulateGhosting, GhostingConfiguration ghosting) {
             this.scaleFactor = scaleFactor;
@@ -95,7 +83,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         
         /**
          * Returns the default screen configuration.
-         * @return 
+         * @return The default screen configuration.
          */
         public static ScreenConfiguration getDefault() {
             return new ScreenConfiguration(10, ColorScheme.getDefault(), true, GhostingConfiguration.getDefault());
@@ -104,62 +92,40 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         @Override
         public ScreenConfiguration cloned() {
             return new ScreenConfiguration(
-                                getDisplayScale(),
-                getColors().cloned(), isEmulateGhosting(), getGhosting().cloned());
+                getDisplayScale(),
+                getColors().cloned(),
+                emulateGhosting(),
+                getGhosting().cloned());
         }
 
-        /**
-         * @return the scaleFactor
-         */
         public int getDisplayScale() {
             return scaleFactor;
         }
 
-        /**
-         * @param scaleFactor the scaleFactor to set
-         */
         public void setScaleFactor(int scaleFactor) {
             this.scaleFactor = scaleFactor;
         }
 
-        /**
-         * @return the colors
-         */
         public ColorScheme getColors() {
             return colors;
         }
 
-        /**
-         * @param colors the colors to set
-         */
         public void setColors(ColorScheme colors) {
             this.colors = colors;
         }
 
-        /**
-         * @return the emulateGhosting
-         */
-        public boolean isEmulateGhosting() {
+        public boolean emulateGhosting() {
             return emulateGhosting;
         }
 
-        /**
-         * @param emulateGhosting the emulateGhosting to set
-         */
         public void setEmulateGhosting(boolean emulateGhosting) {
             this.emulateGhosting = emulateGhosting;
         }
 
-        /**
-         * @return the ghosting
-         */
         public GhostingConfiguration getGhosting() {
             return ghosting;
         }
 
-        /**
-         * @param ghosting the ghosting to set
-         */
         public void setGhosting(GhostingConfiguration ghosting) {
             this.ghosting = ghosting;
         }
@@ -167,7 +133,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         /**
          * Contains the colors for the emulated screen.
          */
-        public static class ColorScheme implements DeepCloneable<ColorScheme>{
+        public static class ColorScheme implements DeepCloneable<ColorScheme> {
             private Color background;
             private Color foreground;
 
@@ -176,6 +142,11 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
                 this.foreground = foreground;
             }
             
+            /**
+             * Returns the default color scheme, consisting of a green
+             * background color and a dark gray foreground color.
+             * @return 
+             */
             public static ColorScheme getDefault() {
                 return new ColorScheme(Color.green, Color.darkGray);
             }
@@ -185,30 +156,18 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
                 return new ColorScheme(getBackground(), getForeground());
             }
 
-            /**
-             * @return the background
-             */
             public Color getBackground() {
                 return background;
             }
 
-            /**
-             * @param background the background to set
-             */
             public void setBackground(Color background) {
                 this.background = background;
             }
 
-            /**
-             * @return the foreground
-             */
             public Color getForeground() {
                 return foreground;
             }
 
-            /**
-             * @param foreground the foreground to set
-             */
             public void setForeground(Color foreground) {
                 this.foreground = foreground;
             }
@@ -234,7 +193,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         
         /**
          * Returns the default ghosting emulation config.
-         * @return 
+         * @return Ghosting configuration.
          */
         public static GhostingConfiguration getDefault() {
             return new GhostingConfiguration(0.50f, 0.015f);
@@ -245,75 +204,40 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
             return new GhostingConfiguration(getAddBy(), getSubtractBy());
         }
 
-        /**
-         * @return the addBy
-         */
         public float getAddBy() {
             return addBy;
         }
 
-        /**
-         * @param addBy the addBy to set
-         */
         public void setAddBy(float addBy) {
             this.addBy = addBy;
         }
 
-        /**
-         * @return the subtractBy
-         */
         public float getSubtractBy() {
             return subtractBy;
         }
 
-        /**
-         * @param subtractBy the subtractBy to set
-         */
         public void setSubtractBy(float subtractBy) {
             this.subtractBy = subtractBy;
         }
     }
     
+    /**
+     * Contains the mappings between Swing virtual key codes and the Chip-8 hex
+     * keys.
+     */
     public static class InputConfiguration implements DeepCloneable<InputConfiguration> {
         private final HashMap<Integer, Integer> bindings;
 
+        /**
+         * Creates new 
+         * @param bindings 
+         */
         public InputConfiguration(HashMap<Integer, Integer> bindings) {
             this.bindings = bindings;
         }
         
         public static InputConfiguration getDefault() {
-            HashMap<Integer, Integer> bindings = new HashMap<>(16);
-            
-            /*bindings.put(KeyEvent.VK_Q, 0);
-            bindings.put(KeyEvent.VK_W, 1);
-            bindings.put(KeyEvent.VK_E, 2);
-            bindings.put(KeyEvent.VK_R, 3);
-            bindings.put(KeyEvent.VK_T, 4);
-            bindings.put(KeyEvent.VK_Y, 5);
-            bindings.put(KeyEvent.VK_U, 6);
-            bindings.put(KeyEvent.VK_I, 7);
-            bindings.put(KeyEvent.VK_O, 8);
-            bindings.put(KeyEvent.VK_P, 9);
-            bindings.put(KeyEvent.VK_A, 10);
-            bindings.put(KeyEvent.VK_S, 11);
-            bindings.put(KeyEvent.VK_D, 12);
-            bindings.put(KeyEvent.VK_F, 13);
-            bindings.put(KeyEvent.VK_G, 14);
-            bindings.put(KeyEvent.VK_H, 15);*/
-            
-            // PONG
-            /*bindings.put(KeyEvent.VK_W, 1);
-            bindings.put(KeyEvent.VK_S, 4);
-            bindings.put(KeyEvent.VK_UP, 12);
-            bindings.put(KeyEvent.VK_DOWN, 13);*/
-            
-            // TETRIS
-            bindings.put(KeyEvent.VK_LEFT, 5);
-            bindings.put(KeyEvent.VK_RIGHT, 6);
-            bindings.put(KeyEvent.VK_UP, 4);
-            bindings.put(KeyEvent.VK_DOWN, 7);
-            
-            return new InputConfiguration(bindings);
+            return KnownBindings.pong();
         }
         
         public Map<Integer, Integer> getBindings() {

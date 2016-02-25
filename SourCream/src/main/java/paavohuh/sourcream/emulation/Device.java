@@ -31,18 +31,19 @@ public class Device {
     private ScheduledFuture<?> ticker;
     
     private boolean isRunning;
-    
-    private static final int TIMER_RATE = 60;
-    
+        
     private final Timer delayTimer;
     private final Timer soundTimer;
     private final InputState inputState;
     
+    // REMOVE BEFORE RELEASE
     private final HashSet<Instruction> instructionSet;
     private final List<Instruction> instructions;
     
+    private static final int TIMER_RATE = 60;
+    
     /**
-     * Creates a new device.
+     * Creates a new device with initial state.
      * @param configuration The configuration for the device.
      * @param state Initial state of the device.
      */
@@ -61,10 +62,15 @@ public class Device {
         this.soundTimer = new Timer(0, TIMER_RATE);
         this.inputState = new InputState();
         
+        // REMOVE BEFORE RELEASE
         this.instructionSet = new HashSet<>();
         this.instructions = new ArrayList<>();
     }
     
+    /**
+     * Creates a new device. The state is initialized to the default.
+     * @param configuration The configuration for the device.
+     */
     public Device(DeviceConfiguration configuration) {
         this(configuration, new State(configuration));
     }
@@ -76,21 +82,54 @@ public class Device {
      * 3. Replaces current state with modified state
      * @throws paavohuh.sourcream.emulation.UnknownInstructionException
      */
-    public void runCycle() throws UnknownInstructionException {        
+    public void runCycle() throws UnknownInstructionException {
+        
+        // If the state paused, do nothing.
+        if (state.getExecutionState() == ExecutionState.PAUSED) {
+            return;
+        }
+        
+        // If we are waiting for a key, check if a key is down. If it is,
+        // put it in the register and continue. Otherwise, continue doing
+        // nothing.
+        if (state.getExecutionState() == ExecutionState.WAITING_FOR_KEY) {
+            delayTimer.stop();
+            soundTimer.stop();
+            
+            Optional<Integer> key = inputState.isAKeyDown();
+            
+            if (!key.isPresent()) {
+                return;
+            }
+            
+            delayTimer.start();
+            soundTimer.start();
+            
+            // The register should always be present in this state.
+            Register reg = state.getStoreKeyAfterHaltRegister().get();
+            state = state.withRegister(reg, UByte.valueOf(key.get()));
+        }
+        
+        // Fetch an instruction from the RAM where the program counter points.
         UShort code = state.get16BitsAt(state.getProgramCounter());
         Optional<Instruction> decoded = decoder.decode(code);
         
+        // If decoding an instruction fails, throw an exception.
         if (!decoded.isPresent()) {
             throw new UnknownInstructionException(code);
         }
         
         Instruction instruction = decoded.get();
-        instructionSet.add(instruction);
-        instructions.add(instruction);
-        //System.out.println(instruction);
+        System.out.println(state.getProgramCounter() + ": " + instruction);
         
-        //System.out.println(delayTimer.getValue());
-        
+        // REMOVE BEFORE RELEASE
+        /*instructionSet.add(instruction);
+        instructions.add(instruction);*/
+
+        // Before executing the instruction:
+        // 1. Increment the program counter
+        // 2. Update current input state
+        // 3. Update the timers
         State preInstructionState = state
             .withIncrementedPc()
             .withInputState(inputState)
@@ -99,20 +138,26 @@ public class Device {
         
         State newState = instruction.execute(preInstructionState);
         
+        // After executing the instruction, fetch the new screen buffer.
         ScreenBuffer buffer = newState.getScreenBuffer();
         
+        // If the buffer has been modified, notify handlers.
         if (buffer.modified) {
             updateGraphics(buffer);
         }
         
-        if (newState.isDelayTimerChanged()) {
+        // If the timers should be synchronized, do so.
+        
+        if (newState.shouldDelayTimerBeSynced()) {
             delayTimer.setValue(newState.getDelayTimer().intValue());
         }
         
-        if (newState.isSoundTimerChanged()) {
+        if (newState.shouldSoundTimerBeSynced()) {
             soundTimer.setValue(newState.getSoundTimer().intValue());
         }
         
+        // Clear the timer flags, and assign the modified state as the current
+        // one.
         this.state = newState.withClearedTimerFlags();
     }
 
@@ -131,6 +176,11 @@ public class Device {
         onUpdateGraphicsHandlers.add(handler);
     }
     
+    /**
+     * Starts the device.
+     * Sets the execution state as running, starts the timers and tells the 
+     * scheduler to start executing instructions at the configured rate.
+     */
     public void start() {
         if (this.isRunning) {
             return;
@@ -176,6 +226,11 @@ public class Device {
         this.state = state;
     }
 
+    /**
+     * Sends key input to the device.
+     * @param key The key index (between 0 and 15).
+     * @param keyState The state of the key.
+     */
     public void sendInput(int key, boolean keyState) {
         inputState.setKey(key, keyState);
     }

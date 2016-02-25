@@ -35,7 +35,7 @@ public class Main {
         
         ScreenBuffer logoBuffer = Resource.getLogo();
         
-        byte[] testRom = Files.readAllBytes(Paths.get("../roms/TETRIS"));
+        byte[] testRom = Files.readAllBytes(Paths.get("../roms/TANK"));
         
         Device device = new Device(deviceConfig);
         device.setState(device.getState().withProgram(testRom));

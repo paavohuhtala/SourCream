@@ -23,7 +23,7 @@ public class DeviceTest {
     @Test
     public void canRunCycle() {
         byte[] program = ProgramBuilder.assemble(new Control.JumpTo(UShort.valueOf(0x300)));
-        cpu.setState(cpu.getState().withProgram(program));
+        cpu.setState(cpu.getState().withProgram(program).asRunning());
         
         try {
             cpu.runCycle();
@@ -51,7 +51,7 @@ public class DeviceTest {
        cpu.onUpdateGraphics(buffer -> {didInvoke.setValue(true);});
        
        byte[] program = ProgramBuilder.assemble(new Graphics.ClearScreen());
-       cpu.setState(cpu.getState().withProgram(program));
+       cpu.setState(cpu.getState().withProgram(program).asRunning());
        cpu.runCycle();
        
        Assert.assertTrue("Callback should be invoked on screen clear.", didInvoke.getValue());

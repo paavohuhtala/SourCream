@@ -1,6 +1,7 @@
 
 package paavohuh.sourcream.ui;
 
+import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -35,6 +36,7 @@ public class MainWindow extends JFrame {
         setTitle("SourCream");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
         
         JMenuBar menubar = new JMenuBar();
         
@@ -65,12 +67,11 @@ public class MainWindow extends JFrame {
         });
         settingsMenu.add(item);
         menubar.add(settingsMenu);
+        add(menubar, BorderLayout.NORTH);
         
         emulatorPanel = new EmulatorPanel(emulatorConfig, deviceConfig);
-        add(emulatorPanel);
+        add(emulatorPanel, BorderLayout.SOUTH);
         pack();
         setVisible(true);
-        
-        this.setJMenuBar(menubar);
     }
 }

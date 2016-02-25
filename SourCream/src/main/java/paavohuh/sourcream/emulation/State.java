@@ -2,6 +2,7 @@ package paavohuh.sourcream.emulation;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Optional;
 import org.joou.UByte;
 import org.joou.UShort;
 import paavohuh.sourcream.Resource;
@@ -17,6 +18,7 @@ public class State implements Cloneable, Serializable {
     
     // The current execution state. Defaults to PAUSED.
     private ExecutionState executionState;
+    private Optional<Register> storeKeyAfterHaltRegister;
     
     // 4K (by default) of system RAM
     private byte[] ram;
@@ -43,9 +45,9 @@ public class State implements Cloneable, Serializable {
     private UByte delayTimerValue;
     private UByte soundTimerValue;
     
-    // Set to true if an instruction changes the timers.
-    private boolean delayTimerChanged;
-    private boolean soundTimerChanged;
+    // Set to true if the timer value should be synchronized.
+    private boolean syncDelayTimer;
+    private boolean syncSoundTimer;
     
     private InputState inputState;
     
@@ -55,6 +57,7 @@ public class State implements Cloneable, Serializable {
      */
     public State(State previous) {
         this.executionState = previous.executionState;
+        this.storeKeyAfterHaltRegister = previous.storeKeyAfterHaltRegister;
         this.ram = ArrayUtils.clone(previous.ram);
         this.screen = previous.screen;
         this.registers = ArrayUtils.clone(previous.registers);
@@ -64,8 +67,8 @@ public class State implements Cloneable, Serializable {
         this.stack = ArrayUtils.clone(previous.stack);
         this.delayTimerValue = previous.delayTimerValue;
         this.soundTimerValue = previous.soundTimerValue;
-        this.delayTimerChanged = previous.delayTimerChanged;
-        this.soundTimerChanged = previous.soundTimerChanged;
+        this.syncDelayTimer = previous.syncDelayTimer;
+        this.syncSoundTimer = previous.syncSoundTimer;
         this.inputState = previous.inputState;
     }
     
@@ -76,7 +79,8 @@ public class State implements Cloneable, Serializable {
      * @param config 
      */
     public State(DeviceConfiguration config) {
-        this.executionState = ExecutionState.paused();
+        this.executionState = ExecutionState.PAUSED;
+        this.storeKeyAfterHaltRegister = Optional.empty();
         this.ram = new byte[config.getRamSize()];
         this.screen = new ScreenBuffer(config);
         this.registers = new UByte[16];
@@ -91,8 +95,8 @@ public class State implements Cloneable, Serializable {
         this.stack = new UShort[16];
         this.delayTimerValue = UByte.valueOf(0);
         this.soundTimerValue = UByte.valueOf(0);
-        this.delayTimerChanged = false;
-        this.soundTimerChanged = false;
+        this.syncDelayTimer = false;
+        this.syncSoundTimer = false;
         this.inputState = new InputState();
         
         // We need the system font, so load it from resources and copy it.
@@ -103,7 +107,7 @@ public class State implements Cloneable, Serializable {
     /**
      * Gets the value of the given register.
      * @param reg The register.
-     * @return 
+     * @return The value of the register.
      */
     public UByte getRegister(Register reg) {
         return registers[reg.id];
@@ -113,7 +117,7 @@ public class State implements Cloneable, Serializable {
      * Returns a new state with the given register set to the given value.
      * @param reg The register.
      * @param value The value.
-     * @return The new state.
+     * @return A new state.
      */
     public State withRegister(Register reg, UByte value) {
         State state = new State(this);
@@ -125,7 +129,7 @@ public class State implements Cloneable, Serializable {
     /**
      * Returns a new state with the address register set to the given value.
      * @param value
-     * @return 
+     * @return The value of the address register.
      */
     public State withAddressRegister(UShort value) {
         State state = new State(this);
@@ -159,7 +163,7 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Gets 16 bits of memory from the given offset.
-     * @param memoryOffset the offset
+     * @param memoryOffset The offset.
      * @return 16 bits of data at the given offset
      */
     public UShort get16BitsAt(UShort memoryOffset) {
@@ -175,8 +179,8 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Returns a new state with the program counter set to supplied value.
-     * @param pc
-     * @return The new state
+     * @param pc The new value of the program counter.
+     * @return A new state.
      */
     public State withProgamCounter(UShort pc) {
         State state = new State(this);
@@ -187,7 +191,7 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Returns a new state with the program counter incremented by 2.
-     * @return The new state
+     * @return A new state.
      */
     public State withIncrementedPc() {
         return withProgamCounter(UShort.valueOf(getProgramCounter().intValue() + 2));
@@ -203,9 +207,9 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Returns a new state with the given buffer copied to memory.
-     * @param from The buffer to copy
-     * @param destinationAddress The destination in RAM where the buffer is copied to
-     * @return A new state
+     * @param from The buffer to copy.
+     * @param destinationAddress The destination in RAM where the buffer is copied to.
+     * @return A new state.
      */
     public State withCopiedMemory(byte[] from, UShort destinationAddress) {
         int destination = destinationAddress.intValue();
@@ -241,8 +245,8 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Returns a new state with the screen buffer set to the supplied buffer.
-     * @param buffer
-     * @return 
+     * @param buffer The new screen buffer.
+     * @return A new state.
      */
     public State withScreenBuffer(ScreenBuffer buffer) {
         State state = new State(this);
@@ -253,7 +257,7 @@ public class State implements Cloneable, Serializable {
     
     /**
      * Gets the screen buffer.
-     * @return The screen buffer
+     * @return The screen buffer.
      */
     public ScreenBuffer getScreenBuffer() {
         return screen;
@@ -264,7 +268,7 @@ public class State implements Cloneable, Serializable {
      * position of the program counter (0x200).
      * Memory and/or registers doesn't get cleared.
      * @param byteCode The program to copy
-     * @return 
+     * @return A new state.
      */
     public State withProgram(byte[] byteCode) {
         return this.withCopiedMemory(byteCode, UShort.valueOf(0x200));
@@ -274,10 +278,11 @@ public class State implements Cloneable, Serializable {
      * Returns a new state with PC set to the given address and the current PC
      * is pushed to call stack. The stack point is also incremented.
      * @param subroutine The address to jump to.
-     * @return The new state.
+     * @return A new state.
      */
     public State withCallTo(UShort subroutine) {
         State state = new State(this);
+        System.out.println("call from " + state.pc + " to " + subroutine);
         state.stack[state.sp.intValue() + 1] = state.pc;
         state.sp = UByte.valueOf(state.sp.intValue() + 1);
         state.pc = subroutine;
@@ -288,32 +293,46 @@ public class State implements Cloneable, Serializable {
     /**
      * Returns a new state with with PC set to the topmost item in the call
      * stack. The stack pointer is also decremetned.
-     * @return The new state.
+     * @return A new state.
      */
     public State withReturn() {
         State state = new State(this);
+        System.out.println("returning from " + state.pc + " to " + state.stack[sp.intValue()]);
         state.pc = state.stack[state.sp.intValue()];
         state.sp = UByte.valueOf(state.sp.intValue() - 1);
         
         return state;
     }
     
+    /**
+     * Returns a new state with the delay timer set to the value.
+     * @param value The value to set the timer to.
+     * @param setFlag Should the value be synchronized with the timer?
+     * @return A new state.
+     */
     public State withDelayTimer(UByte value, boolean setFlag) {
         State state = new State(this);
         state.delayTimerValue = value;
-        state.delayTimerChanged = setFlag;
+        state.syncDelayTimer = setFlag;
         
         return state;
     }
     
+    /**
+     * Returns a new state with the sound timer set to the value.
+     * @param value The value to set the timer to.
+     * @param setFlag Should the value be synchronized with the timer?
+     * @return A new state.
+     */
     public State withSoundTimer(UByte value, boolean setFlag) {
         State state = new State(this);
         state.soundTimerValue = value;
-        state.delayTimerChanged = setFlag;
+        state.syncDelayTimer = setFlag;
         
         return state;
     }
-        
+    
+    
     public UByte getDelayTimer() {
         return delayTimerValue;
     }
@@ -322,23 +341,38 @@ public class State implements Cloneable, Serializable {
         return soundTimerValue;
     }
     
+    /**
+     * Returns a new state with the execution state set to PAUSED.
+     * @return A new state.
+     */
     public State asPaused() {
         State state = new State(this);
-        state.executionState = ExecutionState.paused();
+        state.executionState = ExecutionState.PAUSED;
         
         return state;
     }
     
+    /**
+     * Returns a new state with the execution state set to RUNNING.
+     * @return A new state.
+     */
     public State asRunning() {
         State state = new State(this);
-        state.executionState = ExecutionState.running();
+        state.executionState = ExecutionState.RUNNING;
         
         return state;
     }
     
+    /**
+     * Returns a new state with the execution state set to WAITING_FOR_KEY.
+     * Pauses the state until a key is pressed.
+     * @param storeIn Which register the key id should be stored in?
+     * @return A new state.
+     */
     public State asWaitingForKey(Register storeIn) {
         State state = new State(this);
-        state.executionState = ExecutionState.waitingForKey(storeIn);
+        state.executionState = ExecutionState.WAITING_FOR_KEY;
+        state.storeKeyAfterHaltRegister = Optional.of(storeIn);
         
         return state;
     }
@@ -346,27 +380,48 @@ public class State implements Cloneable, Serializable {
     public InputState getInputState() {
         return inputState;
     }
-    
+
+    /**
+     * Sets the timer synchronization flags to false.
+     * @return A new state.
+     */
     public State withClearedTimerFlags() {
         State state = new State(this);
-        state.soundTimerChanged = false;
-        state.delayTimerChanged = false;
+        state.syncSoundTimer = false;
+        state.syncDelayTimer = false;
         
         return state;
     }
 
-    public boolean isDelayTimerChanged() {
-        return delayTimerChanged;
+    public boolean shouldDelayTimerBeSynced() {
+        return syncDelayTimer;
     }
 
-    public boolean isSoundTimerChanged() {
-        return soundTimerChanged;
+    public boolean shouldSoundTimerBeSynced() {
+        return syncSoundTimer;
     }
 
+    /**
+     * Sets the input state to the provided value.
+     * @param inputState  The new input state.
+     * @return A new state.
+     */
     public State withInputState(InputState inputState) {
         State state = new State(this);
         state.inputState = inputState;
         
         return state;
+    }
+
+    public ExecutionState getExecutionState() {
+        return executionState;
+    }
+
+    public Optional<Register> getStoreKeyAfterHaltRegister() {
+        return storeKeyAfterHaltRegister;
+    }
+
+    public UByte getStackPointer() {
+        return sp;
     }
 }
