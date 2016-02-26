@@ -17,8 +17,8 @@ import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.emulation.instructions.AllInstructions;
 
 /**
- * The virtual CPU of the device. Contains the machine state, and handles the
- * fetch-decode-execute -loop.
+ * The composition root of the interpreter. Contains the machine state, and
+ * handles the fetch-decode-execute -loop.
  */
 public class Device {
     private final DeviceConfiguration configuration;

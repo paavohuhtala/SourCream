@@ -33,22 +33,10 @@ public class Main {
         DeviceConfiguration deviceConfig = ConfigurationManager.loadOrCreateDeviceConfig();
         EmulatorConfiguration emulatorConfig = ConfigurationManager.loadOrCreateEmulatorConfig();
         
-        ScreenBuffer logoBuffer = Resource.getLogo();
-        
         byte[] testRom = Files.readAllBytes(Paths.get("../roms/TANK"));
         
-        Device device = new Device(deviceConfig);
-        device.setState(device.getState().withProgram(testRom));
-        
         MainWindow window = new MainWindow(emulatorConfig, deviceConfig);
-        window.getEmulatorPanel().updateScreenBuffer(logoBuffer);
-        
-        InputMapper mapper = new InputMapper(device, emulatorConfig.getInput());
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(mapper);
-
-        EmulatorPanel emulatorPanel = window.getEmulatorPanel();
-        
-        device.onUpdateGraphics(emulatorPanel::updateScreenBuffer);
-        device.start();
+        window.loadProgram(testRom);
+        window.start();
     }
 }

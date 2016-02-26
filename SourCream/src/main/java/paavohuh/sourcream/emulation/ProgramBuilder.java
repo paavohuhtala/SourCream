@@ -1,6 +1,9 @@
 
 package paavohuh.sourcream.emulation;
 
+import org.joou.UShort;
+import paavohuh.sourcream.emulation.instructions.Control;
+
 /**
  * Contains functions for assembling bytecode programs from Chip-8 instructions.
  */
@@ -21,5 +24,13 @@ public class ProgramBuilder {
         }
         
         return byteCode;
+    }
+    
+    /**
+     * Returns an idle loop, which only jumps onto itself.
+     * @return A byte array containing the program.
+     */
+    public static byte[] getIdleLoop() {
+        return assemble(new Control.JumpTo(UShort.valueOf(0x200)));
     }
 }

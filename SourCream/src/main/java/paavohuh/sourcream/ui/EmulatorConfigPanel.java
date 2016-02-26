@@ -23,7 +23,7 @@ public class EmulatorConfigPanel extends JPanel {
         
         setLayout(new GridLayout(1, 2, 4, 4));
         
-        JPanel leftColumn = new JPanel(new GridLayout(0, 1));
+        JPanel leftColumn = new JPanel(new GridLayout(4, 1));
         leftColumn.setBorder(BorderFactory.createTitledBorder("Screen"));
         JPanel rightColumn = new JPanel(new BorderLayout());
         rightColumn.setBorder(BorderFactory.createTitledBorder("Input"));
