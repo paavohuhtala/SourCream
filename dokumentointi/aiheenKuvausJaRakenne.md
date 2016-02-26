@@ -32,6 +32,7 @@ Tulkki ja emulaattori binäärimuotoisille [CHIP-8](https://en.wikipedia.org/wik
 
 ## Loppudokumentaatio
 [Rakennekuvaus](/dokumentointi/rakennekuvaus.md)
+[Käyttöohje](/dokumentointi/kayttoohje.md)
 
 ## Riippuvuudet
 

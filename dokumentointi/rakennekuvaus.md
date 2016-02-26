@@ -43,8 +43,8 @@ Emulaation ydin on `Device`-luokka, joka yhdistää käskycachen, tilan ja kello
 
 ## Käyttöliittymän näkökulmasta
 
-TODO
+Käyttöliittymä on toteuttu hyvin perinteisesti Swingillä. `MainWindow`-luokka sisältää valikot, näyttöemulaatiopaneelin (`EmulatorPanel`) sekä itse `Device`-luokan.
 
-## Muuta
+Näyttöemulaatio perustuu kolmeen eri luokkaan: edellämainittuun `ScreenBuffer`iin, `EmulatedLcdBuffer`iin ja `EmulatorPanel`iin. Pääikkuna rekisteröi `EmulatorPanel`in vastaanottamaan näyttöpuskuripäivityksiä, ja `EmulatorPanel` välittää datan `EmulatedLcdBuffer`ille. Chip-8 ei tunne framen käsitettä, joten grafiikat täytyy päivittää aina kun näyttöpuskuria päivitetään, mikä johtaa usein kuvan vilkkumiseen. SourCream emuloi nestekidenäyttöjen ghosting-efektiä laajentamalla yksibittisen näyttöpuskurin liukuluvuiksi, ja feidaamalla pikseleitä sisään ja ulos muutosten mukaan. Kun `EmulatedLcdBuffer` on tehnyt laskunsa, `EmulatorPanel` laskee ja näyttää lopulliset pikselit interpoloimalla etu- ja taustavärien välillä. Koska näyttöpuskurin koko on tavallisesti vain 64x32, puskuria skaalataan konfiguroitavalla vakiolla.
 
-TODO
+`InputMapper` seuraa koko ohjelmassa tapahtuvia näppäinsyötteitä, ja välittää bindatut näppäimet `Device`lle.

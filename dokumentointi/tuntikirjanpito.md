@@ -99,3 +99,7 @@ Eilistä koodia siistitty ja bugeja/suunniteluvirheitä korjattu.
 * Ohjelmia voi nyt ladata graafisesti.
 * Konfiguraatio jätetty pois PIT-raportista toistaiseksi.
 * Aloitettu rakennekuvauksen kirjoittaminen
+
+## 26.2.2016: 2h
+* Näppäinpresetit lisätty käyttöliittymään
+* Kirjoitettu lisää dokumentaatiota (käyttöohje, rakennekuvaus)
