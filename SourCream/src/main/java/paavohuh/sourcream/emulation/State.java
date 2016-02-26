@@ -282,7 +282,7 @@ public class State implements Cloneable, Serializable {
      */
     public State withCallTo(UShort subroutine) {
         State state = new State(this);
-        System.out.println("call from " + state.pc + " to " + subroutine);
+        //System.out.println("call from " + state.pc + " to " + subroutine);
         state.stack[state.sp.intValue() + 1] = state.pc;
         state.sp = UByte.valueOf(state.sp.intValue() + 1);
         state.pc = subroutine;
@@ -297,7 +297,7 @@ public class State implements Cloneable, Serializable {
      */
     public State withReturn() {
         State state = new State(this);
-        System.out.println("returning from " + state.pc + " to " + state.stack[sp.intValue()]);
+        //System.out.println("returning from " + state.pc + " to " + state.stack[sp.intValue()]);
         state.pc = state.stack[state.sp.intValue()];
         state.sp = UByte.valueOf(state.sp.intValue() - 1);
         

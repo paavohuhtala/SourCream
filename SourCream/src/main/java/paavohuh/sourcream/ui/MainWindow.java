@@ -31,7 +31,7 @@ public class MainWindow extends JFrame {
         this.deviceConfig = deviceConfig;
         this.device = new Device(deviceConfig);
         
-        InputMapper mapper = new InputMapper(device, emulatorConfig.getInput());
+        InputMapper mapper = new InputMapper(device, emulatorConfig);
         KeyboardFocusManager
             .getCurrentKeyboardFocusManager()
             .addKeyEventDispatcher(mapper);

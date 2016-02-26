@@ -121,7 +121,7 @@ public class Device {
         }
         
         Instruction instruction = decoded.get();
-        System.out.println(state.getProgramCounter() + ": " + instruction);
+        //System.out.println(state.getProgramCounter() + ": " + instruction);
         
         // REMOVE BEFORE RELEASE
         /*instructionSet.add(instruction);

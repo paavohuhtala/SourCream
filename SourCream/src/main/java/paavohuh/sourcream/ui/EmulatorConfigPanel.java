@@ -5,6 +5,7 @@ package paavohuh.sourcream.ui;
 import java.awt.*;
 import javax.swing.*;
 import paavohuh.sourcream.configuration.EmulatorConfiguration;
+import paavohuh.sourcream.configuration.KnownBindings;
 
 /**
  * The emulator config panel.
@@ -47,14 +48,36 @@ public class EmulatorConfigPanel extends JPanel {
         leftColumn.add(colorGroup);
         
         JPanel bindingsGroup = new JPanel(new BorderLayout(4, 4));
-        bindingsGroup.add(new JComboBox(new String[]{"Custom", "Pong", "Tetris"}), BorderLayout.NORTH);
-        JPanel subBindingsGroup = new JPanel(new GridLayout(8, 4, 4, 4));
+        JComboBox presetBox = new JComboBox(new String[]{"Custom", "Pong", "Tetris"});
+        
+        // Temporary HACK
+        presetBox.addActionListener(event -> {
+            String selected = (String) presetBox.getModel().getSelectedItem();
+            
+            System.out.println(selected);
+            switch (selected) {
+                case "Pong":
+                    config.setInput(KnownBindings.pong());
+                    break;
+                case "Tetris":
+                    config.setInput(KnownBindings.tetris());
+                    break;
+            }
+        });
+        
+        bindingsGroup.add(presetBox, BorderLayout.NORTH);
+        
+        JPanel subBindingsGroup = new JPanel(new GridLayout(8, 2, 4, 4));
         
         String[] keys = {"None", "Up", "Down", "Left", "Right", "W", "A", "S", "D"};
         
         for (int i = 0; i < 16; i++) {
-            subBindingsGroup.add(new JLabel(Integer.toString(i + 1)));
-            subBindingsGroup.add(new JComboBox(keys));
+            JPanel bindingPanel = new JPanel(new BorderLayout(4, 0));
+            bindingPanel.add(new JLabel(Integer.toString(i + 1)), BorderLayout.WEST);
+            JComboBox keyBox = new JComboBox(keys);
+            keyBox.setPreferredSize(new Dimension(80, 0));
+            bindingPanel.add(keyBox, BorderLayout.EAST);
+            subBindingsGroup.add(bindingPanel);
         }
         
         bindingsGroup.add(subBindingsGroup, BorderLayout.CENTER);

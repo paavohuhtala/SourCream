@@ -186,8 +186,10 @@ public interface Instruction {
         
         @Override
         public String toString() {
-            return String.format("%s(%02X)",
+            return String.format("%s(%s, %s, %2X)",
                 this.getClass().getSimpleName(),
+                registerX.toString(),
+                registerY.toString(),
                 constant.intValue());
         }
     }
