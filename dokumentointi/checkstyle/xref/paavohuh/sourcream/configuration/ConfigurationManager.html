@@ -19,74 +19,77 @@
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> java.util.function.Supplier;
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.FileUtils;
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../paavohuh/sourcream/configuration/ConfigurationManager.html">ConfigurationManager</a> {
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>      
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Gson GSON = <strong class="jxr_keyword">new</strong> Gson();
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>      
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CONFIGURATION_DIRECTORY = <span class="jxr_string">"config/"</span>;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String DEVICE_CONFIGURATION_FILE = <span class="jxr_string">"device.json"</span>;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String EMULATOR_CONFIGURATION_FILE = <span class="jxr_string">"emulator.json"</span>;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>      
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">     * Loads or creates the device config.</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment">     * @return The config</em>
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> loadOrCreateDeviceConfig() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>          Path path = Paths.get(CONFIGURATION_DIRECTORY, DEVICE_CONFIGURATION_FILE);
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>          
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>          <strong class="jxr_keyword">return</strong> loadOrCreateConfig(path, DeviceConfiguration::getDefault, DeviceConfiguration.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      }
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment">     * Loads or creates the emulator config.</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment">     * @return The config</em>
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> loadorCreateEmulatorConfig() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          Path path = Paths.get(CONFIGURATION_DIRECTORY, EMULATOR_CONFIGURATION_FILE);
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <strong class="jxr_keyword">return</strong> loadOrCreateConfig(path, EmulatorConfiguration::getDefault, EmulatorConfiguration.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      }
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>      
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> &lt;T&gt; T loadOrCreateConfig(Path path, Supplier&lt;T&gt; defaulSupplier, Class&lt;T&gt; configType) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          T config;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">if</strong> (!Files.exists(path)) {
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>              config = defaulSupplier.get();
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>              serializeToFile(path.toFile(), config);
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>              String json = FileUtils.readFileToString(path.toFile());
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>              config = GSON.fromJson(json, configType);
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>          }
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>          
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">return</strong> config;
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      }
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment">     * Saves the device config.</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     * @param config</em>
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> saveDeviceConfiguration(<a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> config) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          File target = <strong class="jxr_keyword">new</strong> File(CONFIGURATION_DIRECTORY, DEVICE_CONFIGURATION_FILE);
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          serializeToFile(target, config);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * Saves the emulator config.</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * @param config</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> saveEmulatorConfiguration(<a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> config) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          File target = <strong class="jxr_keyword">new</strong> File(CONFIGURATION_DIRECTORY, EMULATOR_CONFIGURATION_FILE);
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          serializeToFile(target, config);
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      }
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> serializeToFile(File file, Object o) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          FileUtils.writeStringToFile(file, GSON.toJson(o));
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>      }
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>  }
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * Provides functionality for loading and saving configuration files.</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../paavohuh/sourcream/configuration/ConfigurationManager.html">ConfigurationManager</a> {
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Gson GSON = <strong class="jxr_keyword">new</strong> Gson();
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CONFIGURATION_DIRECTORY = <span class="jxr_string">"config/"</span>;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String DEVICE_CONFIGURATION_FILE = <span class="jxr_string">"device.json"</span>;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String EMULATOR_CONFIGURATION_FILE = <span class="jxr_string">"emulator.json"</span>;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">     * Loads or creates the device config.</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * @return The config.</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> loadOrCreateDeviceConfig() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          Path path = Paths.get(CONFIGURATION_DIRECTORY, DEVICE_CONFIGURATION_FILE);
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>          
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">return</strong> loadOrCreateConfig(path, DeviceConfiguration::getDefault, DeviceConfiguration.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment">     * Loads or creates the emulator config.</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * @return The config.</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> loadOrCreateEmulatorConfig() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          Path path = Paths.get(CONFIGURATION_DIRECTORY, EMULATOR_CONFIGURATION_FILE);
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          <strong class="jxr_keyword">return</strong> loadOrCreateConfig(path, EmulatorConfiguration::getDefault, EmulatorConfiguration.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      }
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> &lt;T&gt; T loadOrCreateConfig(Path path, Supplier&lt;T&gt; defaulSupplier, Class&lt;T&gt; configType) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          T config;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          <strong class="jxr_keyword">if</strong> (!Files.exists(path)) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>              config = defaulSupplier.get();
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>              serializeToFile(path.toFile(), config);
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>              String json = FileUtils.readFileToString(path.toFile());
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>              config = GSON.fromJson(json, configType);
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          }
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">return</strong> config;
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      }
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     * Saves the device config.</em>
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     * @param config The confg.</em>
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> saveDeviceConfiguration(<a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> config) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          File target = <strong class="jxr_keyword">new</strong> File(CONFIGURATION_DIRECTORY, DEVICE_CONFIGURATION_FILE);
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          serializeToFile(target, config);
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * Saves the emulator config.</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * @param config The config.</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * @throws IOException </em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> saveEmulatorConfiguration(<a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> config) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          File target = <strong class="jxr_keyword">new</strong> File(CONFIGURATION_DIRECTORY, EMULATOR_CONFIGURATION_FILE);
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          serializeToFile(target, config);
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      }
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> serializeToFile(File file, Object o) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          FileUtils.writeStringToFile(file, GSON.toJson(o));
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      }
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2016. All rights reserved.</div>
