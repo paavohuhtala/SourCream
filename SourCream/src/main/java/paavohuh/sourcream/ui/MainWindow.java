@@ -107,14 +107,9 @@ public class MainWindow extends JFrame {
      * @param program 
      */
     public void loadProgram(byte[] program) {
-        boolean wasRunning = device.getState().getExecutionState() == ExecutionState.RUNNING;
-
         device.stop();  
         device.setState(new State(deviceConfig).withProgram(program));
-        
-        if (wasRunning) {
-            start();
-        }
+        start();
     }
     
     /**
