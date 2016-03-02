@@ -10,9 +10,11 @@ import paavohuh.sourcream.configuration.*;
  * The main configuration window of the program.
  */
 public class ConfigWindow extends JDialog {
-    private final Configuration config;
-    private ConfigWindowResult result;
-
+    private final Configuration globalConfig;
+    private final Configuration modifiedConfig;
+    private DeviceConfigPanel deviceSettings;
+    private EmulatorConfigPanel emulatorSettings;
+    
     /**
      * Creates a new modal configuration window.
      * @param owner The owner of the window.
@@ -22,8 +24,8 @@ public class ConfigWindow extends JDialog {
     public ConfigWindow(Frame owner, Configuration config) throws HeadlessException {
         super(owner);
         
-        this.config = config;
-        this.result = ConfigWindowResult.CANCEL;
+        this.globalConfig = config;
+        this.modifiedConfig = globalConfig.cloned();
         
         initComponents();
     }
@@ -36,8 +38,8 @@ public class ConfigWindow extends JDialog {
         
         JTabbedPane tabs = new JTabbedPane();
         
-        EmulatorConfigPanel emulatorSettings = new EmulatorConfigPanel(this, config.getEmulatorConfig());
-        DeviceConfigPanel deviceSettings = new DeviceConfigPanel(this, config.getDeviceConfig());
+        emulatorSettings = new EmulatorConfigPanel(this, modifiedConfig.getEmulatorConfig());
+        deviceSettings = new DeviceConfigPanel(this, modifiedConfig.getDeviceConfig());
         
         tabs.addTab("Emulator", emulatorSettings);
         tabs.addTab("Device", deviceSettings);
@@ -50,10 +52,8 @@ public class ConfigWindow extends JDialog {
         JButton ok = new JButton("OK");
         ok.addActionListener(event -> {
             try {
-                
-                ConfigurationManager.saveEmulatorConfiguration(emulatorSettings.getConfig());
-                ConfigurationManager.saveDeviceConfiguration(deviceSettings.getConfig());
-                this.result = ConfigWindowResult.OK;
+                applyConfig();
+                saveConfig();
                 this.setVisible(false);
                 this.dispose();
             } catch (IOException ex) { /* TODO: handle*/ }
@@ -61,13 +61,18 @@ public class ConfigWindow extends JDialog {
         
         JButton cancel = new JButton("Cancel");
         cancel.addActionListener(event -> {
-            this.result = ConfigWindowResult.CANCEL;
             this.setVisible(false);
             this.dispose();
         });
         
         JButton apply = new JButton("Apply");
-        apply.setEnabled(false);
+        cancel.addActionListener(event -> {
+            applyConfig();
+            try {
+                applyConfig();
+                saveConfig();
+            } catch (IOException ex) {/* TODO: handle */}
+        });
         
         buttonPane.add(ok);
         buttonPane.add(cancel);
@@ -77,18 +82,13 @@ public class ConfigWindow extends JDialog {
         pack();
     }
     
-    public Configuration showDialog() {
-        this.setVisible(true);
-        
-        if (result == ConfigWindowResult.OK) {
-            return config;
-        }
-        
-        return null;
+    private void applyConfig() {
+        this.globalConfig.setEmulatorConfig(emulatorSettings.getConfig());
+        this.globalConfig.setDeviceConfig(deviceSettings.getConfig());
     }
     
-    public enum ConfigWindowResult {
-        OK,
-        CANCEL
+    private void saveConfig() throws IOException {
+        ConfigurationManager.saveEmulatorConfiguration(modifiedConfig.getEmulatorConfig());
+        ConfigurationManager.saveDeviceConfiguration(modifiedConfig.getDeviceConfig());
     }
 }

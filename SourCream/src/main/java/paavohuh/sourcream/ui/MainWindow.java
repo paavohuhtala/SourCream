@@ -82,9 +82,12 @@ public class MainWindow extends JFrame {
         
         item = new JMenuItem("Configuration...");
         item.addActionListener(event -> {
+            device.stop();
             ConfigWindow window = new ConfigWindow(this, config);
             window.setVisible(true);
+            device.start();
         });
+        
         settingsMenu.add(item);
         menubar.add(settingsMenu);
         add(menubar, BorderLayout.NORTH);
