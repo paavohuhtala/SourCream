@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 import org.joou.UByte;
 
 import org.joou.UShort;
+import paavohuh.sourcream.configuration.Configuration;
 import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.emulation.instructions.AllInstructions;
 
@@ -21,7 +22,7 @@ import paavohuh.sourcream.emulation.instructions.AllInstructions;
  * handles the fetch-decode-execute -loop.
  */
 public class Device {
-    private final DeviceConfiguration configuration;
+    private final Configuration config;
     
     private State state;
     private final InstructionDecoder decoder;
@@ -44,15 +45,15 @@ public class Device {
     
     /**
      * Creates a new device with initial state.
-     * @param configuration The configuration for the device.
+     * @param config The configuration for the device.
      * @param state Initial state of the device.
      */
-    public Device(DeviceConfiguration configuration, State state) {
+    public Device(Configuration config, State state) {
         InstructionCache cache = new ArrayInstructionCache();
         AllInstructions.get().forEach(cache::register);
         
         this.decoder = cache;
-        this.configuration = configuration;
+        this.config = config;
         this.state = state;
         this.onUpdateGraphicsHandlers = new ArrayList<>(1);
         this.scheduler = new ScheduledThreadPoolExecutor(1);
@@ -69,10 +70,10 @@ public class Device {
     
     /**
      * Creates a new device. The state is initialized to the default.
-     * @param configuration The configuration for the device.
+     * @param config The configuration for the device.
      */
-    public Device(DeviceConfiguration configuration) {
-        this(configuration, new State(configuration));
+    public Device(Configuration config) {
+        this(config, new State(config));
     }
     
     /**
@@ -190,7 +191,12 @@ public class Device {
         this.state = this.state.asRunning();
         this.delayTimer.start();
         this.soundTimer.start();
-        this.ticker = scheduler.scheduleAtFixedRate(this::tryRunCycle, 0, 1000 / configuration.getClockSpeed(), TimeUnit.MILLISECONDS);
+        this.ticker =
+            scheduler.scheduleAtFixedRate(
+                this::tryRunCycle,
+                0,
+                1000 / config.getDeviceConfig().getClockSpeed(),
+                TimeUnit.MILLISECONDS);
         this.isRunning = true;
     }
     

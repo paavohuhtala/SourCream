@@ -1,6 +1,7 @@
 
 package paavohuh.sourcream.ui;
 
+import paavohuh.sourcream.configuration.Configuration;
 import paavohuh.sourcream.configuration.EmulatorConfiguration;
 import paavohuh.sourcream.emulation.ScreenBuffer;
 import paavohuh.sourcream.utils.MathUtils;
@@ -9,7 +10,7 @@ import paavohuh.sourcream.utils.MathUtils;
  * An emulated LCD buffer, with simulated ghosting.
  */
 class EmulatedLcdBuffer {
-    private final EmulatorConfiguration config;
+    private final Configuration config;
     float[][] buffer;
     final int width;
     final int height;
@@ -19,7 +20,7 @@ class EmulatedLcdBuffer {
      * @param config The emulator configuration
      * @param buffer Initial ScreenBuffer.
      */
-    public EmulatedLcdBuffer(EmulatorConfiguration config, ScreenBuffer buffer) {
+    public EmulatedLcdBuffer(Configuration config, ScreenBuffer buffer) {
         this.config = config;
         this.buffer = new float[buffer.height][buffer.width];
         this.width = buffer.width;
@@ -37,10 +38,12 @@ class EmulatedLcdBuffer {
      * @param buffer
      */
     public void updateWith(ScreenBuffer buffer) {
+        EmulatorConfiguration.ScreenConfiguration screen = config.getEmulatorConfig().getScreen();
+        
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                float addBy = config.getScreen().getGhosting().getAddBy();
-                float subtractBy = config.getScreen().getGhosting().getSubtractBy();
+                float addBy = screen.getGhosting().getAddBy();
+                float subtractBy = screen.getGhosting().getSubtractBy();
                 this.buffer[y][x] = MathUtils.clamp(0.0f, this.buffer[y][x] + (buffer.get(x, y) ? addBy : -subtractBy), 1.0f);
             }
         }

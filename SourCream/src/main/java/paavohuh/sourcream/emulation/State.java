@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.joou.UByte;
 import org.joou.UShort;
 import paavohuh.sourcream.Resource;
+import paavohuh.sourcream.configuration.Configuration;
 
 import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.utils.ArrayUtils;
@@ -78,10 +79,10 @@ public class State implements Cloneable, Serializable {
      * The execution state is set to PAUSED.
      * @param config 
      */
-    public State(DeviceConfiguration config) {
+    public State(Configuration config) {
         this.executionState = ExecutionState.PAUSED;
         this.storeKeyAfterHaltRegister = Optional.empty();
-        this.ram = new byte[config.getRamSize()];
+        this.ram = new byte[config.getDeviceConfig().getRamSize()];
         this.screen = new ScreenBuffer(config);
         this.registers = new UByte[16];
         

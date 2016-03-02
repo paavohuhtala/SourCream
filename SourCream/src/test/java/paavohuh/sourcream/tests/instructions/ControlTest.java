@@ -4,7 +4,7 @@ import org.joou.UByte;
 import org.joou.UShort;
 import org.junit.Assert;
 import org.junit.Test;
-import paavohuh.sourcream.configuration.DeviceConfiguration;
+import paavohuh.sourcream.configuration.Configuration;
 import paavohuh.sourcream.emulation.*;
 import paavohuh.sourcream.emulation.instructions.Arithmetic.*;
 import paavohuh.sourcream.emulation.instructions.Control.*;
@@ -18,7 +18,7 @@ public class ControlTest extends StateTest {
             new AddConstantToRegister(Register.V0, UByte.valueOf(1)),
             new JumpTo(UShort.valueOf(0x200)));
         
-        Device device = new Device(DeviceConfiguration.getDefault());
+        Device device = new Device(Configuration.getDefault());
         device.setState(device.getState().withProgram(program).asRunning());
         
         device.runCycle();
@@ -41,7 +41,7 @@ public class ControlTest extends StateTest {
             new AddConstantToRegister(Register.V0, UByte.valueOf(2)),
             new Return());
         
-        Device device = new Device(DeviceConfiguration.getDefault());
+        Device device = new Device(Configuration.getDefault());
         device.setState(device.getState()
             .withProgram(program)
             .withCopiedMemory(subroutine, UShort.valueOf(0x300))

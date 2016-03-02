@@ -4,10 +4,9 @@ package paavohuh.sourcream.tests;
 import org.joou.UShort;
 import org.junit.Assert;
 import org.junit.Test;
-import paavohuh.sourcream.configuration.DeviceConfiguration;
+import paavohuh.sourcream.configuration.Configuration;
 import paavohuh.sourcream.emulation.Device;
 import paavohuh.sourcream.emulation.ProgramBuilder;
-import paavohuh.sourcream.emulation.State;
 import paavohuh.sourcream.emulation.UnknownInstructionException;
 import paavohuh.sourcream.emulation.instructions.Control;
 import paavohuh.sourcream.emulation.instructions.Graphics;
@@ -16,8 +15,7 @@ public class DeviceTest {
     private final Device cpu;
 
     public DeviceTest() {
-        State initialState = new State(DeviceConfiguration.getDefault());
-        this.cpu = new Device(DeviceConfiguration.getDefault(), initialState);
+        this.cpu = new Device(Configuration.getDefault());
     }
     
     @Test

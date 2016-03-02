@@ -18,20 +18,17 @@ public class MainWindow extends JFrame {
     
     private final Device device;
     private EmulatorPanel emulatorPanel;
-    private final EmulatorConfiguration emulatorConfig;
-    private final DeviceConfiguration deviceConfig;
+    private final Configuration config;
 
     /**
      * Creates a new main window.
-     * @param emulatorConfig The emulator configuration.
-     * @param deviceConfig The device configuration.
+     * @param config The configuration.
      */
-    public MainWindow(EmulatorConfiguration emulatorConfig, DeviceConfiguration deviceConfig) {
-        this.emulatorConfig = emulatorConfig;
-        this.deviceConfig = deviceConfig;
-        this.device = new Device(deviceConfig);
+    public MainWindow(Configuration config) {
+        this.config = config;
+        this.device = new Device(config);
         
-        InputMapper mapper = new InputMapper(device, emulatorConfig);
+        InputMapper mapper = new InputMapper(device, config);
         KeyboardFocusManager
             .getCurrentKeyboardFocusManager()
             .addKeyEventDispatcher(mapper);
@@ -85,14 +82,14 @@ public class MainWindow extends JFrame {
         
         item = new JMenuItem("Configuration...");
         item.addActionListener(event -> {
-            ConfigWindow window = new ConfigWindow(this, emulatorConfig, deviceConfig);
+            ConfigWindow window = new ConfigWindow(this, config);
             window.setVisible(true);
         });
         settingsMenu.add(item);
         menubar.add(settingsMenu);
         add(menubar, BorderLayout.NORTH);
         
-        emulatorPanel = new EmulatorPanel(emulatorConfig, deviceConfig);
+        emulatorPanel = new EmulatorPanel(config);
         add(emulatorPanel, BorderLayout.SOUTH);
         pack();
         setVisible(true);
@@ -108,7 +105,7 @@ public class MainWindow extends JFrame {
      */
     public void loadProgram(byte[] program) {
         device.stop();  
-        device.setState(new State(deviceConfig).withProgram(program));
+        device.setState(new State(config).withProgram(program));
         start();
     }
     

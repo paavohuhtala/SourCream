@@ -1,5 +1,6 @@
 package paavohuh.sourcream.emulation;
 
+import paavohuh.sourcream.configuration.Configuration;
 import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.utils.ArrayUtils;
 
@@ -35,9 +36,10 @@ public class ScreenBuffer {
      * Creates a new screen buffer for the supplied device configuration.
      * @param config The device configuration.
      */
-    public ScreenBuffer(DeviceConfiguration config) {
-        width = config.getResolutionX();
-        height = config.getResolutionY();
+    public ScreenBuffer(Configuration config) {
+        DeviceConfiguration deviceConfig = config.getDeviceConfig();
+        width = deviceConfig.getResolutionX();
+        height = deviceConfig.getResolutionY();
         flipped = false;
         modified = false;
         

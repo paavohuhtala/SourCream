@@ -30,9 +30,10 @@ public class Main {
         
         DeviceConfiguration deviceConfig = ConfigurationManager.loadOrCreateDeviceConfig();
         EmulatorConfiguration emulatorConfig = ConfigurationManager.loadOrCreateEmulatorConfig();
+        Configuration config = new Configuration(deviceConfig, emulatorConfig);
         
         //byte[] testRom = Files.readAllBytes(Paths.get("../roms/TANK"));
-        MainWindow window = new MainWindow(emulatorConfig, deviceConfig);
+        MainWindow window = new MainWindow(config);
         /*window.loadProgram(testRom);
         window.start();*/
     }

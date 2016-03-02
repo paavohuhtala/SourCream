@@ -4,8 +4,8 @@ package paavohuh.sourcream.ui;
 import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 import java.util.Map;
+import paavohuh.sourcream.configuration.Configuration;
 
-import paavohuh.sourcream.configuration.EmulatorConfiguration;
 import paavohuh.sourcream.emulation.Device;
 
 /**
@@ -14,14 +14,14 @@ import paavohuh.sourcream.emulation.Device;
 public class InputMapper implements KeyEventDispatcher {
     
     private final Device device;
-    private final EmulatorConfiguration config;
+    private final Configuration config;
 
     /**
      * Creates a new input mapper.
      * @param device The device which will receive the key presses.
      * @param config The emulator configuration containing the key bindings.
      */
-    public InputMapper(Device device, EmulatorConfiguration config) {
+    public InputMapper(Device device, Configuration config) {
         this.config = config;
         this.device = device;
     }
@@ -29,7 +29,7 @@ public class InputMapper implements KeyEventDispatcher {
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         
-        Map<Integer, Integer> bindings = config.getInput().getBindings();
+        Map<Integer, Integer> bindings = config.getEmulatorConfig().getInput().getBindings();
         
         if (!bindings.containsKey(e.getKeyCode())) {
             return false;
