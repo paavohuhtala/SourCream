@@ -2,6 +2,8 @@
 package paavohuh.sourcream.ui;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +22,9 @@ public class MainWindow extends JFrame {
     private EmulatorPanel emulatorPanel;
     private JMenuItem pauseContinueItem;
     private final Configuration config;
+    
+    private final State[] saveStates;
+    private final JMenuItem[] loadStateItems;
 
     /**
      * Creates a new main window.
@@ -28,6 +33,8 @@ public class MainWindow extends JFrame {
     public MainWindow(Configuration config) {
         this.config = config;
         this.device = new Device(config);
+        this.saveStates = new State[8];
+        this.loadStateItems = new JMenuItem[8];
         
         InputMapper mapper = new InputMapper(device, config);
         KeyboardFocusManager
@@ -93,7 +100,6 @@ public class MainWindow extends JFrame {
         menubar.add(emulationMenu);
         
         JMenu settingsMenu = new JMenu("Options");
-        
         item = new JMenuItem("Configuration...");
         item.addActionListener(event -> {
             device.stop();
@@ -106,8 +112,37 @@ public class MainWindow extends JFrame {
         
         settingsMenu.add(item);
         menubar.add(settingsMenu);
-        add(menubar, BorderLayout.NORTH);
         
+        JMenu saveStateMenu = new JMenu("Save states");
+        
+        for (int i = 1; i <= saveStates.length; i++) {
+            final int index = i;
+            JMenuItem saveItem = new JMenuItem("Save to slot " + i);
+            saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1 + (i - 1), 0));
+            saveItem.addActionListener(event -> {
+                saveStates[index - 1] = device.getState();
+                loadStateItems[index - 1].setEnabled(true);
+            });
+            saveStateMenu.add(saveItem);
+        }
+        
+        saveStateMenu.addSeparator();
+        
+        for (int i = 1; i <= saveStates.length; i++) {
+            final int index = i;
+            JMenuItem loadItem = new JMenuItem("Load slot " + i);
+            loadItem.setEnabled(false);
+            loadItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1 + (i - 1), InputEvent.CTRL_DOWN_MASK));
+            loadItem.addActionListener(event -> {
+                device.setState(saveStates[index - 1]);
+            });
+            saveStateMenu.add(loadItem);
+            loadStateItems[i - 1] = loadItem;
+        }
+        
+        menubar.add(saveStateMenu);
+        
+        add(menubar, BorderLayout.NORTH);
         emulatorPanel = new EmulatorPanel(config);
         add(emulatorPanel, BorderLayout.SOUTH);
         pack();
