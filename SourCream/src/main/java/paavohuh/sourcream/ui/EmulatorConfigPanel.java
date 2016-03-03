@@ -179,7 +179,6 @@ public class EmulatorConfigPanel extends JPanel {
             NamedKey key;
 
             if (invertedBindings.containsKey(i)) {
-                System.out.println(i);
                 key = NamedKey.fromCode(invertedBindings.get(i)).get();
             } else {
                 key = NamedKey.none();

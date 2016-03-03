@@ -60,6 +60,7 @@ public class MainWindow extends JFrame {
         JMenu fileMenu = new JMenu("File");
         
         JMenuItem item = new JMenuItem("Load ROM...");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
         item.addActionListener(event -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File("../roms"));
@@ -80,6 +81,7 @@ public class MainWindow extends JFrame {
         fileMenu.addSeparator();
         
         item = new JMenuItem("Exit");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         item.addActionListener(event -> {
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
@@ -88,6 +90,7 @@ public class MainWindow extends JFrame {
         
         JMenu emulationMenu = new JMenu("Emulation");
         pauseContinueItem = new JMenuItem("Not running");
+        pauseContinueItem.setAccelerator(KeyStroke.getKeyStroke("P"));
         pauseContinueItem.setEnabled(false);
         pauseContinueItem.addActionListener(event -> {
             if (device.isRunning()) {
@@ -109,7 +112,6 @@ public class MainWindow extends JFrame {
             emulatorPanel.updateBounds();
             pack();
         });
-        
         settingsMenu.add(item);
         menubar.add(settingsMenu);
         

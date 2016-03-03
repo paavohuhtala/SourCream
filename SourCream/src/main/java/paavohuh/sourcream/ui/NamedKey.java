@@ -67,7 +67,6 @@ public class NamedKey {
      * @return A NamedKey if it exists.
      */
     public static Optional<NamedKey> fromCode(int code) {
-        System.out.println(code);
         return getKnown().stream()
             .filter(k -> k.keyCode != null && k.keyCode == code)
             .findFirst();
