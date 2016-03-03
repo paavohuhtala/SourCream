@@ -18,6 +18,7 @@ public class MainWindow extends JFrame {
     
     private final Device device;
     private EmulatorPanel emulatorPanel;
+    private JMenuItem pauseContinueItem;
     private final Configuration config;
 
     /**
@@ -67,8 +68,8 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        fileMenu.add(item);
         
+        fileMenu.add(item);
         fileMenu.addSeparator();
         
         item = new JMenuItem("Exit");
@@ -77,6 +78,19 @@ public class MainWindow extends JFrame {
         });
         fileMenu.add(item);
         menubar.add(fileMenu);
+        
+        JMenu emulationMenu = new JMenu("Emulation");
+        pauseContinueItem = new JMenuItem("Not running");
+        pauseContinueItem.setEnabled(false);
+        pauseContinueItem.addActionListener(event -> {
+            if (device.isRunning()) {
+                pause();
+            } else {
+                start();
+            }
+        });
+        emulationMenu.add(pauseContinueItem);
+        menubar.add(emulationMenu);
         
         JMenu settingsMenu = new JMenu("Options");
         
@@ -111,6 +125,7 @@ public class MainWindow extends JFrame {
     public void loadProgram(byte[] program) {
         device.stop();  
         device.setState(new State(config).withProgram(program));
+        pauseContinueItem.setEnabled(true);
         start();
     }
     
@@ -118,7 +133,16 @@ public class MainWindow extends JFrame {
      * Starts executing the Chip-8 VM.
      */
     public void start() {
-        device.setState(device.getState().asRunning());
         device.start();
+        pauseContinueItem.setText("Pause");
+
+    }
+    
+    /**
+     * Pauses the Chip-8 VM.
+     */
+    public void pause() {
+        device.stop();
+        pauseContinueItem.setText("Continue");
     }
 }

@@ -242,4 +242,12 @@ public class Device {
     public void sendInput(int key, boolean keyState) {
         inputState.setKey(key, keyState);
     }
+    
+    /**
+     * Checks if the device is running.
+     * @return True if the device is running.
+     */
+    public boolean isRunning() {
+        return this.isRunning;
+    }
 }
