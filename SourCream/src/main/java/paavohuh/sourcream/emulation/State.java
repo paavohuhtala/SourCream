@@ -328,7 +328,7 @@ public class State implements Cloneable, Serializable {
     public State withSoundTimer(UByte value, boolean setFlag) {
         State state = new State(this);
         state.soundTimerValue = value;
-        state.shouldDelayTimerBeSynced = setFlag;
+        state.shouldSoundTimerBeSynced = setFlag;
         
         return state;
     }

@@ -16,6 +16,7 @@ import org.joou.UShort;
 import paavohuh.sourcream.configuration.Configuration;
 import paavohuh.sourcream.configuration.DeviceConfiguration;
 import paavohuh.sourcream.emulation.instructions.AllInstructions;
+import paavohuh.sourcream.ui.BeepPlayer;
 
 /**
  * The composition root of the interpreter. Contains the machine state, and
@@ -40,6 +41,8 @@ public class Device {
     // REMOVE BEFORE RELEASE
     private final HashSet<Instruction> instructionSet;
     private final List<Instruction> instructions;
+    
+    private final BeepPlayer beeper;
     
     private static final int TIMER_RATE = 60;
     
@@ -66,6 +69,8 @@ public class Device {
         // REMOVE BEFORE RELEASE
         this.instructionSet = new HashSet<>();
         this.instructions = new ArrayList<>();
+        
+        this.beeper = new BeepPlayer(config);
     }
     
     /**
@@ -122,12 +127,7 @@ public class Device {
         }
         
         Instruction instruction = decoded.get();
-        //System.out.println(state.getProgramCounter() + ": " + instruction);
         
-        // REMOVE BEFORE RELEASE
-        /*instructionSet.add(instruction);
-        instructions.add(instruction);*/
-
         // Before executing the instruction:
         // 1. Increment the program counter
         // 2. Update current input state
@@ -156,6 +156,13 @@ public class Device {
         
         if (newState.getShouldSoundTimerBeSynced()) {
             soundTimer.setValue(newState.getSoundTimer().intValue());
+        }
+        
+        // If the sound timer is zero, play a startBeep
+        if (soundTimer.getValue() > 0) {
+            beeper.startBeep();
+        } else {
+            beeper.endBeep();
         }
         
         // Clear the timer flags, and assign the modified state as the current

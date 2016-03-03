@@ -112,14 +112,14 @@ public class Transfer {
     /**
      * Copies registers V0 - VX to RAM, beginning from address register I.
      */
-    public static class StoreRegisters extends Instruction.With4BitConstant {
+    public static class StoreRegisters extends Instruction.WithRegister {
 
         /**
          * Copies registers V0 - VX to RAM, beginning from address register I.
-         * @param constant 
+         * @param register The last register to copy.
          */
-        public StoreRegisters(UByte constant) {
-            super(constant);
+        public StoreRegisters(Register register) {
+            super(register);
         }
 
         @Override
@@ -130,14 +130,14 @@ public class Transfer {
         @Override
         public State execute(State state) {
             UShort addressRegister = state.getAddressRegister();
-            byte[] registers = new byte[constant.intValue()];
+            byte[] registers = new byte[register.id + 1];
             
             // Copy registers V0 - VX to a temporary buffer 
             for (int i = 0; i < registers.length; i++) {
                 registers[i] = (byte) state.getRegister(new Register(i)).intValue();
             }
             
-            UShort newAddressRegister = UShort.valueOf(addressRegister.intValue() + constant.intValue() + 1);
+            UShort newAddressRegister = UShort.valueOf(addressRegister.intValue() + register.id + 1);
             
             return state
                 .withCopiedMemory(registers, addressRegister)
@@ -145,9 +145,9 @@ public class Transfer {
         }
 
         @Override
-        protected int getOffset() {
+        protected int getRegisterOffset() {
             return 2;
-        }   
+        }
     }
     
     /**
