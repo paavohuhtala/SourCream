@@ -130,7 +130,7 @@ public class Transfer {
         @Override
         public State execute(State state) {
             UShort addressRegister = state.getAddressRegister();
-            byte[] registers = new byte[constant.intValue() + 1];
+            byte[] registers = new byte[constant.intValue()];
             
             // Copy registers V0 - VX to a temporary buffer 
             for (int i = 0; i < registers.length; i++) {
@@ -178,7 +178,7 @@ public class Transfer {
             State newState = state;
             int addressRegister = state.getAddressRegister().intValue();
             
-            for (int i = 0; i < register.id; i++) {
+            for (int i = 0; i <= register.id; i++) {
                 UShort address = UShort.valueOf(addressRegister + i);
                 Register reg = new Register(i);
                 newState = newState.withRegister(reg, UByte.valueOf(state.getMemoryFrom(address, 1)[0]));
