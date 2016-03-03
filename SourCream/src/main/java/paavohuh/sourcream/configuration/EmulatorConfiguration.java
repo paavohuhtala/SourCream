@@ -251,7 +251,7 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         }
         
         /**
-         * Gets the key bindings.
+         * Gets the key bindings from key codes to device keys.
          * @return The key bindings.
          */
         public Map<Integer, Integer> getBindings() {
@@ -265,6 +265,14 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
          */
         public void bind(int keyCode, int deviceKey) {
             bindings.put(keyCode, deviceKey);
+        }
+        
+        /**
+         * Removes a key binding from the binding map.
+         * @param keyCode The Swing virtual keycode to remove.
+         */
+        public void unbind(int keyCode) {
+            bindings.remove(keyCode);
         }
         
         @Override

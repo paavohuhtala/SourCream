@@ -42,9 +42,13 @@ class EmulatedLcdBuffer {
         
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                float addBy = screen.getGhosting().getAddBy();
-                float subtractBy = screen.getGhosting().getSubtractBy();
-                this.buffer[y][x] = MathUtils.clamp(0.0f, this.buffer[y][x] + (buffer.get(x, y) ? addBy : -subtractBy), 1.0f);
+                if (screen.getEmulateGhosting()) {
+                    float addBy = screen.getGhosting().getAddBy();
+                    float subtractBy = screen.getGhosting().getSubtractBy();
+                    this.buffer[y][x] = MathUtils.clamp(0.0f, this.buffer[y][x] + (buffer.get(x, y) ? addBy : -subtractBy), 1.0f);
+                } else {
+                    this.buffer[y][x] = buffer.get(x, y) ? 1.0f : 0.0f;
+                }
             }
         }
     }

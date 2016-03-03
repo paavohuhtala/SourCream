@@ -26,7 +26,7 @@ public class EmulatorPanel extends JPanel {
     public EmulatorPanel(Configuration config) {
         super(true);
         this.config = config;
-        calculateBounds();
+        updateBounds();
         
         this.screen = new EmulatedLcdBuffer(config, new ScreenBuffer(config));
     }
@@ -45,7 +45,6 @@ public class EmulatorPanel extends JPanel {
         for (int y = 0; y < screen.height; y++) {
             for (int x = 0; x < screen.width; x++) {
                 float level = screen.buffer[y][x];
-                
                 g.setColor(ColorUtils.lerp(fg, bg, level));
                 g.fillRect(x * scale, y * scale, scale, scale);
             }
@@ -65,7 +64,7 @@ public class EmulatorPanel extends JPanel {
      * Calculates the preferred size for the panel using the screen buffer size
      * and the display scale factor.
      */
-    public final void calculateBounds() {
+    public final void updateBounds() {
         EmulatorConfiguration.ScreenConfiguration screenConfig = config.getEmulatorConfig().getScreen();
         int scale = screenConfig.getDisplayScale();
         int width  = config.getDeviceConfig().getResolutionX() * scale;

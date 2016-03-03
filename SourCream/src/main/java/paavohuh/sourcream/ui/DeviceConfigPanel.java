@@ -2,6 +2,7 @@
 package paavohuh.sourcream.ui;
 
 import java.awt.Dialog;
+import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import paavohuh.sourcream.configuration.DeviceConfiguration;
@@ -18,6 +19,7 @@ class DeviceConfigPanel extends JPanel {
      * @param config The device configuration.
      */
     public DeviceConfigPanel(Dialog parent, DeviceConfiguration config) {
+        this.setLayout(new GridLayout(5, 2));
         add(new JLabel("These settings can and will affect emulation."));
         this.config = config;
     }

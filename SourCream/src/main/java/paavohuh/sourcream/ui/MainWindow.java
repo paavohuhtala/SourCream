@@ -86,6 +86,8 @@ public class MainWindow extends JFrame {
             ConfigWindow window = new ConfigWindow(this, config);
             window.setVisible(true);
             device.start();
+            emulatorPanel.updateBounds();
+            pack();
         });
         
         settingsMenu.add(item);
