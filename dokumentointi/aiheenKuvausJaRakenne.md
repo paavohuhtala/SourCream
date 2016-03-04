@@ -32,8 +32,11 @@ Tulkki ja emulaattori binäärimuotoisille [CHIP-8](https://en.wikipedia.org/wik
 
 ## Loppudokumentaatio
 [Rakennekuvaus](/dokumentointi/rakennekuvaus.md)
+
 [Käyttöohje](/dokumentointi/kayttoohje.md)
+
+[Testidokumentointi / post mortem](/dokumentointi/testidokumentointi.md)
 
 ## Riippuvuudet
 
-* Projekti hyödyntää jOOq-prjektin [jOOλ](https://github.com/jOOQ/jOOL) ja [jOOu](https://github.com/jOOQ/jOOU)-kirjastoja, jota Maven asentaa automaattisesti.
+* Projekti hyödyntää jOOq-projektin kirjastoja [jOOλ](https://github.com/jOOQ/jOOL) ja [jOOu](https://github.com/jOOQ/jOOU), Googlen JSON-kirjastoa Gson ja commons-io-kirjastoa, jotka Maven asentaa automaattisesti.
