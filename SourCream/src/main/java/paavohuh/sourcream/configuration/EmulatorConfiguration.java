@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import paavohuh.sourcream.utils.DeepCloneable;
+import paavohuh.sourcream.utils.MapUtils;
 
 /**
  * Configuration for the emulator. These settings have no effect on emulation;
@@ -288,6 +289,26 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
          */
         public void unbind(int keyCode) {
             bindings.remove(keyCode);
+        }
+        
+        /**
+         * Unbinds all keys.
+         */
+        public void unbindAll() {
+            bindings.clear();
+        }
+        
+        /**
+         * Removes a key binding from the binding map via the device key.
+         * @param deviceKey The Chip-8 key code (between 0 and 15).
+         */
+        public void unbindDeviceKey(int deviceKey) {
+            Map<Integer, Integer> inverted = MapUtils.invert(bindings);
+            for (Map.Entry<Integer, Integer> entry : inverted.entrySet()) {
+                if (entry.getValue() == deviceKey) {
+                    bindings.remove(entry.getKey());
+                }
+            }
         }
         
         @Override

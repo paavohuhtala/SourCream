@@ -7,12 +7,11 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -31,7 +30,8 @@ import paavohuh.sourcream.utils.MapUtils;
 public class EmulatorConfigPanel extends JPanel {
 
     private final EmulatorConfiguration config;
-    private List<JComboBox<NamedKey>> keyBindBoxes;
+    private final List<JComboBox<NamedKey>> keyBindBoxes;
+    private final Integer[] keyBindings;
     
     /**
      * Creates a new emulator config panel.
@@ -89,14 +89,14 @@ public class EmulatorConfigPanel extends JPanel {
             
             switch (selected) {
                 case "Pong":
-                    config.setInput(KnownBindings.pong());
+                    updateConfigBindings(KnownBindings.pong());
                     break;
                 case "Tetris":
-                    config.setInput(KnownBindings.tetris());
+                    updateConfigBindings(KnownBindings.tetris());
                     break;
             }
             
-            updateKeyBinds();
+            updateDisplayedBindings();
         });
         
         bindingsGroup.add(presetBox, BorderLayout.NORTH);
@@ -107,6 +107,7 @@ public class EmulatorConfigPanel extends JPanel {
         NamedKey[] keys = namedKeyList.toArray(new NamedKey[namedKeyList.size()]);
 
         keyBindBoxes = new ArrayList<>(16);
+        keyBindings = new Integer[16];
         
         for (int i = 0; i < 16; i++) {
             final int index = i;
@@ -118,9 +119,8 @@ public class EmulatorConfigPanel extends JPanel {
             keyBindBox.setPreferredSize(new Dimension(80, 0));
             keyBindBox.addItemListener(event -> {
                 NamedKey key = (NamedKey) event.getItem();
-                if (!key.isNone()) {
-                    config.getInput().bind(key.getKeyCode(), index);
-                }
+                keyBindings[index] = key.getKeyCode();
+                updateConfigBindings();
             });
             
             bindingPanel.add(keyBindBox, BorderLayout.EAST);
@@ -128,7 +128,7 @@ public class EmulatorConfigPanel extends JPanel {
             keyBindBoxes.add(keyBindBox);
         }
         
-        updateKeyBinds();
+        updateDisplayedBindings();
         
         bindingsGroup.add(subBindingsGroup, BorderLayout.CENTER);
         rightColumn.add(bindingsGroup, BorderLayout.CENTER);
@@ -214,7 +214,6 @@ public class EmulatorConfigPanel extends JPanel {
         c.gridy = 5;
         leftColumn.add(new JPanel(), c);
         
-        
         add(leftColumn);
         add(rightColumn);
     }
@@ -223,7 +222,7 @@ public class EmulatorConfigPanel extends JPanel {
         return config;
     }
     
-    private void updateKeyBinds() {
+    private void updateDisplayedBindings() {
         Map<Integer, Integer> invertedBindings = MapUtils.invert(config.getInput().getBindings());
 
         for (int i = 0; i < keyBindBoxes.size(); i++) {
@@ -237,5 +236,32 @@ public class EmulatorConfigPanel extends JPanel {
             
             keyBindBoxes.get(i).setSelectedItem(key);
         }
+    }
+    
+    private void updateConfigBindings() {
+        config.getInput().unbindAll();
+        
+        for (int i = 0; i < keyBindings.length; i++) {
+            if (keyBindings[i] != null) {
+                config.getInput().bind(keyBindings[i], i);
+            } else {
+                config.getInput().unbindDeviceKey(i);
+            }
+        }
+    }
+    
+    private void updateConfigBindings(EmulatorConfiguration.InputConfiguration config) {
+        Arrays.fill(keyBindings, null);
+        
+        Map<Integer, Integer> invertedBindings = MapUtils.invert(config.getBindings());
+        for (int i = 0; i < keyBindings.length; i++) {
+            if (invertedBindings.containsKey(i)) {
+                keyBindings[i] = invertedBindings.get(i);
+            } else {
+                keyBindings[i] = null;
+            }
+        }
+        
+        updateConfigBindings();
     }
 }
