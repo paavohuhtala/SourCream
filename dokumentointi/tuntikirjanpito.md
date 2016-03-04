@@ -103,3 +103,21 @@ Eilistä koodia siistitty ja bugeja/suunniteluvirheitä korjattu.
 ## 26.2.2016: 2h
 * Näppäinpresetit lisätty käyttöliittymään
 * Kirjoitettu lisää dokumentaatiota (käyttöohje, rakennekuvaus)
+
+
+## 2.3.2016: 2h
+* Konfiguraation hiomista
+* Pysäytä emulaatio kun konffausikkuna avataan
+
+## 3.3.2016: 4h
+* Paljon lisää konffi-ikkunan hiomista
+* Save statet
+* Korjattu (toivottavasti) viimeinen emulaatiobugi!
+* Piippauskaiutin
+
+## 4.3.2016: 4h
+* Käyttöliittymän hiomista
+* Kellotaajuuden valinta
+* Hio näppäinbindausasetuksia
+* Päivitä dokumentaatioita
+* Tee ensimmäinen binäärijulkaisu
