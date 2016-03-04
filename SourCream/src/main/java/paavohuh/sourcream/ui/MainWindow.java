@@ -105,12 +105,17 @@ public class MainWindow extends JFrame {
         JMenu settingsMenu = new JMenu("Options");
         item = new JMenuItem("Configuration...");
         item.addActionListener(event -> {
+            boolean wasRunning = device.isRunning();
+            
             device.stop();
             ConfigWindow window = new ConfigWindow(this, config);
             window.setVisible(true);
-            device.start();
             emulatorPanel.updateBounds();
             pack();
+            
+            if (wasRunning) {
+                device.start();
+            }
         });
         settingsMenu.add(item);
         menubar.add(settingsMenu);
