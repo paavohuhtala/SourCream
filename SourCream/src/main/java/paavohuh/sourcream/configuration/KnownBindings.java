@@ -43,6 +43,39 @@ public class KnownBindings {
     }
     
     /**
+     * Returns the premade input configuration for UFO.
+     * Arrow keys left, up and right and are used for shooting in the respective
+     * directions.
+     * @return An input configuration.
+     */
+    public static InputConfiguration ufo() {
+        HashMap<Integer, Integer> bindings = new HashMap<>();
+        
+        bindings.put(KeyEvent.VK_LEFT, 4);
+        bindings.put(KeyEvent.VK_RIGHT, 6);
+        bindings.put(KeyEvent.VK_UP, 5);
+        
+        return new InputConfiguration(bindings);
+    }
+    
+    /**
+     * Returns the premade input configuration for TANK.
+     * Arrow keys are used for moving, and the space bar is used for shooting.
+     * @return An input configuration.
+     */
+    public static InputConfiguration tank() {
+        HashMap<Integer, Integer> bindings = new HashMap<>();
+        
+        bindings.put(KeyEvent.VK_UP, 8);
+        bindings.put(KeyEvent.VK_DOWN, 2);
+        bindings.put(KeyEvent.VK_LEFT, 4);
+        bindings.put(KeyEvent.VK_RIGHT, 6);
+        bindings.put(KeyEvent.VK_SPACE, 5);
+        
+        return new InputConfiguration(bindings);
+    }
+    
+    /**
      * Returns an input configuration with every button bound to something.
      * Keys 0 - 9 are bound to Q - P on a standard WASD keyboard. Keys 10 - 15
      * are bound to A - H.

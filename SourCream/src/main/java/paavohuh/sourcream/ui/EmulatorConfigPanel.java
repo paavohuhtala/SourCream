@@ -82,7 +82,7 @@ public class EmulatorConfigPanel extends JPanel {
         screenGroup.add(colorGroup, c);
         
         JPanel bindingsGroup = new JPanel(new BorderLayout(4, 4));
-        JComboBox presetBox = new JComboBox(new String[]{"Custom", "Pong", "Tetris"});
+        JComboBox presetBox = new JComboBox(new String[]{"Custom", "Pong", "Tetris", "UFO", "Tank"});
         
         presetBox.addActionListener(event -> {
             String selected = (String) presetBox.getModel().getSelectedItem();
@@ -93,6 +93,12 @@ public class EmulatorConfigPanel extends JPanel {
                     break;
                 case "Tetris":
                     updateConfigBindings(KnownBindings.tetris());
+                    break;
+                case "UFO":
+                    updateConfigBindings(KnownBindings.ufo());
+                    break;
+                case "Tank":
+                    updateConfigBindings(KnownBindings.tank());
                     break;
             }
             

@@ -235,7 +235,7 @@ public class State implements Cloneable, Serializable {
         int source = sourceAddress.intValue();
         
         if (source < 0 || source + length > ram.length) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Tried to read " + length + " bytes from " + String.format("%04X", sourceAddress.intValue()));
         }
         
         byte[] buffer = new byte[length];

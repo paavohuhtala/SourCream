@@ -71,7 +71,7 @@ public class ConfigWindow extends JDialog {
             try {
                 applyConfig();
                 saveConfig();
-            } catch (IOException ex) {/* TODO: handle */}
+            } catch (IOException ex) { /* TODO: handle */ }
         });
         
         buttonPane.add(ok);
