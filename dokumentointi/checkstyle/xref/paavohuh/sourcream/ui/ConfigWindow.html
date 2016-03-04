@@ -18,71 +18,88 @@
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * The main configuration window of the program.</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../paavohuh/sourcream/ui/ConfigWindow.html">ConfigWindow</a> <strong class="jxr_keyword">extends</strong> JDialog {
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> emulatorConfig;
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> deviceConfig;
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment">     * Creates a new modal configuration window.</em>
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * @param owner The owner of the window.</em>
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     * @param emulatorConfig The emulator configuration.</em>
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment">     * @param deviceConfig The device configraution.</em>
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment">     * @throws HeadlessException </em>
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>      <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/ui/ConfigWindow.html">ConfigWindow</a>(Frame owner, <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> emulatorConfig, <a href="../../../paavohuh/sourcream/configuration/DeviceConfiguration.html">DeviceConfiguration</a> deviceConfig) <strong class="jxr_keyword">throws</strong> HeadlessException {
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>          <strong class="jxr_keyword">super</strong>(owner);
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>          
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>          <strong class="jxr_keyword">this</strong>.emulatorConfig = emulatorConfig;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>          <strong class="jxr_keyword">this</strong>.deviceConfig = deviceConfig;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>          initComponents();
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>      }
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initComponents() {
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>          setTitle(<span class="jxr_string">"Configuration"</span>);
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>          setPreferredSize(<strong class="jxr_keyword">new</strong> Dimension(500, 500));
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>          setResizable(false);
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          setModalityType(ModalityType.APPLICATION_MODAL);
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>          
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>          JTabbedPane tabs = <strong class="jxr_keyword">new</strong> JTabbedPane();
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a> emulatorSettings = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a>(<strong class="jxr_keyword">this</strong>, emulatorConfig);
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <a href="../../../paavohuh/sourcream/ui/DeviceConfigPanel.html">DeviceConfigPanel</a> deviceSettings = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/DeviceConfigPanel.html">DeviceConfigPanel</a>(<strong class="jxr_keyword">this</strong>, deviceConfig);
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          tabs.addTab(<span class="jxr_string">"Emulator"</span>, emulatorSettings);
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          tabs.addTab(<span class="jxr_string">"Device"</span>, deviceSettings);
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          add(tabs, BorderLayout.CENTER);
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          JPanel buttonPane = <strong class="jxr_keyword">new</strong> JPanel();
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          buttonPane.setLayout(<strong class="jxr_keyword">new</strong> GridLayout(1, 3, 8, 8));
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          JButton ok = <strong class="jxr_keyword">new</strong> JButton(<span class="jxr_string">"OK"</span>);
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          ok.addActionListener(event -&gt; {
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>              <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>                  ConfigurationManager.saveEmulatorConfiguration(emulatorSettings.getConfig());
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>                  ConfigurationManager.saveDeviceConfiguration(deviceSettings.getConfig());
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>                  <strong class="jxr_keyword">this</strong>.setVisible(false);
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>              } <strong class="jxr_keyword">catch</strong> (IOException ex) { <em class="jxr_comment">/* TODO: handle*/</em> }
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          });
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          JButton cancel = <strong class="jxr_keyword">new</strong> JButton(<span class="jxr_string">"Cancel"</span>);
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/configuration/Configuration.html">Configuration</a> globalConfig;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/configuration/Configuration.html">Configuration</a> modifiedConfig;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>      <strong class="jxr_keyword">private</strong> <a href="../../../paavohuh/sourcream/ui/DeviceConfigPanel.html">DeviceConfigPanel</a> deviceSettings;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>      <strong class="jxr_keyword">private</strong> <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a> emulatorSettings;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>      
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     * Creates a new modal configuration window.</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment">     * @param owner The owner of the window.</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment">     * @param config The configuration.</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">     * @throws HeadlessException </em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/ui/ConfigWindow.html">ConfigWindow</a>(Frame owner, <a href="../../../paavohuh/sourcream/configuration/Configuration.html">Configuration</a> config) <strong class="jxr_keyword">throws</strong> HeadlessException {
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          <strong class="jxr_keyword">super</strong>(owner);
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>          
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>          <strong class="jxr_keyword">this</strong>.globalConfig = config;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          <strong class="jxr_keyword">this</strong>.modifiedConfig = globalConfig.cloned();
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>          initComponents();
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      }
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initComponents() {
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          setTitle(<span class="jxr_string">"Configuration"</span>);
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>          setPreferredSize(<strong class="jxr_keyword">new</strong> Dimension(500, 500));
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          setResizable(false);
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          setModalityType(ModalityType.APPLICATION_MODAL);
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          JTabbedPane tabs = <strong class="jxr_keyword">new</strong> JTabbedPane();
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          emulatorSettings = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a>(<strong class="jxr_keyword">this</strong>, modifiedConfig.getEmulatorConfig());
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          deviceSettings = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/DeviceConfigPanel.html">DeviceConfigPanel</a>(<strong class="jxr_keyword">this</strong>, modifiedConfig.getDeviceConfig());
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          tabs.addTab(<span class="jxr_string">"Emulator"</span>, emulatorSettings);
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          tabs.addTab(<span class="jxr_string">"Device"</span>, deviceSettings);
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          add(tabs, BorderLayout.CENTER);
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          JPanel buttonPane = <strong class="jxr_keyword">new</strong> JPanel();
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          buttonPane.setLayout(<strong class="jxr_keyword">new</strong> GridLayout(1, 3, 8, 8));
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          JButton ok = <strong class="jxr_keyword">new</strong> JButton(<span class="jxr_string">"OK"</span>);
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          ok.addActionListener(event -&gt; {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>              <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>                  applyConfig();
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>                  saveConfig();
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  <strong class="jxr_keyword">this</strong>.setVisible(false);
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                  <strong class="jxr_keyword">this</strong>.dispose();
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>              } <strong class="jxr_keyword">catch</strong> (IOException ex) { <em class="jxr_comment">/* TODO: handle*/</em> }
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          });
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          cancel.addActionListener(event -&gt; {
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>              <strong class="jxr_keyword">this</strong>.setVisible(false);
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>              <strong class="jxr_keyword">this</strong>.dispose();
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          });
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          JButton apply = <strong class="jxr_keyword">new</strong> JButton(<span class="jxr_string">"Apply"</span>);
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          apply.setEnabled(false);
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          buttonPane.add(ok);
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          buttonPane.add(cancel);
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          buttonPane.add(apply);
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>          add(buttonPane, BorderLayout.SOUTH);
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          pack();
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      }
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  }
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          JButton cancel = <strong class="jxr_keyword">new</strong> JButton(<span class="jxr_string">"Cancel"</span>);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          cancel.addActionListener(event -&gt; {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>              <strong class="jxr_keyword">this</strong>.setVisible(false);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>              <strong class="jxr_keyword">this</strong>.dispose();
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          });
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          JButton apply = <strong class="jxr_keyword">new</strong> JButton(<span class="jxr_string">"Apply"</span>);
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          cancel.addActionListener(event -&gt; {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>              applyConfig();
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>              <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>                  applyConfig();
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>                  saveConfig();
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              } <strong class="jxr_keyword">catch</strong> (IOException ex) { <em class="jxr_comment">/* TODO: handle */</em> }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          });
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          buttonPane.add(ok);
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          buttonPane.add(cancel);
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          buttonPane.add(apply);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          add(buttonPane, BorderLayout.SOUTH);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          pack();
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      }
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> applyConfig() {
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">this</strong>.globalConfig.setEmulatorConfig(emulatorSettings.getConfig());
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">this</strong>.globalConfig.setDeviceConfig(deviceSettings.getConfig());
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> saveConfig() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          ConfigurationManager.saveEmulatorConfiguration(modifiedConfig.getEmulatorConfig());
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          ConfigurationManager.saveDeviceConfiguration(modifiedConfig.getDeviceConfig());
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>      }
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2016. All rights reserved.</div>

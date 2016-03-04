@@ -9,119 +9,276 @@
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   <strong class="jxr_keyword">package</strong> paavohuh.sourcream.ui;
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> java.awt.*;
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> javax.swing.*;
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.configuration.EmulatorConfiguration;
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> paavohuh.sourcream.configuration.KnownBindings;
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * The emulator config panel.</em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a> <strong class="jxr_keyword">extends</strong> JPanel {
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> config;
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>      
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * Creates a new emulator config panel.</em>
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     * @param parent The parent. </em>
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment">     * @param config The emulator configuration.</em>
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>      <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a>(Dialog parent, <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> config) {
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>          <strong class="jxr_keyword">this</strong>.config = config;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>          
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>          setLayout(<strong class="jxr_keyword">new</strong> GridLayout(1, 2, 4, 4));
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>          
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>          JPanel leftColumn = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(4, 1));
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>          leftColumn.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Screen"</span>));
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>          JPanel rightColumn = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>          rightColumn.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Input"</span>));
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>          
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>          JPanel colorGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(1, 2, 15, 15));
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>          colorGroup.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Colors"</span>));
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>          
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>          <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a> bg = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a>(parent, <span class="jxr_string">"Background"</span>, config.getScreen().getColors().getBackground());
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a> fg = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a>(parent, <span class="jxr_string">"Foreground"</span>, config.getScreen().getColors().getForeground());
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>          
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>          bg.onChangeColor(color -&gt; {
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>              config.getScreen().getColors().setBackground(color);
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          });
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          fg.onChangeColor(color -&gt; {
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>              config.getScreen().getColors().setForeground(color);
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          });
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> java.awt.BorderLayout;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> java.awt.Dialog;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> java.awt.Dimension;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> java.awt.GridBagConstraints;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> java.awt.GridBagLayout;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> java.awt.GridLayout;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> javax.swing.BorderFactory;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> javax.swing.JCheckBox;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> javax.swing.JComboBox;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> javax.swing.JLabel;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> javax.swing.JPanel;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> javax.swing.JSpinner;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> javax.swing.SpinnerModel;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> javax.swing.SpinnerNumberModel;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> paavohuh.sourcream.configuration.EmulatorConfiguration;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> paavohuh.sourcream.configuration.KnownBindings;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> paavohuh.sourcream.utils.MapUtils;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * The emulator config panel.</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a> <strong class="jxr_keyword">extends</strong> JPanel {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> config;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> List&lt;JComboBox&lt;NamedKey&gt;&gt; keyBindBoxes;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Integer[] keyBindings;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment">     * Creates a new emulator config panel.</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * @param parent The parent. </em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * @param config The emulator configuration.</em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/ui/EmulatorConfigPanel.html">EmulatorConfigPanel</a>(Dialog parent, <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> config) {
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">this</strong>.config = config;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          setLayout(<strong class="jxr_keyword">new</strong> GridLayout(1, 2, 4, 4));
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          colorGroup.add(bg);
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          colorGroup.add(fg);
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          leftColumn.add(colorGroup);
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          JPanel bindingsGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout(4, 4));
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          JComboBox presetBox = <strong class="jxr_keyword">new</strong> JComboBox(<strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"Custom"</span>, <span class="jxr_string">"Pong"</span>, <span class="jxr_string">"Tetris"</span>});
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <em class="jxr_comment">// Temporary HACK</em>
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>          presetBox.addActionListener(event -&gt; {
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>              String selected = (String) presetBox.getModel().getSelectedItem();
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>              
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>              System.out.println(selected);
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>              <strong class="jxr_keyword">switch</strong> (selected) {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  <strong class="jxr_keyword">case</strong> <span class="jxr_string">"Pong"</span>:
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>                      config.setInput(KnownBindings.pong());
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>                      <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  <strong class="jxr_keyword">case</strong> <span class="jxr_string">"Tetris"</span>:
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>                      config.setInput(KnownBindings.tetris());
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>                      <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>              }
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          });
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          bindingsGroup.add(presetBox, BorderLayout.NORTH);
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          JPanel subBindingsGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(8, 2, 4, 4));
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          String[] keys = {<span class="jxr_string">"None"</span>, <span class="jxr_string">"Up"</span>, <span class="jxr_string">"Down"</span>, <span class="jxr_string">"Left"</span>, <span class="jxr_string">"Right"</span>, <span class="jxr_string">"W"</span>, <span class="jxr_string">"A"</span>, <span class="jxr_string">"S"</span>, <span class="jxr_string">"D"</span>};
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>          
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; 16; i++) {
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>              JPanel bindingPanel = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout(4, 0));
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>              bindingPanel.add(<strong class="jxr_keyword">new</strong> JLabel(Integer.toString(i + 1)), BorderLayout.WEST);
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>              JComboBox keyBox = <strong class="jxr_keyword">new</strong> JComboBox(keys);
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>              keyBox.setPreferredSize(<strong class="jxr_keyword">new</strong> Dimension(80, 0));
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>              bindingPanel.add(keyBox, BorderLayout.EAST);
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              subBindingsGroup.add(bindingPanel);
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          }
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          bindingsGroup.add(subBindingsGroup, BorderLayout.CENTER);
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>          
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          rightColumn.add(bindingsGroup, BorderLayout.CENTER);
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          GridBagConstraints c = <strong class="jxr_keyword">new</strong> GridBagConstraints();
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          c.fill = GridBagConstraints.BOTH;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          c.anchor = GridBagConstraints.PAGE_START;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          c.weightx = 1.0f;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          JPanel leftColumn = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridBagLayout());
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          JPanel screenGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridBagLayout());
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          screenGroup.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Screen"</span>));
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          JPanel rightColumn = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout());
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          rightColumn.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Input"</span>));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          JPanel colorGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(1, 2, 15, 15));
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          colorGroup.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Colors"</span>));
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a> bg = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a>(parent, <span class="jxr_string">"Background"</span>, config.getScreen().getColors().getBackground());
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a> fg = <strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/ColorChooserButton.html">ColorChooserButton</a>(parent, <span class="jxr_string">"Foreground"</span>, config.getScreen().getColors().getForeground());
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          bg.onChangeColor(color -&gt; {
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>              config.getScreen().getColors().setBackground(color);
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          });
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          fg.onChangeColor(color -&gt; {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>              config.getScreen().getColors().setForeground(color);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          });
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          colorGroup.add(bg);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          colorGroup.add(fg);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          c.weighty = 0.7;
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          c.gridx = 0;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          c.gridy = 0;
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          c.gridwidth = 1;
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          c.gridheight = 2;
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          screenGroup.add(colorGroup, c);
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          JPanel bindingsGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout(4, 4));
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          JComboBox presetBox = <strong class="jxr_keyword">new</strong> JComboBox(<strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"Custom"</span>, <span class="jxr_string">"Pong"</span>, <span class="jxr_string">"Tetris"</span>, <span class="jxr_string">"UFO"</span>, <span class="jxr_string">"Tank"</span>});
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          JPanel ghostingGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(3, 2, 4, 4));
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          ghostingGroup.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Ghosting"</span>));
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          ghostingGroup.add(<strong class="jxr_keyword">new</strong> JCheckBox(<span class="jxr_string">"Enable?"</span>));
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          ghostingGroup.add(<strong class="jxr_keyword">new</strong> JLabel());
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          SpinnerModel fadeInModel = <strong class="jxr_keyword">new</strong> SpinnerNumberModel(
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>              config.getScreen().getGhosting().getAddBy(), 0.1, 1.0, 0.1);
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          JSpinner fadeIn = <strong class="jxr_keyword">new</strong> JSpinner(fadeInModel);
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          JSpinner fadeOut = <strong class="jxr_keyword">new</strong> JSpinner();
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>          ghostingGroup.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Fade in"</span>));
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          ghostingGroup.add(fadeIn);
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          ghostingGroup.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Fade out"</span>));
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>         ghostingGroup.add(fadeOut);
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         leftColumn.add(ghostingGroup);
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>         
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         JPanel scaleGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(1, 2));
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>         scaleGroup.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Scale factor"</span>));
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         scaleGroup.add(<strong class="jxr_keyword">new</strong> JSpinner(<strong class="jxr_keyword">new</strong> SpinnerNumberModel(10, 1, 50, 1)));
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         leftColumn.add(scaleGroup);
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>                 
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>         add(leftColumn);
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>         add(rightColumn);
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>     }
-<a class="jxr_linenumber" name="L112" href="#L112">112</a> 
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> getConfig() {
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">return</strong> config;
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>     }
-<a class="jxr_linenumber" name="L116" href="#L116">116</a> }
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          presetBox.addActionListener(event -&gt; {
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>              String selected = (String) presetBox.getModel().getSelectedItem();
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>              
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>              <strong class="jxr_keyword">switch</strong> (selected) {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>                  <strong class="jxr_keyword">case</strong> <span class="jxr_string">"Pong"</span>:
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>                      updateConfigBindings(KnownBindings.pong());
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>                      <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>                  <strong class="jxr_keyword">case</strong> <span class="jxr_string">"Tetris"</span>:
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                      updateConfigBindings(KnownBindings.tetris());
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>                      <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  <strong class="jxr_keyword">case</strong> <span class="jxr_string">"UFO"</span>:
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>                      updateConfigBindings(KnownBindings.ufo());
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>                      <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>                 <strong class="jxr_keyword">case</strong> <span class="jxr_string">"Tank"</span>:
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                     updateConfigBindings(KnownBindings.tank());
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>             }
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>             
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>             updateDisplayedBindings();
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         });
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>         bindingsGroup.add(presetBox, BorderLayout.NORTH);
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         JPanel subBindingsGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(8, 2, 4, 4));
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         List&lt;NamedKey&gt; namedKeyList = NamedKey.getKnown();
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         <a href="../../../paavohuh/sourcream/ui/NamedKey.html">NamedKey</a>[] keys = namedKeyList.toArray(<strong class="jxr_keyword">new</strong> <a href="../../../paavohuh/sourcream/ui/NamedKey.html">NamedKey</a>[namedKeyList.size()]);
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> 
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         keyBindBoxes = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(16);
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         keyBindings = <strong class="jxr_keyword">new</strong> Integer[16];
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; 16; i++) {
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> index = i;
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>             
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>             JPanel bindingPanel = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> BorderLayout(4, 0));
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>             bindingPanel.add(<strong class="jxr_keyword">new</strong> JLabel(Integer.toString(i + 1)), BorderLayout.WEST);
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>             
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>             JComboBox&lt;NamedKey&gt; keyBindBox = <strong class="jxr_keyword">new</strong> JComboBox(keys);
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>             keyBindBox.setPreferredSize(<strong class="jxr_keyword">new</strong> Dimension(80, 0));
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>             keyBindBox.addItemListener(event -&gt; {
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>                 <a href="../../../paavohuh/sourcream/ui/NamedKey.html">NamedKey</a> key = (NamedKey) event.getItem();
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>                 keyBindings[index] = key.getKeyCode();
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>                 updateConfigBindings();
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>             });
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>             
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>             bindingPanel.add(keyBindBox, BorderLayout.EAST);
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>             subBindingsGroup.add(bindingPanel);
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>             keyBindBoxes.add(keyBindBox);
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>         }
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>         updateDisplayedBindings();
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>         
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>         bindingsGroup.add(subBindingsGroup, BorderLayout.CENTER);
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>         rightColumn.add(bindingsGroup, BorderLayout.CENTER);
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>         
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         JPanel ghostingGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(3, 2, 4, 4));
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         ghostingGroup.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Ghosting"</span>));
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>         
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>         JCheckBox enableGhosting = <strong class="jxr_keyword">new</strong> JCheckBox(<span class="jxr_string">"Enable?"</span>);
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>         
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         enableGhosting.setSelected(config.getScreen().getEmulateGhosting());
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>         enableGhosting.addActionListener(event -&gt; {
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>             config.getScreen().setEmulateGhosting(enableGhosting.isSelected());
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>         });
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         ghostingGroup.add(enableGhosting);
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         ghostingGroup.add(<strong class="jxr_keyword">new</strong> JLabel());
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>         
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         SpinnerModel fadeInModel = <strong class="jxr_keyword">new</strong> SpinnerNumberModel(
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>             config.getScreen().getGhosting().getAddBy(), 0.0, 1.0, 0.1);
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>         fadeInModel.addChangeListener(event -&gt; {
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>             <strong class="jxr_keyword">double</strong> addBy = (<strong class="jxr_keyword">double</strong>) fadeInModel.getValue();
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>             config.getScreen().getGhosting().setAddBy((<strong class="jxr_keyword">float</strong>) addBy);
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>         });
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>         
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>         SpinnerModel fadeOutModel = <strong class="jxr_keyword">new</strong> SpinnerNumberModel(
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>             config.getScreen().getGhosting().getSubtractBy(), 0.0, 1.0, 0.1);
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>         fadeOutModel.addChangeListener(event -&gt; {
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>             <strong class="jxr_keyword">double</strong> subBy = (<strong class="jxr_keyword">double</strong>) fadeOutModel.getValue();
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>             config.getScreen().getGhosting().setSubtractBy((<strong class="jxr_keyword">float</strong>) subBy);
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>         });
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>         
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>         JSpinner fadeIn = <strong class="jxr_keyword">new</strong> JSpinner(fadeInModel);
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>         JSpinner fadeOut = <strong class="jxr_keyword">new</strong> JSpinner(fadeOutModel);
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>         
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>         ghostingGroup.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Fade in"</span>));
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>         ghostingGroup.add(fadeIn);
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         ghostingGroup.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Fade out"</span>));
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         ghostingGroup.add(fadeOut);
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> 
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>         c.weighty = 0.5;
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         c.gridy = 2;
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         c.gridheight = 2;
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         screenGroup.add(ghostingGroup, c);
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>         JPanel scaleGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(1, 2));
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         scaleGroup.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Scale factor"</span>));
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>         SpinnerModel scaleModel = <strong class="jxr_keyword">new</strong> SpinnerNumberModel(
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>             config.getScreen().getDisplayScale(), 1, 50, 1);
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>         scaleModel.addChangeListener(event -&gt; {
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>             <strong class="jxr_keyword">int</strong> scale = (<strong class="jxr_keyword">int</strong>) scaleModel.getValue();
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>             config.getScreen().setScaleFactor(scale);
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>         });
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>         scaleGroup.add(<strong class="jxr_keyword">new</strong> JSpinner(scaleModel));
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         c.weighty = 0.8;
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         c.gridy = 4;
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>         c.gridheight = 1;
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>         
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>         screenGroup.add(scaleGroup, c);
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>         
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>         c.weighty = 0.6f;
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         c.gridy = 0;
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>         c.gridheight = 4;
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>         
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>         leftColumn.add(screenGroup, c);
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>         
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>         JPanel soundGroup = <strong class="jxr_keyword">new</strong> JPanel(<strong class="jxr_keyword">new</strong> GridLayout(1, 1));
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>         soundGroup.setBorder(BorderFactory.createTitledBorder(<span class="jxr_string">"Sound"</span>));
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>         JCheckBox enableBox = <strong class="jxr_keyword">new</strong> JCheckBox(<span class="jxr_string">"Enable?"</span>, config.getSound().isEnabled());
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         enableBox.addActionListener(event -&gt; {
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>             config.getSound().setEnabled(enableBox.isSelected());
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>         });
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>         soundGroup.add(enableBox);
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         c.weighty = 0.4f;
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>         c.gridy = 4;
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>         c.gridheight = 1;
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>         
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>         leftColumn.add(soundGroup, c);
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>         
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>         c.weighty = 1.0f;
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>         c.gridy = 5;
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>         leftColumn.add(<strong class="jxr_keyword">new</strong> JPanel(), c);
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>         
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>         add(leftColumn);
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>         add(rightColumn);
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>     }
+<a class="jxr_linenumber" name="L226" href="#L226">226</a> 
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>     <strong class="jxr_keyword">public</strong> <a href="../../../paavohuh/sourcream/configuration/EmulatorConfiguration.html">EmulatorConfiguration</a> getConfig() {
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>         <strong class="jxr_keyword">return</strong> config;
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>     }
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>     
+<a class="jxr_linenumber" name="L231" href="#L231">231</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> updateDisplayedBindings() {
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>         Map&lt;Integer, Integer&gt; invertedBindings = MapUtils.invert(config.getInput().getBindings());
+<a class="jxr_linenumber" name="L233" href="#L233">233</a> 
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; keyBindBoxes.size(); i++) {
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>             <a href="../../../paavohuh/sourcream/ui/NamedKey.html">NamedKey</a> key;
+<a class="jxr_linenumber" name="L236" href="#L236">236</a> 
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>             <strong class="jxr_keyword">if</strong> (invertedBindings.containsKey(i)) {
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>                 key = NamedKey.fromCode(invertedBindings.get(i)).get();
+<a class="jxr_linenumber" name="L239" href="#L239">239</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>                 key = NamedKey.none();
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>             }
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>             
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>             keyBindBoxes.get(i).setSelectedItem(key);
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>         }
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>     }
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>     
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> updateConfigBindings() {
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>         config.getInput().unbindAll();
+<a class="jxr_linenumber" name="L249" href="#L249">249</a>         
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; keyBindings.length; i++) {
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>             <strong class="jxr_keyword">if</strong> (keyBindings[i] != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>                 config.getInput().bind(keyBindings[i], i);
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>                 config.getInput().unbindDeviceKey(i);
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>             }
+<a class="jxr_linenumber" name="L256" href="#L256">256</a>         }
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>     }
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>     
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> updateConfigBindings(EmulatorConfiguration.InputConfiguration config) {
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>         Arrays.fill(keyBindings, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>         
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>         Map&lt;Integer, Integer&gt; invertedBindings = MapUtils.invert(config.getBindings());
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; keyBindings.length; i++) {
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>             <strong class="jxr_keyword">if</strong> (invertedBindings.containsKey(i)) {
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>                 keyBindings[i] = invertedBindings.get(i);
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>                 keyBindings[i] = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>             }
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>         }
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>         
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>         updateConfigBindings();
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>     }
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2016. All rights reserved.</div>

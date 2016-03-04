@@ -16,6 +16,7 @@ import paavohuh.sourcream.configuration.DeviceConfiguration;
  */
 class DeviceConfigPanel extends JPanel {
     private final DeviceConfiguration config;
+    
     /**
      * Creates a new device configuration panel.
      * @param parent The parent.

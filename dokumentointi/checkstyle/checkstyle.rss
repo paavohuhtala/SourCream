@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2016</copyright>
     <item>
-      <title>File: 48,
-             Errors: 8,
+      <title>File: 52,
+             Errors: 9,
              Warnings: 0,
              Infos: 0
       </title>
@@ -74,7 +74,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.InstructionUtils.java">paavohuh/sourcream/emulation/InstructionUtils.java</a>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.ConfigWindow.java">paavohuh/sourcream/ui/ConfigWindow.java</a>
                 </td>
                 <td>
                   0
@@ -88,7 +88,287 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.ConfigWindow.java">paavohuh/sourcream/ui/ConfigWindow.java</a>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.instructions.Control.java">paavohuh/sourcream/emulation/instructions/Control.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.Instruction.java">paavohuh/sourcream/emulation/Instruction.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ScreenBuffer.java">paavohuh/sourcream/emulation/ScreenBuffer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.ColorChooserDialog.java">paavohuh/sourcream/ui/ColorChooserDialog.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.BeepPlayer.java">paavohuh/sourcream/ui/BeepPlayer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.EmulatorPanel.java">paavohuh/sourcream/ui/EmulatorPanel.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.InstructionDecoder.java">paavohuh/sourcream/emulation/InstructionDecoder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.InstructionFactory.java">paavohuh/sourcream/emulation/InstructionFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.utils.MapUtils.java">paavohuh/sourcream/utils/MapUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.instructions.Graphics.java">paavohuh/sourcream/emulation/instructions/Graphics.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.configuration.Configuration.java">paavohuh/sourcream/configuration/Configuration.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ScreenBufferLoader.java">paavohuh/sourcream/emulation/ScreenBufferLoader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.utils.Cached.java">paavohuh/sourcream/utils/Cached.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.Register.java">paavohuh/sourcream/emulation/Register.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.Device.java">paavohuh/sourcream/emulation/Device.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.BinarySerializable.java">paavohuh/sourcream/BinarySerializable.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ArrayInstructionCache.java">paavohuh/sourcream/emulation/ArrayInstructionCache.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ProgramBuilder.java">paavohuh/sourcream/emulation/ProgramBuilder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.EmulatedLcdBuffer.java">paavohuh/sourcream/ui/EmulatedLcdBuffer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ExecutionState.java">paavohuh/sourcream/emulation/ExecutionState.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.InstructionUtils.java">paavohuh/sourcream/emulation/InstructionUtils.java</a>
                 </td>
                 <td>
                   0
@@ -144,7 +424,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.instructions.Control.java">paavohuh/sourcream/emulation/instructions/Control.java</a>
+                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.NamedKey.java">paavohuh/sourcream/ui/NamedKey.java</a>
                 </td>
                 <td>
                   0
@@ -153,40 +433,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
               </tr>
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#paavohuh.sourcream.utils.ColorUtils.java">paavohuh/sourcream/utils/ColorUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.Instruction.java">paavohuh/sourcream/emulation/Instruction.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ScreenBuffer.java">paavohuh/sourcream/emulation/ScreenBuffer.java</a>
                 </td>
                 <td>
                   0
@@ -228,63 +480,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.ColorChooserDialog.java">paavohuh/sourcream/ui/ColorChooserDialog.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.EmulatorPanel.java">paavohuh/sourcream/ui/EmulatorPanel.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#paavohuh.sourcream.configuration.KnownBindings.java">paavohuh/sourcream/configuration/KnownBindings.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.InstructionDecoder.java">paavohuh/sourcream/emulation/InstructionDecoder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.InstructionFactory.java">paavohuh/sourcream/emulation/InstructionFactory.java</a>
                 </td>
                 <td>
                   0
@@ -354,20 +550,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.instructions.Graphics.java">paavohuh/sourcream/emulation/instructions/Graphics.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.InputMapper.java">paavohuh/sourcream/ui/InputMapper.java</a>
                 </td>
                 <td>
@@ -397,20 +579,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.Timer.java">paavohuh/sourcream/emulation/Timer.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ScreenBufferLoader.java">paavohuh/sourcream/emulation/ScreenBufferLoader.java</a>
                 </td>
                 <td>
                   0
@@ -517,35 +685,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.utils.Cached.java">paavohuh/sourcream/utils/Cached.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.Register.java">paavohuh/sourcream/emulation/Register.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
+                  1
                 </td>
               </tr>
                           <tr>
@@ -592,62 +732,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.Device.java">paavohuh/sourcream/emulation/Device.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.BinarySerializable.java">paavohuh/sourcream/BinarySerializable.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ArrayInstructionCache.java">paavohuh/sourcream/emulation/ArrayInstructionCache.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ProgramBuilder.java">paavohuh/sourcream/emulation/ProgramBuilder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#paavohuh.sourcream.utils.ArrayUtils.java">paavohuh/sourcream/utils/ArrayUtils.java</a>
                 </td>
                 <td>
@@ -662,35 +746,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.ui.EmulatedLcdBuffer.java">paavohuh/sourcream/ui/EmulatedLcdBuffer.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#paavohuh.sourcream.configuration.DeviceConfiguration.java">paavohuh/sourcream/configuration/DeviceConfiguration.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#paavohuh.sourcream.emulation.ExecutionState.java">paavohuh/sourcream/emulation/ExecutionState.java</a>
                 </td>
                 <td>
                   0
