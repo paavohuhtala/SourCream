@@ -15,15 +15,18 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
 
     private ScreenConfiguration screen;
     private InputConfiguration input;
+    private SoundConfiguration sound;
 
     /**
      * Creates a new emulator config.
-     * @param screen The screen configuration
-     * @param mapping The input configuration
+     * @param screen The screen configuration.
+     * @param input The input configuration.
+     * @param sound The sound configuration.
      */
-    public EmulatorConfiguration(ScreenConfiguration screen, InputConfiguration mapping) {
+    public EmulatorConfiguration(ScreenConfiguration screen, InputConfiguration input, SoundConfiguration sound) {
         this.screen = screen;
-        this.input = mapping;
+        this.input = input;
+        this.sound = sound;
     }
     
     /**
@@ -33,12 +36,16 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
     public static EmulatorConfiguration getDefault() {
         return new EmulatorConfiguration(
             ScreenConfiguration.getDefault(),
-            InputConfiguration.getDefault());
+            InputConfiguration.getDefault(),
+            SoundConfiguration.getDefault());
     }
 
     @Override
     public EmulatorConfiguration cloned() {
-        return new EmulatorConfiguration(getScreen().cloned(), getInput().cloned());
+        return new EmulatorConfiguration(
+            getScreen().cloned(),
+            getInput().cloned(),
+            getSound().cloned());
     }
 
     public ScreenConfiguration getScreen() {
@@ -55,6 +62,14 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
 
     public void setInput(InputConfiguration input) {
         this.input = input;
+    }
+
+    public SoundConfiguration getSound() {
+        return sound;
+    }
+
+    public void setSound(SoundConfiguration sound) {
+        this.sound = sound;
     }
         
     /**
@@ -278,6 +293,43 @@ public class EmulatorConfiguration implements DeepCloneable<EmulatorConfiguratio
         @Override
         public InputConfiguration cloned() {
             return new InputConfiguration((HashMap<Integer, Integer>) bindings.clone());
+        }
+    }
+    
+    /**
+     * Contains sound settings.
+     */
+    public static class SoundConfiguration implements DeepCloneable<SoundConfiguration> {
+
+        private boolean enabled;
+        
+        @Override
+        public SoundConfiguration cloned() {
+            return new SoundConfiguration(enabled);
+        }
+
+        /**
+         * Creates a new sound configuration.
+         * @param enabled Sound sound be enabled?
+         */
+        public SoundConfiguration(boolean enabled) {
+            this.enabled = enabled;
+        }
+        
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+        
+        /**
+         * Gets the default sound configuration. Sounds are played by default.
+         * @return The default configuration.
+         */
+        public static SoundConfiguration getDefault() {
+            return new SoundConfiguration(true);
         }
     }
 }

@@ -15,6 +15,11 @@ public class NamedKey {
     private final String name;
     private final boolean isNone;
 
+    /**
+     * Creates a new named key.
+     * @param keyCode The Swing virtual keycode.
+     * @param name The human-friendly name of the key.
+     */
     public NamedKey(int keyCode, String name) {
         this.keyCode = keyCode;
         this.name = name;

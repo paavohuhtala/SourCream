@@ -11,11 +11,18 @@ import javax.sound.sampled.Mixer;
 import paavohuh.sourcream.Resource;
 import paavohuh.sourcream.configuration.Configuration;
 
+/**
+ * Plays a looping, single cycle square wave beep.
+ */
 public class BeepPlayer {
     private final Configuration config;
     private AudioInputStream stream;
     private Clip currentClip;
     
+    /**
+     * Creates a new beep player.
+     * @param config The configuration.
+     */
     public BeepPlayer(Configuration config) {
         this.config = config;
         
@@ -35,7 +42,16 @@ public class BeepPlayer {
         }
     }
     
+    /**
+     * Starts the beep. If the sound is already playing or sound is disabled
+     * in the configuration, does nothing.
+     */
     public void startBeep() {
+    
+        if (!config.getEmulatorConfig().getSound().isEnabled()) {
+            return;
+        }
+        
         if (stream != null) {
             try {
                 if (currentClip != null) {
@@ -53,6 +69,9 @@ public class BeepPlayer {
         }
     }
     
+    /**
+     * Stops the beep. If the sound is not playng, does nothing.
+     */
     public void endBeep() {
         if (currentClip != null) {
             currentClip.stop();

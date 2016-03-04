@@ -70,5 +70,6 @@ public class EmulatorPanel extends JPanel {
         int width  = config.getDeviceConfig().getResolutionX() * scale;
         int height = config.getDeviceConfig().getResolutionY() * scale;
         setPreferredSize(new Dimension(width, height));
+        setMinimumSize(new Dimension(width, height));
     }
 }

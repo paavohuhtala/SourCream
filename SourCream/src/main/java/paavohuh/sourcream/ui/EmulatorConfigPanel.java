@@ -4,6 +4,8 @@ package paavohuh.sourcream.ui;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -41,8 +43,16 @@ public class EmulatorConfigPanel extends JPanel {
         
         setLayout(new GridLayout(1, 2, 4, 4));
         
-        JPanel leftColumn = new JPanel(new GridLayout(4, 1));
-        leftColumn.setBorder(BorderFactory.createTitledBorder("Screen"));
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.PAGE_START;
+        c.weightx = 1.0f;
+        
+        JPanel leftColumn = new JPanel(new GridBagLayout());
+        JPanel screenGroup = new JPanel(new GridBagLayout());
+        
+        screenGroup.setBorder(BorderFactory.createTitledBorder("Screen"));
+        
         JPanel rightColumn = new JPanel(new BorderLayout());
         rightColumn.setBorder(BorderFactory.createTitledBorder("Input"));
         
@@ -62,7 +72,14 @@ public class EmulatorConfigPanel extends JPanel {
         
         colorGroup.add(bg);
         colorGroup.add(fg);
-        leftColumn.add(colorGroup);
+        
+        c.weighty = 0.7;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        c.gridheight = 2;
+        
+        screenGroup.add(colorGroup, c);
         
         JPanel bindingsGroup = new JPanel(new BorderLayout(4, 4));
         JComboBox presetBox = new JComboBox(new String[]{"Custom", "Pong", "Tetris"});
@@ -151,7 +168,11 @@ public class EmulatorConfigPanel extends JPanel {
         ghostingGroup.add(new JLabel("Fade out"));
         ghostingGroup.add(fadeOut);
 
-        leftColumn.add(ghostingGroup);
+        c.weighty = 0.5;
+        c.gridy = 2;
+        c.gridheight = 2;
+        
+        screenGroup.add(ghostingGroup, c);
         
         JPanel scaleGroup = new JPanel(new GridLayout(1, 2));
         scaleGroup.add(new JLabel("Scale factor"));
@@ -162,8 +183,38 @@ public class EmulatorConfigPanel extends JPanel {
             config.getScreen().setScaleFactor(scale);
         });
         scaleGroup.add(new JSpinner(scaleModel));
-        leftColumn.add(scaleGroup);
-                
+        
+        c.weighty = 0.8;
+        c.gridy = 4;
+        c.gridheight = 1;
+        
+        screenGroup.add(scaleGroup, c);
+        
+        c.weighty = 0.6f;
+        c.gridy = 0;
+        c.gridheight = 4;
+        
+        leftColumn.add(screenGroup, c);
+        
+        JPanel soundGroup = new JPanel(new GridLayout(1, 1));
+        soundGroup.setBorder(BorderFactory.createTitledBorder("Sound"));
+        JCheckBox enableBox = new JCheckBox("Enable?", config.getSound().isEnabled());
+        enableBox.addActionListener(event -> {
+            config.getSound().setEnabled(enableBox.isSelected());
+        });
+        soundGroup.add(enableBox);
+        
+        c.weighty = 0.4f;
+        c.gridy = 4;
+        c.gridheight = 1;
+        
+        leftColumn.add(soundGroup, c);
+        
+        c.weighty = 1.0f;
+        c.gridy = 5;
+        leftColumn.add(new JPanel(), c);
+        
+        
         add(leftColumn);
         add(rightColumn);
     }
